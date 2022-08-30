@@ -1,0 +1,111 @@
+input{height:auto;}
+.form_sec_in {
+  padding: 0;
+  margin-top: 10px;
+  padding-left: 10px;
+  position: relative;
+}
+
+.form_sec_in .ng-select {
+  padding: 0;
+  height: calc(1.6625rem + 4.9px);
+}
+
+.form_sec_in .ng-select > .ng-select-container.ng-has-value {
+  min-height: 100%;
+  height:auto;
+}
+.form_sec_in .ng-select > .ng-select-container.ng-has-value {
+  height: auto;
+  min-height: 100%;
+}
+.ng-dropdown-panel.ng-select-bottom{
+  padding: 0;
+}
+h5{
+  color: #757575;
+  padding-left: 10px;
+}
+input.custom-datepicker {
+  float: left;
+  width: auto;
+  background-color: #383d40;
+  color: #fff;
+  margin: 20px 0 20px 22px;
+}
+input.custom-datepicker {
+  float:right;
+  margin:0px;
+}
+.date-picker-wrap{
+  width:100%;
+  display:flex;
+  padding-left:15px;
+  margin-bottom: 30px;
+}
+
+.date-picker-wrap-last{
+  margin-bottom:0px;
+  display: flex;
+  align-items: center;
+  padding: 0px 20px;
+}
+
+.date-picker-wrap-last h4{
+  width: 76%;
+}
+.form_sec_in {
+  padding: 0;
+  position: relative;
+}
+
+.form_sec_in .ng-select {
+  padding: 0;
+  height: calc(1.6625rem + 4.9px);
+}
+
+.form_sec_in .ng-select > .ng-select-container.ng-has-value {
+  min-height: 100%;
+  height:auto;
+}
+.form_sec_in .ng-select > .ng-select-container.ng-has-value {
+  height: auto;
+  min-height: 100%;
+}
+.row.dev-report {
+  padding: 20px 0 0 0;    margin: 0 90px 0 0;
+}
+
+.row.dev-report .form_sec_in {
+    margin-top: 0!important;    padding: 0 15px;
+}
+
+.row.dev-report h5[_ngcontent-c4] {
+    padding-left: 20px !important;
+}
+
+.row.dev-report input.custom-datepicker {
+  width: 67% !important;
+  padding: 7px;
+}
+
+.row.dev-report[_ngcontent-c4] .date-picker-wrap-last > div {
+    width: 100%;
+}
+
+.row.dev-report .date-picker-wrap.date-picker-wrap-last {
+    padding: 0;
+}
+.row.dev-report[_ngcontent-c4] button.btn-success {
+    width: 100px;
+    margin: 20px auto;
+    padding: 5px;
+
+  margin: 10px auto 10px;
+  padding: 4px 25px;
+}
+
+h5.ng-star-inserted {
+  padding: 200px 0;
+  text-align: center;
+}

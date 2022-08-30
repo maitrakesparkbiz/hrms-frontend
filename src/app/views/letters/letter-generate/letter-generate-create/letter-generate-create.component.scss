@@ -1,0 +1,72 @@
+.invalid-error {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #f86c6b;
+}
+
+.invalid-input {
+  border: 1px solid #f86c6b;
+  border-radius: 0.25rem;
+}
+
+.preview {
+  border-top: none;
+  margin: 0px 0px 0px 0px;
+}
+
+#print-div {
+  display: none;
+}
+
+@media print {
+  #print-div {
+    display: block !important;
+    margin-left: -224px !important;
+  }
+
+  ::ng-deep ol,
+  ::ng-deep .app-footer {
+    display: none !important;
+  }
+
+  .main-div {
+    display: none !important;
+  }
+}
+
+
+.input-employee input {padding: 0 !important;}
+/*6-5-2019*/
+.team-header.inner-header button{margin:15px 0;}
+main.messaage.main-div{padding:0 15px;}
+main.messaage.main-div button{margin:15px 0;}
+main.messaage.main-div form{padding:20px 0 0 0;}
+main.messaage.main-div form .card-body .row{padding-bottom:10px;}
+main.messaage.main-div form .card.custom-card .bottom{padding:10px 18px 0px 18px;}
+main.messaage.main-div form .card-header i { padding: 0 10px 0px 0; }
+main.messaage.main-div form .row .card-header button{margin:5px 6px;}
+main.messaage.main-div form .row .button-wrap{margin:0 auto;}
+main.messaage.main-div form  .row.last-row{display:block;}
+
+main.messaage.main-div form .card-body .row .ng-select .ng-select-container .ng-input input{height: 25px; padding: 5px 10px;}
+main.messaage.main-div form .row h4{font-size: 20px;}
+
+.input-employee .ng-select .ng-select-container .ng-value-container .ng-input>input {
+    padding: 0 !important;
+} 
+
+
+
+
+.input-employee .ng-value-container .ng-value .ng-star-inserted{padding: 0 !important;}
+
+.input-employee .input-employee .ng-input {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 2px;
+}
+
+.input-employee .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input{padding: 2px;    position: absolute;
+    top: -4px;}

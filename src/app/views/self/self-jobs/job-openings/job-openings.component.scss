@@ -1,0 +1,220 @@
+.self-job-header {
+  float: left;
+  width: 100%;
+  min-height: 60px;
+}
+
+
+.custom-name {
+  font-size: 20px;
+  color: #2196f3;
+  font-weight: 500;
+  text-transform: capitalize;
+  width: 100%;
+  text-align: left;
+}
+
+input.input-link {
+  height: 29px;
+  font-size: 13px;
+  width: auto;
+  border-radius: 2px;
+  display: inline-block;
+  background: #e4e7ea;
+}
+
+span.ext-link {
+  float: right;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.link-wrap {
+  float: left;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.custom-intro {
+  float: left;
+  width: 100%;
+  text-align: left;
+  padding-top: 15px;
+
+  text-transform: capitalize;
+}
+
+.custom-responsible {
+  float: left;
+  width: 100%;
+  text-align: left;
+  text-transform: capitalize;
+
+}
+
+.custom-skill {
+  float: left;
+  width: 100%;
+  text-align: left;
+  text-transform: capitalize;
+
+}
+
+.custom-intro h3,
+.custom-responsible h3,
+.custom-skill h3 {
+  font-size: 17px;
+  font-weight: 500;
+  color: #4caf50;
+}
+
+.custom-intro span,
+.custom-responsible span,
+.custom-skill span {
+  font-size: 13px;
+  color: #5e5e5e;
+}
+
+
+h4.pop-up-title {
+  float: left;
+  width: 100%;
+  background: #0288d1;
+  padding: 10px 30px;
+  color: #fff;
+}
+
+button.pop-up-close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.close {
+  color: rgba(255, 255, 255, .7);
+  text-shadow: none;
+  padding: 20px 17px 14px;
+}
+
+button.close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+
+.pop-up-body {
+  padding: 30px;
+}
+
+label {
+  position: relative;
+  font-size: 13px;
+  color: #5e5e5e;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: .5rem
+}
+
+input.form-control.ng-pristine.ng-invalid.ng-touched,
+input.form-control.ng-untouched.ng-pristine.ng-invalid {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+.form-control {
+  margin: 6px 0;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(2.0625rem + 2px);
+  padding: .375rem .75rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: #5c6873;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #e4e7ea;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+label.custom-file-upload.document-select-btn {
+  padding: 5px 15px;
+  border-radius: 2px;
+  background: #039be5;
+  color: #fff;
+}
+
+.document-select-btn {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  background: #00bcd4;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+}
+
+#resume {
+  display: none;
+}
+
+input.form-control.ng-pristine.ng-invalid.ng-touched,
+input.form-control.ng-untouched.ng-pristine.ng-invalid {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+.cancel-btn {
+  border-radius: 2px;
+  padding: 5.5px 11px;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #2196f3;
+  font-size: 13px;
+  margin: 0 10px 0 0;
+}
+
+.create-btn {
+  background: #fff;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  font-size: 13px;
+  color: #333;
+  border-radius: 2px;
+  padding: 5.5px 12px;
+}
+
+.custom-link {
+  float: left;
+}
+
+
+.description-detail {
+  padding: 0
+}
+
+
+@media(min-width:1500px) {
+  .custom-intro span {
+    font-size: 14px;
+  }
+}
+
+
+
+@media(max-width:1400px) {
+
+  .abc,
+  .description-wrap {
+    width: 25.1%;
+  }
+}

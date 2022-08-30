@@ -1,0 +1,206 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="border-bottom">
+      <div class="white-bg inner-header">
+        <button type="button" class="btn btn-success backbtn" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="LeaveTypeForm" (ngSubmit)="onsubmit()">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card custom-padding leave-form-wrap comman-card-wrap">
+            <div class="card-header blue-bg">
+              <h4 class="c-white"><i class="fa fa-info-circle" aria-hidden="true"></i>General</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Name</label>
+                  <input type="text" name="leavetype" formControlName="leavetype" [(ngModel)]="leave_type.leavetype"
+                    placeholder="Like: Casual, Sick, Maternal, etc." class="form-control input-sm fc-alt">
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Gender</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <br>
+                  <div class="btn-group btn-group-toggle btn-toggle" ngbRadioGroup name="gender" formControlName="gender"
+                    [(ngModel)]="leave_type.gender">
+                    <label ngbButtonLabel class="btn-primary">
+                      <input ngbButton type="radio" [value]="23"> Male
+                    </label>
+                    <label ngbButtonLabel class="btn-default" [ngClass]="leave_type.gender==24? 'btn-danger':''">
+                      <input ngbButton type="radio" [value]="24"> Female
+                    </label>
+                    <label ngbButtonLabel class="btn-default" [ngClass]="leave_type.gender==25? 'btn-info':''">
+                      <input ngbButton type="radio" [value]="25"> Both
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Status</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <br>
+                  <div class="btn-group btn-group-toggle" ngbRadioGroup name="status" formControlName="status"
+                    [(ngModel)]="leave_type.status">
+                    <label ngbButtonLabel class="btn-primary">
+                      <input ngbButton type="radio" [value]="21"> Enable
+                    </label>
+                    <label ngbButtonLabel class="btn-default" [ngClass]="leave_type.status==22? 'btn-danger':''">
+                      <input ngbButton type="radio" [value]="22"> Disable
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card custom-padding">
+            <div class="card-header pink-bg">
+              <h4 class="c-white"><i class="fa fa-bar-chart" aria-hidden="true"></i>Counts</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Count Type</label>
+                  <select name="count_type" formControlName="count_type" [(ngModel)]="leave_type.count_type" class="form-control input-sm fc-alt">
+                    <option value="Same for All">Same for All</option>
+                    <option value="Employee Specific">Employee Specific</option>
+                  </select>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Total Count</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <input type="number" name="count" formControlName="count" [(ngModel)]="leave_type.count" class="form-control input-sm fc-alt">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Max Leaves per Month</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <input type="number" name="max_leave_month" formControlName="max_leave_month" [(ngModel)]="leave_type.max_leave_month"
+                    class="form-control input-sm fc-alt">
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Max Consecutive Leaves per Month</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <input type="number" name="max_consecutive_leave_month" [(ngModel)]="leave_type.max_consecutive_leave_month"
+                    formControlName="max_consecutive_leave_month" class="form-control input-sm fc-alt">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card custom-padding">
+            <div class="card-header purple-bg">
+              <h4 class="c-white"><i class="fa fa-cog" aria-hidden="true"></i>Rules</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Allowed in Probation</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <br>
+                  <label class="switch switch-label switch-primary">
+                    <input type="checkbox" class="switch-input" formControlName="probation" [(ngModel)]="leave_type.probation">
+                    <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                  </label>
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Allow Half Day</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <br>
+
+                  <label class="switch switch-label switch-primary">
+                    <input type="checkbox" class="switch-input" formControlName="half_day" [(ngModel)]="leave_type.half_day">
+                    <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                  </label>
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Allow Intervening Holidays</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <br>
+                  <label class="switch switch-label switch-primary">
+                    <input type="checkbox" class="switch-input" formControlName="intervening_holiday" [(ngModel)]="leave_type.intervening_holiday">
+                    <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Over Utilization</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <select name="Over Utilization" formControlName="over_utilization" [(ngModel)]="leave_type.over_utilization"
+                    class="form-control input-sm fc-alt">
+                    <option value="26">Paid</option>
+                    <option value="27">Unpaid</option>
+                    <option value="30">Other Leave Type</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Unused Leaves</label>
+                  <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                    placement="top" aria-hidden="true"></i>
+                  <br>
+                  <div name="unused_leave">
+                    <div class="checkbox-wrap">
+                      <input name="unused_leave" formControlName="unused_leave" [(ngModel)]="leave_type.unused_leave"
+                        type="radio" [value]="0" id="test1"> <label for="test1">Carry Forward
+                      </label>
+                    </div>
+
+                    <div class="checkbox-wrap">
+                      <input name="unused_leave" formControlName="unused_leave" [(ngModel)]="leave_type.unused_leave"
+                        type="radio" [value]="1" id="test2"><label for="test2"> Lapse</label>
+                    </div>
+
+                    <div class="checkbox-wrap">
+                      <input name="unused_leave" formControlName="unused_leave" [(ngModel)]="leave_type.unused_leave"
+                        type="radio" [value]="2" id="test3"><label for="test3"> Paid</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group pull-center mt">
+            <button class="btn btn-primary updatebtn" type="submit">
+              Update
+            </button>
+            <button class="btn cancelbtn" type="button" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

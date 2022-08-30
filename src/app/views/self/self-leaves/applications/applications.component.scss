@@ -1,0 +1,207 @@
+table#claim_table tr td input[type="checkbox"]+label:before,
+table#claim_table tr td input[type="checkbox"]:checked+label:after {
+  left: 27px;
+}
+
+table#claim_table tr td input[type="checkbox"] {
+  left: 46px;
+}
+
+.custom-duration {
+  margin: 0 5px;
+}
+
+h4.leave-heading {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 20px;
+  color: #2196f3;
+  margin-bottom: 15px;
+}
+
+
+.modal-header.edit-leave {
+  background: #e57373;
+  padding: 17.5px 20px;
+}
+
+button.close.custom-close {
+  padding: 20px 15px;
+}
+
+button.close.custom-close:focus {
+  outline: none;
+  color: inherit
+}
+
+button.close.custom-close span {
+  outline: none
+}
+
+.modal-body label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5e5e5e;
+}
+
+input.form-control.ng-pristine.ng-invalid.ng-touched,
+input.form-control.ng-untouched.ng-pristine.ng-invalid {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+span.switch-slider.toggle-switch {
+  border: none;
+}
+
+.switch-slider {
+  position: relative;
+  display: block;
+  height: inherit;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #c8ced3;
+  transition: .15s ease-out;
+  border-radius: .25rem;
+}
+
+
+span.switch-slider.toggle-switch:before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -4px;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 90px;
+  transition: .3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .28);
+}
+
+
+span.switch-slider.toggle-switch:after {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 40px;
+  height: 16px;
+  background: grey;
+  display: block;
+  border-radius: 100px;
+  position: relative;
+  top: 2px;
+}
+
+.modal-body select {
+  height: 30px;
+  border-radius: 2px;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+
+textarea {
+  height: 100px;
+  border-radius: 2px;
+  margin: 0;
+  resize: none;
+}
+
+button.btn.btn-primary.cancel-btn {
+  border-radius: 2px;
+  padding: 5.5px 15.2px;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #2196f3;
+  font-size: 13px;
+}
+
+button.btn.btn-secondary.create-btn {
+  background: #fff;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  font-size: 13px;
+  color: #333;
+  border-radius: 2px;
+  padding: 5.5px 12px;
+}
+
+
+.switch-label .switch-input:checked~.switch-slider::after {
+  background: rgba(62, 101, 149, .58);
+}
+
+.switch-label .switch-input:checked~.switch-slider::after {
+  left: 1px;
+  color: #fff;
+  content: attr(data-checked);
+}
+
+.switch-primary .switch-input:checked+.switch-slider {
+  background-color: transparent;
+  border-color: transparent
+}
+
+.switch-primary .switch-input:checked+.switch-slider::before {
+  border-color: transparent;
+  background: #3e6595;
+}
+
+h4.modal-title {
+  color: #fff;
+}
+
+.close {
+  color: rgba(255, 255, 255, .7);
+  text-shadow: none;
+}
+
+span.half_day_label {
+  width: auto;
+  position: relative;
+  z-index: 2;
+  float: right;
+  margin-right: -25px;
+  margin-top: -26px;
+}
+
+.modal-body select:focus {
+  box-shadow: none;
+}
+
+.custom-status {
+  margin-right: 15px;
+}
+
+.custom-duration {
+  float: left;
+}
+
+.abc,
+.description-wrap {
+  width: 26.2%
+}
+
+
+@media(max-width:1500px) {
+
+  .abc,
+  .description-wrap {
+    width: 25%
+  }
+}
+
+@media(max-width:1400px) {
+
+  .abc,
+  .description-wrap {
+    width: 24.7%;
+  }
+}
+
+div#claim_table_info {
+  padding-left: 35px;
+}

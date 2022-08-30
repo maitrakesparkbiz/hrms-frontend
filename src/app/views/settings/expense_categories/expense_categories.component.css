@@ -1,0 +1,66 @@
+main.message {
+  float: left;
+  width: 100%;
+  padding: 0; }
+
+.modal-header {
+  padding: 23px 26px;
+  background-color: #0288d1;
+  color: #fff;
+  border-radius: 2px;
+  border-bottom: 1px solid transparent; }
+
+.form-control {
+  margin: 6px 0; }
+
+.close {
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: none; }
+
+.close:not(:disabled):not(.disabled):hover {
+  color: #fff; }
+
+input.form-control.ng-pristine.ng-valid.ng-touched,
+input.form-control.ng-untouched.ng-pristine.ng-valid,
+input.form-control.ng-valid.ng-dirty.ng-touched,
+input.form-control.ng-valid.ng-dirty.ng-untouched {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px; }
+
+input.form-control.ng-pristine.ng-valid.ng-touched:focus,
+input.form-control.ng-untouched.ng-pristine.ng-valid:focus,
+input.form-control.ng-valid.ng-dirty.ng-touched:focus,
+input.form-control.ng-valid.ng-dirty.ng-untouched:focus {
+  border-color: #2f88d2 !important;
+  box-shadow: none; }
+
+table.dataTable thead th {
+  position: relative; }
+
+.col-md-2.setting-add-button {
+  padding-top: 7px; }
+
+.plus-btn {
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3); }
+
+.cross-btn {
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  margin-top: 8px; }
+
+.header-buttons {
+  left: 458px; }
+
+.error-div {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #f86c6b; }
+
+/*# sourceMappingURL=expense_categories.component.css.map */

@@ -1,0 +1,198 @@
+<div class="custom-dashboard">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card custom-card">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-clock-o" aria-hidden="true"></i> Today's Attendance</h4>
+          </div>
+          <div class="card-body form-padding">
+            <div class="row">
+              <div class="col-md-6">
+                <h5>Current IP Address</h5>
+                <p>{{this.current_ip}}</p>
+              </div>
+              <div class="col-md-6">
+                <h5>Current Time</h5>
+                <p>{{hour}}:{{min}}:{{sec}} {{type}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 custom-attendance">
+                <h5>Attendance</h5>
+                <div *ngIf="listings!==null" class="attendace-wrap">
+                  <span *ngFor="let row of listings" style="display: block"
+                    [ngClass]="row.type=='Checked In'?'check_in_label':(row.type=='Breaked In'?'break_in_label':(row.type=='Breaked Out'?'break_out_label':'check_out_label'))">
+                    <span class="bold-heading"
+                      [ngClass]="row.type=='Checked In'?'check_in_heading':(row.type=='Breaked In'?'break_in_heading':(row.type=='Breaked Out'?'break_out_heading':'check_out_heading'))">{{row.type}}</span>
+                    {{row[0]}}
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6 custom-comment">
+                <h5>Comments</h5>
+                <ng-container *ngFor="let comment of comments">
+                  <div class="cmt">
+                    <div class="custom-send">
+                      <span class="send lower-case-txt">
+                        {{comment.comment_text}}
+                      </span>
+                    </div>
+
+                    <div class="custom-receive" *ngIf="comment.response_text">
+                      <span class="receive lower-case-txt">
+                        {{comment.response_text}}
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card custom-card">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-binoculars" aria-hidden="true"></i> Record Your Attendance</h4>
+          </div>
+          <div class="card-body form-padding" *ngIf="end;else other">
+            <form [formGroup]="cmtForm" (ngSubmit)="onSubmit()" #cmt="ngForm">
+              <div class="row">
+                <div class="col-md-12" *ngIf="staffing_error!==null">
+                  <div class="staffing-error">Your previous staffing was less than {{batch_hours}} hours</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <input type="text" formControlName="comment_text" class="form-control" placeholder="comment"
+                    [ngClass]="(cmtForm.get('comment_text').invalid && submitted) ? 'is-invalid' : ''">
+                  <div class="invalid-feedback" *ngIf="cmtForm.get('comment_text').invalid && submitted">
+                    Comment should not be blank
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <button type="submit" class="custom-submit">Submit</button>
+                </div>
+              </div>
+            </form>
+            <div class="row button-wrap">
+              <div class="col-md-6" style="display: block">
+                <button class="custom-check-in" (click)="onBtnClick('check_in')" [disabled]="checkin"><i
+                    class="fa fa-sign-in" aria-hidden="true"></i>Check In</button>
+                <button class="btn btn-danger custom-check-out" (click)="openModal(confrimBox,'check_out')"
+                  [disabled]="both"><i class="fa fa-sign-in" aria-hidden="true"></i>Check Out</button>
+              </div>
+              <div class="col-md-6" style="display: block">
+                <button class="custom-break-in" (click)="openModal(confrimBox,'break_in')" [disabled]="both">Break
+                  In</button>
+                <button class="btn btn-warning custom-break-out" (click)="openModal(confrimBox,'break_out')"
+                  [disabled]="breakout">Break
+                  Out</button>
+              </div>
+            </div>
+          </div>
+          <ng-template #other>
+            <div class="custom-presense">
+              <h6 class=""><i class="fa fa-smile-o" aria-hidden="true"></i>{{msg}}</h6>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <div class="row custom-gray-bg">
+      <div class="col-md-8">
+        <div class="card custom-card">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-clock-o" aria-hidden="true"></i> Calender</h4>
+          </div>
+          <app-self-dashboard-calender></app-self-dashboard-calender>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card custom-card upcoming-bday-tab">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Upcoming Birthdays</h4>
+          </div>
+          <div class="upcoming-bday-content">
+            <ul class="recent-leaves-list">
+              <li *ngFor="let bday of today_birthday" class="custom-li-list">
+                <span class="dash-emp-img">
+                  <img style="width: 38px; height: 38px" *ngIf="bday.profile_image ;else other_content"
+                    [src]=IMAGE_URL+bday.profile_image class="img-avatar bday-img" />
+                  <ng-template #other_content>
+                    <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                  </ng-template>
+                </span>
+
+                <div class="dash-emp-details">
+                  <a class="person-name">{{bday.firstname}}
+                    {{bday.lastname}} <span class="today-bday">{{bday.isToday ? '(today)' : ''}}</span></a>
+                  <span class="dash-emp-content">{{bday.date_of_birth.date | date:'dd-MM-'}}{{currentYear}}</span>
+                </div>
+              </li>
+              <li *ngFor="let bday of month_birthday" class="custom-li-list">
+                <span class="dash-emp-img">
+                  <img style="width: 38px; height: 38px" *ngIf="bday.profile_image ;else other_content"
+                    [src]=IMAGE_URL+bday.profile_image class="img-avatar bday-img" />
+                  <ng-template #other_content>
+                    <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                  </ng-template>
+                </span>
+
+                <div class="dash-emp-details">
+                  <a class="person-name">{{bday.firstname}}
+                    {{bday.lastname}} <span class="today-bday">{{bday.isToday ? '(today)' : ''}}</span></a>
+                  <span class="dash-emp-content">{{bday.date_of_birth.date | date:'dd-MM-'}}{{currentYear}}</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card custom-card holiday-tab">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-binoculars" aria-hidden="true"></i> Holidays</h4>
+          </div>
+          <div class="holiday-content">
+            <ul *ngIf="holidays.length > 0;else noHolidays" class="recent-leaves-list">
+              <li *ngFor="let holiday of holidays" class="custom-li-list">
+                <span class="holiday-name">{{holiday.event_name}}</span><br>
+                <span class="holiday-date">Holiday Date : {{holiday.start_date.date | dateFilter}}</span>
+              </li>
+            </ul>
+            <ng-template #noHolidays>
+              <div class="empty-msg-txt">
+                No Holidays in this month
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #confrimBox>
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="center"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
+        <h4 class="modal-title">Are you sure?</h4>
+        <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text">
+        <h3>Are you sure ?</h3>
+        <h5>Do you really want to {{event == 'break_in'?'Break In':(event == 'break_out'?'Break Out':'Check Out')}} ?
+        </h5>
+        <div class="modal-footer footer-self">
+          <button type="button" class="btn btn-info cancel custom-no" (click)="closeModel()">No</button>
+          <button type="button" class="btn btn-info cancel custom-yes" (click)="onBtnClick(event)">Yes
+            {{event == 'break_in'?'Break In':(event == 'break_out'?'Break Out':'Check Out')}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

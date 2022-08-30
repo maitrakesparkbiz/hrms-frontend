@@ -1,0 +1,471 @@
+<div class="animated fadeIn">
+  <div class="col-md-3 custom-profile">
+    <img *ngIf="employeedetail.profile_image;else other_content" [src]=IMAGE_URL+employeedetail.profile_image />
+    <ng-template #other_content>
+      <img style="width: 100%;height: auto" [src]="employee_image" />
+    </ng-template>
+    <button class="profile-edit-btn custom-edit" (click)="onEditBtn()" [appCheckPermission]="'SELF-PROFILE.EDIT'"><i
+        class="fa fa-pencil" aria-hidden="true"></i>
+      edit</button>
+    <div class="profile-contact">
+      <h4>Contact</h4>
+      <span *ngIf="dataStatus" class="custom-email"><i class="fa fa-envelope" aria-hidden="true"></i>
+        <a href="mailto:{{employeedetail.email}}"> {{employeedetail.email}}</a></span>
+      <span *ngIf="dataStatus" class="custom-email1"><i class="fa fa-phone" aria-hidden="true"></i>
+        {{employeedetail.contact_no ? employeedetail.contact_no : '-'}}</span><span
+        class="span-number">{{employeedetail.emergency_contact_no}}</span>
+    </div>
+  </div>
+
+  <div class="col-md-9 custom-info">
+    <div class="custom custom_about" style="display: inline-block">
+      <a class="custom-self about-wrap" (click)="onTabClick(1)" [ngClass]="tabStatus?'tab-active':''">ABOUT</a>
+      <a class="custom-manager appreiciation-wrap" (click)="onTabClick(2)"
+        [ngClass]="!tabStatus?'tab-active':''">APPRECIATION</a>
+    </div>
+    <div *ngIf="dataStatus && tabStatus" class="custom-basic-info">
+      <h4><i class="fa fa-user-o" aria-hidden="true"></i>Basic Information</h4>
+      <div class="row id-self">
+        <span class="left-part">Full Name</span>
+        <span class="right-part">{{employeedetail.firstname}}&nbsp;{{employeedetail.lastname}}</span>
+      </div>
+      <div class="row id-self">
+        <span class="left-part">Employee ID</span>
+        <span class="right-part">{{employeedetail.employee_id}}</span>
+      </div>
+      <div class="row id-self">
+        <span class="left-part">Personal Email</span>
+        <span class="right-part email-text"><a
+            href="mailto:{{employeedetail.email}}">{{employeedetail.email}}</a></span>
+      </div>
+      <div class="row id-self">
+        <span class="left-part">Company Email</span>
+        <span class="right-part email-text"><a
+            href="mailto:{{employeedetail.company_email!==''?employeedetail.company_email:'-'}}">
+            {{employeedetail.company_email!==''?employeedetail.company_email:'-'}}</a></span>
+      </div>
+      <div class="row id-self">
+        <span class="left-part">Gender</span>
+        <span class="right-part">{{employeedetail.gender ? employeedetail.gender.key_text : '-'}}</span>
+      </div>
+      <div class="row id-self">
+        <span class="left-part">Birthday</span>
+        <span class="right-part">
+          {{!! employeedetail.date_of_birth ? (employeedetail.date_of_birth.date | dateFilter) : '-'}}</span>
+      </div>
+      <div class="row id-self">
+        <span class="left-part">Marital Status</span>
+        <span class="right-part">{{!!employeedetail.marital_status?'Married':'Unmarried'}}</span>
+      </div>
+      <div class="row id-self">
+        <span class="left-part">Marital Anniversary</span>
+        <span class="right-part">{{(employeedetail.marital_status
+          && employeedetail.marriage_anniversary_date!=null) ?
+          (employeedetail.marriage_anniversary_date.date | dateFilter) :'-'}}</span>
+      </div>
+      <div class="row id-self">
+        <span class="left-part">Status</span>
+        <span class="right-part" [ngClass]="employeedetail.user_exit_status ? 'emp-active' : 'emp-deactive'">
+          <i class="fa fa-check" *ngIf="employeedetail.user_exit_status;else inactive"></i>
+          <ng-template #inactive><i class="fa fa-cross"></i></ng-template>
+          {{!!employeedetail.user_exit_status? 'Active': 'Inactive'}}
+        </span>
+      </div>
+      <div class="row id-self">
+        <!-- <span class="left-part">Probation</span>
+      <span class="right-part" [ngClass]="employeedetail.probation_end_date == null ? 'probation' : 'probation-end'">
+        {{!!(employeedetail.probation_end_date == null) ? 'No' : 'Yes'}}</span> -->
+      </div>
+      <div class="custom-company">
+        <h4><i class="fa fa-university" aria-hidden="true"></i>Company Relations</h4>
+        <div class="row id-self">
+          <span class="left-part">Department</span>
+          <span class="right-part">{{employeedetail.department?employeedetail.department.name:'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Designation</span>
+          <span class="right-part">{{employeedetail.designation?employeedetail.designation.name:'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Batch</span>
+          <span class="right-part">{{employeedetail.location ? employeedetail.location.name : '-'}}</span>
+        </div>
+        <!-- <div class="row id-self">
+          <span class="left-part">Manager</span>
+          <span class="right-part" [ngClass]="employeedetail.is_manager ? 'is-manager' : 'not-manager'">
+            {{employeedetail.is_manager? 'Yes' : 'No'}}</span>
+        </div> -->
+        <div class="row id-self">
+          <span class="left-part">Reports To</span>
+          <span class="right-part" *ngIf="employeedetail.report_to.id!==null;else showNull">
+            <span class="company-image">
+              <img style="width: 38px; height: 38px" *ngIf="employeedetail.report_to.profile_image ;else other_content"
+                [src]=IMAGE_URL+employeedetail.report_to.profile_image class="img-avatar" />
+              <ng-template #other_content>
+                <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+              </ng-template>
+            </span>
+            <div class="emp-des">
+              <a>{{employeedetail.report_to.firstname}}
+                {{employeedetail.report_to.lastname}} </a>
+            </div>
+          </span>
+          <ng-template #showNull>
+            -
+          </ng-template>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Joining Date</span>
+          <span class="right-part">
+            {{employeedetail.joining_date ?(employeedetail.joining_date.date | dateFilter) :'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Probation End Date</span>
+          <span class="right-part">
+            {{employeedetail.probation_end_date ?(employeedetail.probation_end_date.date | dateFilter) :'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Work Duration</span>
+          <span class="right-part"> {{employeedetail.duration!=='' ? employeedetail.duration : '-'}} </span>
+        </div>
+      </div>
+      <div class="custom-contact">
+        <h4><i class="fa fa-phone" aria-hidden="true"></i>Contact Information</h4>
+        <div class="row id-self">
+          <span class="left-part">Mobile Phone</span>
+          <span class="right-part">{{employeedetail.contact_no ? employeedetail.contact_no : '-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Emergency Contact <br>Number</span>
+          <span class="right-part">{{employeedetail.emergency_contact_no ? employeedetail.emergency_contact_no : '-'
+            }}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Emergency Contact <br>Person</span>
+          <span class="right-part">
+            {{employeedetail.emergency_contact_person ? employeedetail.emergency_contact_person: '-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Current Address</span>
+          <span class="right-part">{{employeedetail.address ? employeedetail.address : '-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Permanent Address</span>
+          <span class="right-part">{{employeedetail.per_address ? employeedetail.per_address : '-'}}</span>
+        </div>
+      </div>
+
+      <div class="custom-contact">
+        <h4><i class="fa fa-file" aria-hidden="true"></i>Document</h4>
+        <div class="row id-self">
+          <span class="left-part">Driving License Number</span>
+          <span class="right-part">{{employeedetail.driving_license_number ? employeedetail.driving_license_number
+            :'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">PAN Number</span>
+          <span class="right-part">{{employeedetail.pan_number ? employeedetail.pan_number : '-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Aadhar Number/SSN</span>
+          <span class="right-part">{{employeedetail.aadhar_number ? employeedetail.aadhar_number : '-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Voter ID Number</span>
+          <span class="right-part">{{employeedetail.voter_id_number ? employeedetail.voter_id_number : '-'}}</span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.driving_license_image">
+          <span class="left-part">Driving License</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.driving_license_image}}">{{employeedetail.driving_license_image}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.pan_id_image">
+          <span class="left-part">PAN ID</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.pan_id_image}}">{{employeedetail.pan_id_image}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.aadhar_id_image">
+          <span class="left-part">Aadhar ID</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.aadhar_id_image}}">{{employeedetail.aadhar_id_image}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.voter_id_image">
+          <span class="left-part">Voter ID</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.voter_id_image}}">{{employeedetail.voter_id_image}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.lc">
+          <span class="left-part">School Leaving Certificate</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.lc}}">{{employeedetail.lc}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.marksheet">
+          <span class="left-part">Marksheet</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.marksheet}}">{{employeedetail.marksheet}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.offer_later_file">
+          <span class="left-part">Offer Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.offer_later_file}}">{{employeedetail.offer_later_file}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.joining_letter_file">
+          <span class="left-part">Welcome Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.joining_letter_file}}">{{employeedetail.joining_letter_file}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.contract_file">
+          <span class="left-part">Contract Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.contract_file}}">{{employeedetail.contract_file}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.resume_file">
+          <span class="left-part">Resume</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.resume_file}}">{{employeedetail.resume_file}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.appointment_letter">
+          <span class="left-part">Appointment Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.appointment_letter}}">{{employeedetail.appointment_letter}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.increment_letter">
+          <span class="left-part">Increment Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.increment_letter}}">{{employeedetail.increment_letter}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.promotion_letter">
+          <span class="left-part">Promotion Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.promotion_letter}}">{{employeedetail.promotion_letter}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.relieving_letter">
+          <span class="left-part">Relieving Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.relieving_letter}}">{{employeedetail.relieving_letter}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.exp_letter">
+          <span class="left-part">Experience Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.exp_letter}}">{{employeedetail.exp_letter}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.appreciation_letter">
+          <span class="left-part">Appreciation Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.appreciation_letter}}">{{employeedetail.appreciation_letter}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.document_returns_letter">
+          <span class="left-part">Document Returns</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.document_returns_letter}}">{{employeedetail.document_returns_letter}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.no_due_certificate">
+          <span class="left-part">No Due Certificate</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.no_due_certificate}}">{{employeedetail.no_due_certificate}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.acknowledgement_letter">
+          <span class="left-part">Acknowledge. Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.acknowledgement_letter}}">{{employeedetail.acknowledgement_letter}}</a></span>
+        </div>
+        <div class="row id-self" *ngIf="employeedetail.warning_letter">
+          <span class="left-part">Warning Letter</span>
+          <span class="right-part"><a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.warning_letter}}">{{employeedetail.warning_letter}}</a></span>
+        </div>
+      </div>
+
+      <div class="custom-contact" *ngIf="employeedetail.user_qualification.length > 0">
+        <h4><i class="fa fa-graduation-cap" aria-hidden="true"></i>Qualification</h4>
+        <ng-container *ngFor="let row of employeedetail.user_qualification">
+          <h5 class="q-heading"
+            [ngClass]="row.education_type.key_text=='hsc' || row.education_type.key_text=='ssc' ? 'make-uppercase':'' ">
+            {{row.education_type.key_text}}</h5>
+          <div class="row id-self">
+            <span class="left-part">School/University</span>
+            <span class="right-part">{{row.university_name?row.university_name:'-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Degree</span>
+            <span class="right-part">{{row.degree ?row.degree:'-' }}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Start Date</span>
+            <span class="right-part">{{row.start_date ? (row.start_date.date | dateFilter) : '-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">End Date</span>
+            <span class="right-part">{{row.end_date ? (row.end_date.date | dateFilter) : '-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Document</span>
+            <span class="right-part" *ngIf="row.doc_copy;else blank_part">
+              <a target="_blank" href="{{FILE_URL}}{{row.doc_copy}}">{{row.doc_copy}}</a>
+            </span>
+            <ng-template #blank_part>
+              -
+            </ng-template>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="custom-contact" *ngIf="employeedetail.user_work.length > 0">
+        <h4><i class="fa fa-graduation-cap" aria-hidden="true"></i>Work Experience</h4>
+        <ng-container *ngFor="let data of employeedetail.user_work; let i=index">
+          <h5 class="q-heading">Work Experience {{i+1}}</h5>
+          <div class="row id-self">
+            <span class="left-part">Company Name</span>
+            <span class="right-part">{{data.company_name?data.company_name:'-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Designation</span>
+            <span class="right-part">{{data.designation?data.designation:'-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Start Date</span>
+            <span class="right-part">{{data.from_date?(data.from_date.date | dateFilter):'-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">End Date</span>
+            <span class="right-part">{{data.to_date?(data.to_date.date | dateFilter):'-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Relieving Letter</span>
+            <span class="right-part" *ngIf="data.relieving_letter;else blank_part">
+              <a target="_blank" href="{{FILE_URL}}{{data.relieving_letter}}">{{data.relieving_letter}}</a>
+            </span>
+            <ng-template #blank_part>
+              -
+            </ng-template>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Experience Letter</span>
+            <span class="right-part" *ngIf="data.exp_letter;else blank_part">
+              <a target="_blank" href="{{FILE_URL}}{{data.exp_letter}}">{{data.exp_letter}}</a>
+            </span>
+            <ng-template #blank_part>
+              -
+            </ng-template>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Salary Slip</span>
+            <span class="right-part" *ngIf="data.salary_slip;else blank_part">
+              <a target="_blank" href="{{FILE_URL}}{{data.salary_slip}}">{{data.salary_slip}}</a>
+            </span>
+            <ng-template #blank_part>
+              -
+            </ng-template>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="custom-contact">
+        <h4><i class="fa fa-globe" aria-hidden="true"></i>Immigration</h4>
+        <h5 class="q-heading">Passport</h5>
+        <div class="row id-self">
+          <span class="left-part">Number</span>
+          <span class="right-part">{{employeedetail.passport_number?employeedetail.passport_number:'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Issue Date</span>
+          <span class="right-part">{{employeedetail.passport_issue_date?(employeedetail.passport_issue_date.date
+            | dateFilter):'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Expiry Date</span>
+          <span class="right-part">{{employeedetail.passport_expiry_date?(employeedetail.passport_expiry_date.date
+            | dateFilter):'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Scanned Copy</span>
+          <span class="right-part" *ngIf="employeedetail.passport_image;else blank_part">
+            <a target="_blank"
+              href="{{FILE_URL}}{{employeedetail.passport_image}}">{{employeedetail.passport_image}}</a>
+          </span>
+          <ng-template #blank_part>
+            -
+          </ng-template>
+        </div>
+
+        <h5 class="q-heading">Visa</h5>
+        <div class="row id-self">
+          <span class="left-part">Number</span>
+          <span class="right-part">{{employeedetail.visa_number?employeedetail.visa_number:'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Issue Date</span>
+          <span class="right-part">{{employeedetail.visa_issue_date?(employeedetail.visa_issue_date.date
+            | dateFilter):'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Expiry Date</span>
+          <span class="right-part">{{employeedetail.visa_expiry_date?(employeedetail.visa_expiry_date.date
+            | dateFilter):'-'}}</span>
+        </div>
+        <div class="row id-self">
+          <span class="left-part">Scanned Copy</span>
+          <span class="right-part" *ngIf="employeedetail.visa_image;else blank_part">
+            <a target="_blank" href="{{FILE_URL}}{{employeedetail.visa_image}}">{{employeedetail.visa_image}}</a>
+          </span>
+          <ng-template #blank_part>
+            -
+          </ng-template>
+        </div>
+
+        <div class="custom-contact">
+          <h4><i class="fa fa-share-alt" aria-hidden="true"></i>Social Network</h4>
+          <div class="row id-self">
+            <span class="left-part">Slack username</span>
+            <span class="right-part">{{employeedetail.slack_username?employeedetail.slack_username:'-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Facebook username</span>
+            <span class="right-part">{{employeedetail.facebook_username?employeedetail.facebook_username:'-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">Twitter username</span>
+            <span class="right-part">{{employeedetail.twitter_username?employeedetail.twitter_username:'-'}}</span>
+          </div>
+          <div class="row id-self">
+            <span class="left-part">LinkedIn username</span>
+            <span class="right-part">{{employeedetail.linkdin_username?employeedetail.linkdin_username:'-'}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+    <div *ngIf="dataStatus && !tabStatus && appreciationData?.length > 0" class="custom-appericiation">
+      <div *ngFor="let award of appreciationData">
+        <div class="apperciation-details">
+          <span class="apper-img">
+            <img style="width: 38px; height: 38px" *ngIf="employeedetail.profile_image ;else other_content"
+              [src]=IMAGE_URL+employeedetail.profile_image class="img-avatar" />
+            <ng-template #other_content>
+              <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+            </ng-template>
+          </span>
+          <div class="apper-name">
+            <a href="#">{{employeedetail.firstname}} {{employeedetail.lastname}} </a>
+          </div>
+          <h4>Received <span class="award-name">{{award.award_id.name}}</span> on {{(award.date.date | dateFilter)}}
+          </h4>
+        </div>
+
+        <div *ngIf="award.image" class="main-image">
+          <img [src]="IMAGE_URL+award.image">
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="!tabStatus && appreciationData?.length == 0">
+      <div class="custom-appericiation-soon">
+        <i class="fa fa-smile-o" aria-hidden="true"></i>
+        <h6>Appreciation Coming Soon</h6>
+      </div>
+    </ng-container>
+  </div>
+</div>

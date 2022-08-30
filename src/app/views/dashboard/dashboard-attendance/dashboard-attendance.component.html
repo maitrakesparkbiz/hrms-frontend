@@ -1,0 +1,67 @@
+<div class="tab-wrap-attendance">
+  <tabset>
+    <tab>
+      <ng-template tabHeading>Not Marked <span *ngIf="notMarkedCount!=0" class="leave-count">{{notMarkedCount}}</span>
+      </ng-template>
+      <ul *ngIf="notMarkedCount!=0;else notMarkedTemplate" class="recent-leaves-list">
+        <ng-container *ngFor="let attn of allAttn">
+          <li *ngIf="attn.check_in_id==null" class="custom-li-list">
+
+
+            <span class="dash-emp-img">
+              <img *ngIf="attn.profile_image ;else other_content" [src]=IMAGE_URL+attn.profile_image
+                class="img-avatar bday-img" />
+              <ng-template #other_content>
+                <img [src]="employee_image" class="img-avatar" />
+              </ng-template>
+            </span>
+            <div class="dash-emp-details">
+              <a class="person-name">{{attn.firstname}}
+                {{attn.lastname}} {{attn.contact_no!==null ? ' - '+attn.contact_no : '-'}}</a>
+              <span class="dash-emp-content">{{attn.designation ? attn.designation+', ' : ''}}{{attn.batch}}</span>
+            </div>
+
+
+          </li>
+        </ng-container>
+      </ul>
+      <ng-template #notMarkedTemplate>
+        <div class="empty-msg-txt">
+          All Employees are present
+        </div>
+      </ng-template>
+    </tab>
+    <tab>
+      <ng-template tabHeading>Present <span *ngIf="presentCount!=0" class="leave-count">{{presentCount}}</span>
+      </ng-template>
+      <ul *ngIf="presentCount!=0;else presentTemplate" class="recent-leaves-list">
+        <ng-container *ngFor="let attn of allAttn">
+          <li *ngIf="attn.check_in_id" class="custom-li-list">
+
+
+            <span class="dash-emp-img">
+              <img *ngIf="attn.profile_image ;else other_content" [src]=IMAGE_URL+attn.profile_image
+                class="img-avatar bday-img" />
+              <ng-template #other_content>
+                <img [src]="employee_image" class="img-avatar" />
+              </ng-template>
+            </span>
+            <div class="dash-emp-details">
+              <a class="person-name">{{attn.firstname}}
+                {{attn.lastname}}</a>
+              <span class="dash-emp-content">{{attn.designation ? attn.designation+', ' : ''}}{{attn.batch}}</span>
+            </div>
+
+
+
+          </li>
+        </ng-container>
+      </ul>
+      <ng-template #presentTemplate>
+        <div class="empty-msg-txt">
+          No one is present
+        </div>
+      </ng-template>
+    </tab>
+  </tabset>
+</div>

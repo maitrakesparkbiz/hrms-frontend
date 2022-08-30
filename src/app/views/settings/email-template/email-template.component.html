@@ -1,0 +1,70 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <form [formGroup]="emailTemplateForm" (ngSubmit)="saveEmailTemplate()" class="custom-form">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="c-white"><i class="fa fa-star" aria-hidden="true"></i>Email Templates
+                <!-- <div class="add-btn">
+                <button type="button" (click)="addTemplate()" class="btn-primary custom-plus">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div> -->
+              </h4>
+            </div>
+
+            <div class="card-body form-padding custom-setting-template">
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Name</label>
+                  <input type="text" name="template_name" formControlName="template_name" class="form-control input-sm fc-alt">
+                </div>
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Content</label>
+                  <quill-editor formControlName="content" [readOnly]="!editAllowed"></quill-editor>
+                </div>
+              </div>
+            </div>
+
+            <div formArrayName="addsub">
+              <div *ngFor="let template of emailTemplateForm.get('addsub')['controls']; let i=index" [formGroupName]="i"
+                class="row add-template">
+                <!-- <div *ngFor="let template of formData.controls; let i=index" [formGroupName]="i" class="row add-template"> -->
+                <div class="card-body form-padding custom-setting-template">
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <div class="template-close-btn" *ngIf="editAllowed">
+                        <button type="button" class="btn btn-danger" (click)="deleteSubRow(i)">
+                          <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                      <label class="f-700 control-label">Name</label>
+                      <input type="text" name="template_name" formControlName="template_name" class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-12 form-group">
+                      <label class="f-700 control-label">Content</label>
+                      <quill-editor formControlName="content" [readOnly]="!editAllowed"></quill-editor>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" *ngIf="editAllowed">
+          <div class="form-group pull-center custom-update">
+            <button class="btn btn-primary updatebtn" type="submit">
+              Update
+            </button>
+            <button type="button" (click)="addTemplate()" class="btn-primary cancel">
+              <i class="fa fa-plus"></i>Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

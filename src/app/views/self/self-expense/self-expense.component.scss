@@ -1,0 +1,218 @@
+.table-wrap {
+  padding-left: 14px;
+}
+
+.table-wrap table#claim_table {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.table-wrap table#claim_table thead tr.custom-th th {
+  position: relative;
+
+}
+
+label {
+  position: relative;
+}
+
+.table-wrap table#claim_table thead tr.custom-th th input[type="checkbox"] {
+  position: absolute;
+  left: 30px;
+  z-index: 2;
+  top: 50%;
+  opacity: 0;
+  height: 17px;
+  width: 17px;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.table-wrap table#claim_table thead tr.custom-th th input[type="checkbox"]+label:before {
+  content: '';
+  background: #fff;
+  height: 17px;
+  width: 17px;
+  border: 2px solid #7a7a7a;
+  position: absolute;
+  left: 12px;
+  top: -7px;
+  border-radius: 2px;
+}
+
+.table-wrap table#claim_table thead tr.custom-th th input[type="checkbox"]:checked+label:after {
+  content: '\f00c';
+  font-family: fontawesome;
+  background: #000;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  left: 12px;
+  top: -7px;
+  height: 17px;
+  width: 17px;
+  font-size: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+table#claim_table tr td input[type="checkbox"]+label:before,
+table#claim_table tr td input[type="checkbox"]:checked+label:after {
+  left: 12px;
+}
+
+table.dataTable tbody td {
+  padding: 8px 10px 8px 18px;
+  border-top: 1px solid #eee
+}
+
+table.dataTable tbody tr:first-child td {
+  border-top: none;
+}
+
+
+a.status.pending-tag {
+  padding: 2px 15px;
+}
+
+a.status.reject-tag {
+  padding: 2px 14px;
+}
+
+span.table-txt {
+  text-transform: capitalize;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: 400;
+  color: #5e5e5e;
+
+}
+
+.blue-txt {
+  color: #20a8d8 !important
+}
+
+span.txt-center {
+  padding-top: 8px;
+  float: left;
+}
+
+
+.custom-title {
+  font-size: 20px;
+  color: #2196f3;
+  line-height: 17px;
+  text-transform: capitalize;
+  padding-bottom: 15px;
+  text-align: left;
+}
+
+
+.custom-desc,
+.custom-expense {
+  float: left;
+  width: 100%;
+
+}
+
+.custom-desc {
+  padding: 10px 0;
+  text-align: left;
+}
+
+.custom-detail {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 17px;
+  text-transform: capitalize;
+
+}
+
+.expense-right-part-content {
+  float: left;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.green-txt {
+  color: #4caf50;
+}
+
+.emp-img {
+  float: left;
+  width: 12%;
+  text-align: left;
+}
+
+.emp-details {
+  float: left;
+  width: 85%;
+  text-align: left;
+}
+
+.emp-details a {
+  text-transform: capitalize;
+  font-size: 13px;
+}
+
+.custom-emp-detail {
+  float: left;
+  width: 100%;
+  padding: 15px 0;
+}
+
+.custom-status {
+  margin-right: 15px;
+}
+
+
+.emp-details a {
+  display: inline-block;
+  padding-top: 7px;
+}
+
+
+.abc,
+.description-wrap {
+  width: 26.2%
+}
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+
+  .emp-img {
+    width: 15%
+  }
+
+  .emp-details {
+    width: 85%
+  }
+
+
+}
+
+@media(max-width:1500px) {
+  .emp-img {
+    width: 17%
+  }
+
+  .emp-details {
+    width: 78%
+  }
+
+  .abc,
+  .description-wrap {
+    width: 25%
+  }
+
+
+}
+
+@media(max-width:1400px) {
+
+  .abc,
+  .description-wrap {
+    width: 24.7%;
+  }
+}

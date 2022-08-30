@@ -1,0 +1,112 @@
+<div class="animated fadeIn">
+  <div class="row inner-header">
+    <div class="col-md-4">
+      <button type="button" class="btn btn-success" (click)="cancel()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Back
+      </button> &nbsp;&nbsp;
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+  <form class="m-form" [formGroup]="invoiceForm" (ngSubmit)="leaveApplication()" #invoiceform="ngForm">
+    <div class="col-md-12 custom-leave-apply">
+      <div class="card comman-card-wrap">
+        <div class="card-header">
+          <h4 class="c-white">Apply Leave</h4>
+        </div>
+        <div class="card-body form-padding">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label class="f-700 control-label">Employee</label>
+              <br />
+              <div class="custom-dropdown">
+                <ng-select #agesSelect [items]="employee" [selectOnTab]="true" bindValue="value"
+                  placeholder="Select Employee" formControlName="user_id" class="custom-input form-control"
+                  (change)="onEmpSelect()"
+                  [ngClass]="invoiceForm.get('user_id').invalid && invoiceform.submitted ?'error-input':''">
+                </ng-select>
+              </div>
+              <div class="error-feedback" *ngIf="invoiceForm.get('user_id').invalid && invoiceform.submitted">
+                The Employee Field is Required
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <label class="f-700 control-label">Date</label>
+              <input [owlDateTimeTrigger]="leave_date" [owlDateTime]="leave_date" formControlName="leave_date"
+                [ngClass]="invoiceForm.get('leave_date').invalid && invoiceform.submitted ?'is-invalid':''"
+                name="date_of_birth" class="form-control m-input">
+              <owl-date-time (afterPickerClosed)="onEmpSelect()" [pickerType]="'calendar'" #leave_date></owl-date-time>
+              <div class="invalid-feedback" *ngIf="invoiceForm.get('leave_date').invalid && invoiceform.submitted">
+                The start date is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label class="f-700 control-label">Leave Type</label>
+              <br>
+              <select class="form-control input-sm fc-alt" formControlName="leave_type"
+                (change)="onHalfDay($event.target.value)"
+                [ngClass]="(invoiceForm.get('leave_type').value=='' || invoiceForm.get('leave_type').errors ) && invoiceform.submitted?'is-invalid':''">
+                <option value=''>-- select leave type --</option>
+                <option *ngFor="let leave of leaveOpt" value={{leave.id}}>{{leave.label}}
+                  <span class="custom-leave-label" *ngIf="leave.available!== undefined">{{leave.available > 0 ?
+                    ' - ' +leave.available+ ' left':''}}</span></option>
+              </select>
+              <div class="invalid-feedback"
+                *ngIf="invoiceForm.get('leave_type').value=='' && invoiceform.submitted;else other_error">
+                Choose any one leave
+              </div>
+              <ng-template #other_error>
+                <div class="invalid-feedback" *ngIf="invoiceForm.get('leave_type').errors && invoiceform.submitted">
+                  Select appropriate leave for fullday
+                </div>
+              </ng-template>
+              <!-- <ng-select #empSelect [items]="Allleave" [selectOnTab]="true" bindValue="value" placeholder="Select Leave Type"
+              formControlName="leave_type" class="custom-input form-control" [ngClass]="invoiceForm.get('leave_type').invalid && invoiceform.submitted ?'is-invalid':''">
+            </ng-select> -->
+              <!-- <div class="invalid-feedback" *ngIf="invoiceForm.get('leave_type').invalid && invoiceform.submitted">
+              The Leave Type Field is Required
+            </div> -->
+            </div>
+            <div class="col-md-6 form-group">
+              <label class="f-700 control-label">HalfDay</label>
+              <br />
+              <label class="switch switch-label switch-primary">
+                <input type="checkbox" name="half_day" formControlName="half_day" class="switch-input"
+                  (change)="onHalfDay()" checked>
+                <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-group">
+              <label class="f-700 control-label">Reason</label>
+              <textarea name="description" formControlName="reason" class="form-control m-input"
+                [ngClass]="invoiceForm.get('reason').invalid && invoiceform.submitted ?'is-invalid':''"></textarea>
+              <div class="invalid-feedback" *ngIf="invoiceForm.get('reason').invalid && invoiceform.submitted">
+                The Reason is Required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 button-wrap">
+      <div class="form-group pull-center">
+        <button class="btn btn-primary" type="submit" appDisableButton>
+          <span>{{!!id?'Update':'Apply'}}</span>
+          <!-- <span *ngIf="id;else btn_content ">Update</span>
+                    <ng-template #btn_content>Apply</ng-template> -->
+        </button>
+        <button class="btn btn-cancel" type="button" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="col-md-12" style="color:red" *ngIf="msg">
+    *{{msg}}
+  </div>
+</div>

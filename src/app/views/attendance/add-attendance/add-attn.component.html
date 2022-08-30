@@ -1,0 +1,122 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row inner-header">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-success back" (click)="navigateToManage()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="attnForm" (ngSubmit)="saveAttn()" class="custom-form" #AttnForm="ngForm">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card custom-card comman-card-wrap">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Details - <span class="capital-it">{{emp_name}}</span>
+                <span style="float:right">Date : {{selected_date}}</span>
+              </h4>
+            </div>
+
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-4">
+                  <label>Check In Time : </label>
+                  <input name="check_in_time" formControlName="check_in_time" class="form-control"
+                    [ngClass]="attnForm.get('check_in_time').invalid && AttnForm.submitted?'is-invalid':''"
+                    [owlDateTimeTrigger]="check_in_time" [owlDateTime]="check_in_time" (keyup)="checkBreaksError()">
+                  <div class="invalid-feedback" *ngIf="attnForm.get('check_in_time').invalid && AttnForm.submitted">
+                    Enter valid Check In time
+                  </div>
+                  <owl-date-time [pickerType]="'timer'" (afterPickerClosed)="checkBreaksError()" [hour12Timer]=true
+                    #check_in_time></owl-date-time>
+
+                  <label>Check Out Time : </label>
+                  <input name="check_out_time" formControlName="check_out_time" class="form-control"
+                    [ngClass]="attnForm.get('check_out_time').invalid && AttnForm.submitted?'is-invalid':''"
+                    [owlDateTimeTrigger]="check_out_time" [owlDateTime]="check_out_time" (keyup)="checkBreaksError()">
+                  <div class="invalid-feedback" *ngIf="attnForm.get('check_out_time').invalid && AttnForm.submitted">
+                    Enter valid Check Out time
+                  </div>
+                  <owl-date-time [pickerType]="'timer'" (afterPickerClosed)="checkBreaksError()" [hour12Timer]=true
+                    #check_out_time></owl-date-time>
+                </div>
+                <div class="col-md-4">
+                  <h3 class="add-cmt">
+                    Breaks
+                  </h3>
+                  <div formArrayName="breaks">
+                    <div *ngFor="let breakControl of attnForm.get('breaks')['controls']; let i=index"
+                      [formGroupName]="i">
+                      <label>Break In Time</label>
+                      <button type="button" (click)="removeBreaks(i, breakControl.value.id)" class="btn-cls">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                      <input name="break_in_time_{{i}}" formControlName="break_in_time" class="form-control"
+                        [ngClass]="breakControl.get('break_in_time').invalid && AttnForm.submitted?'is-invalid':''"
+                        [owlDateTimeTrigger]="break_in_time" [owlDateTime]="break_in_time" (keyup)="checkBreaksError()">
+                      <div class=" invalid-feedback"
+                        *ngIf="breakControl.get('break_in_time').invalid && AttnForm.submitted">
+                        Enter valid Break In time
+                      </div>
+                      <owl-date-time [pickerType]="'timer'" (afterPickerClosed)="checkBreaksError()" [hour12Timer]=true
+                        #break_in_time></owl-date-time>
+
+                      <label>Break Out Time</label>
+                      <input name="break_out_time_{{i}}" formControlName="break_out_time" class="form-control"
+                        [ngClass]="breakControl.get('break_out_time').invalid && AttnForm.submitted?'is-invalid':''"
+                        [owlDateTimeTrigger]="break_out_time" [owlDateTime]="break_out_time"
+                        (keyup)="checkBreaksError()">
+                      <div class="invalid-feedback"
+                        *ngIf="breakControl.get('break_out_time').invalid && AttnForm.submitted">
+                        Enter valid Break Out time
+                      </div>
+                      <owl-date-time [pickerType]="'timer'" [hour12Timer]=true (afterPickerClosed)="checkBreaksError()"
+                        #break_out_time></owl-date-time>
+
+                    </div>
+                  </div>
+                  <button type="button" (click)="addBreaks()" class="add-cls"><i class="fa fa-plus"
+                      aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="col-md-4">
+                  <h3 class="add-cmt">
+                    comments
+                  </h3>
+                  <div formArrayName="comments">
+                    <div *ngFor="let commentControl of attnForm.get('comments')['controls']; let i = index"
+                      [formGroupName]="i">
+                      <div class="cmt-left">
+                        <p class="custom-send send">{{commentControl.get('comment_text').value}}</p>
+                        <!-- <input type="text" formControlName="comment_text" class="form-control custom-send"
+                          style="width: auto" readonly> -->
+                      </div>
+                      <div class="cmt-right"><input type="text" formControlName="response_text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-wrap">
+        <button class="btn btn-primary update" type="submit">
+          <i aria-hidden="true" class="fa fa-plus" *ngIf="!check_in_id"></i>
+          <i aria-hidden="true" class="fa fa-pencil-square-o" *ngIf="check_in_id"></i>{{check_in_id ? 'Update' :
+          'Add'}}</button>
+        &nbsp;
+        <button type="button" class="btn btn-primary" class="btn btn-default cancel" (click)="navigateToManage()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

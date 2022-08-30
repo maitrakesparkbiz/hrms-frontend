@@ -1,0 +1,39 @@
+<div class="app-body animated fadeIn">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-md-5 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <img *ngIf="user.profile;else other_content" [src]=IMAGE_URL+user.profile class="img-avatar lock-img" />
+                <ng-template #other_content>
+                  <img [src]="employee_image" class="img-avatar lock-img" />
+                </ng-template>
+                <h1 class="text-center lock-name">{{getUserName()}}</h1>
+                <p class="text-muted">Enter your password to unlock</p>
+                <div class="form-group input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-lock-open"></i></span>
+                  </div>
+                  <input type="password" class="form-control" placeholder="Account password" (keyup.enter)="attemptUnlockApp()"
+                    [(ngModel)]="userPassword">
+                </div>
+
+                <div class="row">
+                  <div class="col-6">
+                    <button type="button" class="btn btn-primary px-4 login-btn" (click)="attemptUnlockApp()"
+                      [disabled]="userPassword.trim()===''" appDisableButton>Unlock</button>
+                  </div>
+                  <div class="col-6 text-right">
+                    <button type="button" class="btn btn-link px-0">Forgot password?</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,83 @@
+<app-header [fixed]="true"
+            [navbarBrandFull]="{src: sanitizer.bypassSecurityTrustResourceUrl(logo), alt: 'EsparkBiz Logo'}"
+            [navbarBrandMinimized]="{src: sanitizer.bypassSecurityTrustResourceUrl(logo), width: 30, height: 30, alt: 'EsparkBiz Logo'}"
+            [asideMenuToggler]="false" [sidebarToggler]="false">
+    <div class="custom-header" #customHeader>
+        <span class="headername" style="color: white">Report</span>
+        <ol _ngcontent-c2="" class="breadcrumb">
+            <li class="breadcrumb-item ng-star-inserted" ng-reflect-klass="breadcrumb-item" ng-reflect-ng-class="[object Object]">
+            <a routerLink="/dashboard">Home</a>
+            </li>
+        </ol>
+
+    </div>
+
+</app-header>
+<br><br><br><br>
+
+<form [formGroup]="selectForm">
+  <div class="top">
+    <div class="col-md-4 summary-year">
+        <label>
+            Month and Year:
+        </label>
+        <input formControlName="year_month" class="form-control" [owlDateTimeTrigger]="year_month"
+               (ngModelChange)="getAllUserAttendanceReport()" [owlDateTime]="year_month">
+        <owl-date-time [pickerType]="'calendar'" [startView]="'year'" (yearSelected)="chosenYearHandler($event)"
+                       (monthSelected)="chosenMonthHandler($event, year_month)" #year_month>
+        </owl-date-time>
+        <button class="btn btn-success" (click)="exportData()">Export</button>
+
+    </div>
+    </div>
+    <div class="row " *ngIf="main_list.length > 0">
+
+      <table class="table table-bordered table-hover table-responsive date-table-style" *ngIf="main_list.length > 0">
+       <tr>
+           <th></th>
+           <th>Days</th>
+           <th *ngFor="let days of days_list;let i=index">
+               {{i+1}}
+           </th>
+           <th></th>
+       </tr>
+        <tr>
+            <th>No.</th>
+            <th>UserName</th>
+
+            <th *ngFor="let days of days_list">
+                {{days.charAt(0)}}
+            </th>
+            <th>
+                Total
+            </th>
+        </tr>
+        <tr *ngFor="let mains of main_list; let j=index" style="height: 15px">
+            <th>{{j+1}}</th>
+            <td>
+                {{user_list[j]['firstname'] | uppercase}} {{user_list[j]['lastname']| uppercase}}
+            </td>
+            <td *ngFor="let main of mains;last as isLast">
+                <!--<p [ngClass]="main=='P' ? 'p_class' : main=='HDL' ? 'l_class' : main=='H' ? 'h_class':'a_class'">{{main}}</p>-->
+
+                <img *ngIf="main=='P'" src="../../../../assets/icons/present1.svg" height="16px"/>
+                <img *ngIf="main=='A'" src="../../../../assets/icons/absent2.svg" height="16px"/>
+                <img *ngIf="main=='H'" src="../../../../assets/icons/holiday.svg" height="16px"/>
+                <img *ngIf="main=='UPL'" src="../../../../assets/icons/unpaid-leave.svg" height="25px"/>
+                <img *ngIf="main=='SL'" src="../../../../assets/icons/short-leave.svg" height="25px"/>
+                <img *ngIf="main=='PL'" src="../../../../assets/icons/paid%20leave.svg" height="25px"/>
+                <img *ngIf="main=='CL'" src="../../../../assets/icons/casual-leave.svg" height="25px"/>
+                <img *ngIf="main=='HDL-UPL'" src="../../../../assets/icons/unpaid-leave-h.svg" height="25px"/>
+                <img *ngIf="main=='HDL-SL'" src="../../../../assets/icons/short-leave-h.svg" height="25px"/>
+                <img *ngIf="main=='HDL-PL'" src="../../../../assets/icons/paid-leave-h.svg" height="25px"/>
+                <img *ngIf="main=='HDL-CL'" src="../../../../assets/icons/casual-leave-h.svg" height="25px"/>
+
+              </td>
+            <td>
+               {{user_list[j]['user_check_in'].length}}
+            </td>
+        </tr>
+      </table>
+    </div>
+</form>
+

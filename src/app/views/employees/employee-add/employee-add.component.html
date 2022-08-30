@@ -1,0 +1,286 @@
+<div class="animated fadeIn">
+  <div class="row inner-header">
+    <div class="col-md-4">
+      <button type="button" class="btn btn-success back-btn" (click)="cancel()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Back
+      </button> &nbsp;&nbsp;
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+  <div class="modal-body comman-modal-wrap">
+    <form class="m-form" [formGroup]="EmployeeeForm" (ngSubmit)="SaveEmployee()" #employeeform="ngForm"
+      autocomplete="off">
+      <div class="row">
+        <div class="col-md-8 form-group">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>Basic Info</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">First Name</label>
+                  <input type="text" name="firstname" formControlName="firstname"
+                    [ngClass]="EmployeeeForm.get('firstname').invalid &&employeeform.submitted?'is-invalid':''"
+                    class="form-control m-input">
+                  <div class="invalid-feedback"
+                    *ngIf="EmployeeeForm.get('firstname').invalid && employeeform.submitted">
+                    The first name field is required.
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Last Name</label>
+                  <input type="text" name="lastname" formControlName="lastname"
+                    [ngClass]="EmployeeeForm.get('lastname').invalid &&employeeform.submitted?'is-invalid':''"
+                    class="form-control m-input">
+                  <div class="invalid-feedback" *ngIf="EmployeeeForm.get('lastname').invalid &&employeeform.submitted">
+                    The last name field is required.
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Personal Email</label>
+                  <input type="text" name="email" formControlName="email"
+                    [ngClass]="EmployeeeForm.get('email').invalid &&employeeform.submitted ?'is-invalid':''"
+                    class="form-control m-input">
+                  <div class="invalid-feedback" *ngIf="EmployeeeForm.get('email').invalid &&employeeform.submitted">
+                    The valid Email Field required.
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Gender</label>
+                  <select class="form-control m-input" name="gender" formControlName="gender">
+                    <option value="" selected>Select an Option</option>
+                    <option value="23">Male</option>
+                    <option value="24">Female</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Employee ID
+                    <i class="fa fa-question-circle"
+                      tooltip="Unique id must be used to identify the employee in Organaization." placement="top"
+                      aria-hidden="true"></i>
+                  </label>
+                  <input type="text" name="employee_id" formControlName="employee_id" id="employee_id"
+                    class="form-control m-input"
+                    [ngClass]="EmployeeeForm.get('employee_id').invalid &&employeeform.submitted ?'is-invalid':''">
+                  <div class="invalid-feedback"
+                    *ngIf="EmployeeeForm.get('employee_id').invalid &&employeeform.submitted ">
+                    Employee ID is required and It must be Unique
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label>Allow Login
+                    <i class="fa fa-question-circle"
+                      tooltip="Set to Yes if you want to allow employee to login in self-service portal" placement="top"
+                      aria-hidden="true"></i>
+                  </label>
+                  <br>
+                  <label class="switch switch-label switch-primary">
+                    <input type="checkbox" name="allowed_login" formControlName="allowed_login"
+                      [(ngModel)]="employee.allowed_login" class="switch-input " checked>
+                    <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                  </label>
+                </div>
+                <div class="col-md-6 form-group" *ngIf="employee.allowed_login">
+                  <div>
+                    <label class="f-700 control-label">Password</label>
+                    <input type="password" name="password" formControlName="password"
+                      [ngClass]="EmployeeeForm.get('password').invalid && employeeform.submitted?'is-invalid':''"
+                      class="form-control m-input">
+                    <div class="invalid-feedback"
+                      *ngIf="EmployeeeForm.get('password').invalid && employeeform.submitted">
+                      The password is requird if Allowed Login Yes
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label>Date of Birth</label>
+                  <input [owlDateTimeTrigger]="date_of_birth" [owlDateTime]="date_of_birth"
+                    formControlName="date_of_birth"
+                    [ngClass]="EmployeeeForm.get('date_of_birth').invalid && employeeform.submitted?'is-invalid':''"
+                    name="date_of_birth" class="form-control m-input">
+                  <owl-date-time [pickerType]="'calendar'" #date_of_birth></owl-date-time>
+                  <div class="invalid-feedback"
+                    *ngIf="EmployeeeForm.get('date_of_birth').invalid && employeeform.submitted">
+                    The date of birth is not a valid date.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 form-group">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="c-white">
+                <i class="fa fa-smile-o" aria-hidden="true"></i> Photo</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="row col-md-12">
+                  <img [src]=employee_image width="95%" alt="admin@bootstrapmaster.com" />
+                </div>
+
+
+              </div>
+              <div class="row">
+                <label for="file-upload" class="custom-file-upload">
+                  Select File
+                </label>
+                <input id="file-upload" type="file" formControlName="profile_image" (change)="uploadImage($event)" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="c-white">
+                <i class="fa fa-university" aria-hidden="true"></i>Company Relations</h4>
+            </div>
+            <div class="card-body form-padding">
+              <!-- <div class="row">
+              <div class="col-md-6 form-group custom-training">
+                <div class="checkbox-wrap">
+                  <input type="radio" [value]="1" id="test1" formControlName="on_training">
+                  <label for="test1">Training</label>
+                </div>
+                <div class="checkbox-wrap">
+                  <input type="radio" [value]="0" id="test2" formControlName="on_training">
+                  <label for="test2">Probation</label>
+                </div>
+                <div class="invalid-feedback" *ngIf="EmployeeeForm.get('on_training').invalid && employeeform.submitted">
+                  Select any one option
+                </div>
+              </div>
+            </div> -->
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label>Joining Date</label>
+                  <input [owlDateTimeTrigger]="joining_date" formControlName="joining_date" [owlDateTime]="joining_date"
+                    name="joining_date" id="joining_date"
+                    [ngClass]="EmployeeeForm.get('joining_date').invalid && employeeform.submitted?'is-invalid':''"
+                    class="form-control m-input">
+                  <owl-date-time [pickerType]="'calendar'" #joining_date></owl-date-time>
+                  <div class="invalid-feedback"
+                    *ngIf="EmployeeeForm.get('joining_date').invalid && employeeform.submitted">
+                    Joining Date is required
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label>Probation End Date</label>
+                  <input [owlDateTimeTrigger]="probation_end_date" formControlName="probation_end_date"
+                    [owlDateTime]="probation_end_date" name="probation_end_date" id="probation_end_date"
+                    [ngClass]="EmployeeeForm.get('probation_end_date').invalid && employeeform.submitted?'is-invalid':''"
+                    class="form-control m-input">
+                  <owl-date-time [pickerType]="'calendar'" #probation_end_date></owl-date-time>
+                  <div class="invalid-feedback"
+                    *ngIf="EmployeeeForm.get('probation_end_date').invalid && employeeform.submitted">
+                    End Date is required
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label>Increment Date</label>
+                  <input [owlDateTimeTrigger]="increment_date" formControlName="increment_date"
+                         [owlDateTime]="increment_date" name="increment_date" id="increment_date"
+                         [ngClass]="EmployeeeForm.get('increment_date').invalid && employeeform.submitted?'is-invalid':''"
+                         class="form-control m-input">
+                  <owl-date-time [pickerType]="'calendar'" #increment_date></owl-date-time>
+                    <div class="invalid-feedback"
+                         *ngIf="EmployeeeForm.get('increment_date').invalid && employeeform.submitted">
+                        Increment Date is required
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Department
+                    <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                      placement="top" aria-hidden="true"></i>
+                  </label>
+                  <br>
+                  <select class="form-control m-input" name="department" formControlName="department"
+                    (change)="onDepSelect($event.target.value)">
+                    <option value="" selected>Select an Option</option>
+                    <option *ngFor="let department of departments" value="{{department.id}}">
+                      {{department.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Designation
+                    <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                      placement="top" aria-hidden="true"></i>
+                  </label>
+                  <br>
+                  <select class="form-control m-input" name="designation" formControlName="designation">
+                    <option value="" selected>Select an Option</option>
+                    <option *ngFor="let designation of designations" value="{{designation.id}}">
+                      {{designation.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Batch
+                    <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                      placement="top" aria-hidden="true"></i>
+                  </label>
+                  <br>
+                  <select class="form-control m-input" name="location" formControlName="location"
+                    [ngClass]="EmployeeeForm.get('location').invalid && employeeform.submitted?'is-invalid':''">
+                    <option value="" disabled selected>Select an option</option>
+                    <option *ngFor="let location of locations" value="{{location.id}}">
+                      {{location.name}}
+                    </option>
+                  </select>
+
+
+                  <div class="invalid-feedback" *ngIf="EmployeeeForm.get('location').invalid && employeeform.submitted">
+                    The Location is required
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Reports to
+                    <i class="fa fa-question-circle" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                      placement="top" aria-hidden="true"></i>
+                  </label>
+                  <br>
+                  <select class="form-control m-input" name="report_to" formControlName="report_to">
+                    <option value="" disabled selected>Select an option</option>
+                    <option *ngFor="let report of users" value="{{report.id}}">{{report.firstname}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button">
+        <button class="btn btn-primary" type="submit">
+          Create
+        </button>&nbsp;
+        <button class="btn btn-primary" class="btn btn-default" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

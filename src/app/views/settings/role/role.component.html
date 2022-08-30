@@ -1,0 +1,156 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 header-buttons setting-header">
+      <button type="button" class="new-button" [routerLink]="'create'" [appCheckPermission]="'ROLES.ADD'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1" type="button" class="edit-button" (click)="EditRole()"
+        [appCheckPermission]="'ROLES.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <button *ngIf="allcheck_id_count==1 && deleteAllowed" type="button" class="del-button"
+        (click)="deleteModel(delete)" [appCheckPermission]="'ROLES.DELETE'">
+        <i class="fa fa-trash "></i>
+        Delete
+      </button>
+    </div>
+
+    <div class="table-wrap">
+      <!-- <table class="table table-striped" style="width: 100%" [mfData]="dept " #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th style="width: 3%">
+            </th>
+            <th style="width: 3%">
+              <mfDefaultSorter by="name">Name</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="description">Description</mfDefaultSorter>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id)" />
+              <label></label>
+
+            </td>
+            <td>{{item.name}}</td>
+            <td>{{item.description}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table> -->
+
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover">
+        <thead>
+          <tr class="custom-th">
+            <th class="check-box" style="width:5%">
+              <!-- <input type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+              <label></label> -->
+            </th>
+            <th class="col-name">Name</th>
+            <th class="col-name">Description</th>
+            <th class="col-name">Employees</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="dept?.length != 0">
+          <tr *ngFor="let item of dept" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td><span class="table-txt">{{item.name}}</span></td>
+            <td><span class="table-txt">{{item.description}}</span></td>
+            <td><span class="table-txt">{{item.employees}}</span></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="dept?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-scroll">
+        <div class="custom-role-details">
+          <h6 class="red-color">{{roledetail.name}}</h6>
+          <h6 class="blue-color">Description</h6>
+          <p>{{roledetail.description}}</p>
+          <div *ngIf="roledetail.permissions?.length > 0">
+            <h6 class="green-color">Permissions</h6>
+            <accordion class="main-accordion">
+              <ng-container *ngFor="let per of roledetail.permissions">
+                <accordion-group heading="{{per.title}}">
+                  <ng-container *ngFor="let mainPer of per.per">
+                    <div class="accordian-text">
+                      <p>{{capitalizeString(mainPer.title)}}</p>
+                    </div>
+                    <div>
+                      <div *ngIf="per.tabs">
+                        <accordion class="sub-accordion">
+                          <ng-container *ngFor="let subTab of per.tabs">
+                            <accordion-group heading="{{subTab.title}}">
+                              <ng-container *ngFor="let subPer of subTab.per">
+                                <div class="accordian-text">
+                                  <p>{{capitalizeString(subPer.title)}}</p>
+                                </div>
+                              </ng-container>
+                            </accordion-group>
+                          </ng-container>
+                        </accordion>
+                      </div>
+                    </div>
+                  </ng-container>
+                </accordion-group>
+              </ng-container>
+            </accordion>
+          </div>
+          <!-- <ul *ngFor="let permission of roledetail.permissions">
+            <li>Manage {{permission.title}}</li>
+          </ul> -->
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+
+  <ng-template #delete>
+    <!-- <div class="modal-dialog modal-confirm"> -->
+    <!-- <div class="modal-content"> -->
+    <!-- <div class="modal-body text"> -->
+    <div class="center img-center">
+      <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+    </div>
+    <h4 class="modal-title delete-title">Delete?</h4>
+    <p class="delete-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    <div class="del-modal-footer">
+      <button type="button" class="btn btn-info cancel del-cancel-btn" (click)="closeModel()">Cancel</button>
+      <button type="button" class="btn btn-danger danger del-delete-btn" (click)="deleteRecord()">Delete</button>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+</main>

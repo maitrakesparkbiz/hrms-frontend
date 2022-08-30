@@ -1,0 +1,63 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row inner-header">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-success backbtn" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="awardForm" (ngSubmit)="SaveAward()" class="custom-form">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card comman-card-wrap">
+            <div class="card-header">
+              <h4 class="c-white"><i class="fa fa-star" aria-hidden="true"></i>Award Details</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <input type="hidden" formControlName="id">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Name</label>
+                  <input type="text" name="name" formControlName="name" [(ngModel)]="award.name" class="form-control input-sm fc-alt">
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Status</label>
+                  <select name="status" formControlName="status" [(ngModel)]="award.status" class="form-control input-sm fc-alt">
+                    <!--<option (ngValue)="null">Select an Option</option>-->
+                    <!--<option value="Enabled">Enabled</option>-->
+                    <!--<option value="Disabled">Disabled</option>-->
+                    <option *ngFor="let status of allstatus; let index = index" value="{{status.id}}">{{status.value_text}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">description</label>
+                  <textarea name="description" formControlName="description" [(ngModel)]="award.description" class="form-control input-sm fc-alt"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group pull-center">
+            <button class="btn btn-primary updatebtn" type="submit">
+              {{id ? 'Update' : 'Add'}}
+            </button>
+            <button class="btn cancelbtn" type="button" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

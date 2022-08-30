@@ -1,0 +1,172 @@
+.custom-active {
+  background: red;
+}
+
+.emp-contact-header {
+  float: left;
+  width: 100%;
+  padding: 15px 15px 0;
+}
+
+input.emp-search {
+  float: left;
+  width: 170px;
+  height: 30px;
+  margin-right: 5px;
+  background: #4f585d;
+  outline: none;
+  border: 0;
+  color: #fff;
+  font-size: 15px;
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+
+input::placeholder {
+  color: #fff
+}
+
+.contact-wrap {
+  float: left;
+  width: 100%;
+}
+
+.contact-card {
+  float: left;
+  width: 23.18%;
+  margin: 15px;
+  border: 1px solid #eee;
+  padding: 15px;
+}
+
+.emp-contact-img {
+  float: left;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.emp-contact-wrap {
+  float: left;
+  width: 100%;
+}
+
+img.employee-profile {
+  height: 150px;
+  width: 150px;
+}
+
+.custom-status {
+  height: 30px;
+}
+
+.emp-contact-pagination {
+  float: left;
+  width: 100%;
+  text-align: center;
+  padding: 15px 0 30px;
+}
+
+button.emp-page {
+  border-radius: 50%;
+  background: #e2e2e2;
+  width: 40px;
+  height: 40px;
+  margin: 0 5px;
+  font-size: 14px;
+  z-index: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+button.emp-page.custom-active {
+  background: #383d40;
+  color: #fff;
+}
+
+button.emp-page.first-btn {
+  font-size: 0;
+  position: relative;
+  top: 4px;
+}
+
+button.emp-page.first-btn:before {
+  content: '\f100';
+  font-family: fontAwesome;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  width: 40px;
+  color: #7e7e7e;
+}
+
+button.emp-page.last-btn {
+  font-size: 0;
+  position: relative;
+  top: 4px;
+}
+.contact_wrap_main_section {
+    display: flex;
+    flex-wrap: wrap;
+}
+button.emp-page.last-btn:before {
+  content: '\f101';
+  font-family: fontAwesome;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  width: 40px;
+  color: #7e7e7e;
+}
+
+
+span.right-part.email-text a {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: left;
+  width: 100%;
+}
+
+// 13-03-2019
+
+.inner-header .search-section{
+  float:left;
+}
+
+.emp-contact-header.inner-header {
+    float: left;
+    width: 100%;
+    padding: 15px 0px 15px 32px;
+}
+
+.contact-wrap{margin-top:100px;}
+
+
+// 13-03-2019 end
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+  .contact-card {
+    width: 31.12%;
+  }
+}
+
+
+@media(max-width:1500px) {
+  .contact-card {
+    width: 30.83%;
+  }
+}
+
+@media(max-width:1400px) {
+  .contact-card {
+    width: 30.63%;
+  }
+}

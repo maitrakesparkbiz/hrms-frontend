@@ -1,0 +1,101 @@
+<div class="animated fadeIn">
+  <div class="emp-contact-header inner-header">
+    <div class="search-section search">
+      <form [formGroup]="filerForm" class="custom-wrap">
+        <input type="text" id="searchFilter" #searchFilter placeholder="search employee ..." class="form-control emp-search searchFilter"
+          formControlName="search">
+        <select class="search-box custom-status searchFilter" (change)="onFilter()" formControlName="status">
+          <option value="all">All</option>
+          <option value=1>Active</option>
+          <option value=0>Inactive</option>
+        </select>
+      </form>
+    </div>
+  </div>
+
+  <div class="contact-wrap" *ngIf="allUsers.length > 0; else no_data">
+    <div class="contact_wrap_main_section">
+      <ng-container *ngFor="let user of allUsers">
+        <div class="contact-card">
+          <div class="col-md-12">
+            <div class="emp-contact-img">
+              <img *ngIf="user.profile_image;else other_content" class="employee-profile" [src]=IMAGE_URL+user.profile_image />
+              <ng-template #other_content>
+                <img class="employee-profile" [src]="employee_image" />
+              </ng-template>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Full Name</span>
+              <span class="right-part">{{user.firstname}} {{user.lastname}}</span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Employee ID</span>
+              <span class="right-part">{{user.employee_id}}</span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Personal Email</span>
+              <span class="right-part email-text"><a href="mailto:{{user.email}}">{{user.email}}</a></span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Company Email</span>
+              <span class="right-part email-text"><a href="mailto:{{user.company_email!==''?user.company_email:'-'}}">
+                  {{user.company_email!==''?user.company_email:'-'}}</a></span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Gender</span>
+              <span class="right-part">{{user.gender ? user.gender.key_text : '-'}}</span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Birthday</span>
+              <span class="right-part">
+                {{!! user.date_of_birth ? (user.date_of_birth.date | dateFilter) : '-'}}</span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Martial Status</span>
+              <span class="right-part">{{!!user.marital_status?'Married':'Unmarried'}}</span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Marriage Anniversary</span>
+              <span class="right-part">{{(user.marital_status
+                && user.marriage_anniversary_date!=null) ?
+                (user.marriage_anniversary_date.date | dateFilter) :'-'}}</span>
+            </div>
+
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Mobile Phone</span>
+              <span class="right-part">{{user.contact_no ? user.contact_no : '-'}}</span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Emergency Contact <br>Number</span>
+              <span class="right-part">{{user.emergency_contact_no ? user.emergency_contact_no : '-'
+                }}</span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Emergency Contact <br>Person</span>
+              <span class="right-part">
+                {{user.emergency_contact_person ? user.emergency_contact_person: '-'}}</span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Current Address</span>
+              <span class="right-part">{{user.address ? user.address : '-'}}</span>
+            </div>
+            <div class="emp-contact-wrap id-self">
+              <span class="left-part">Permanent Address</span>
+              <span class="right-part">{{user.per_address ? user.per_address : '-'}}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="emp-contact-pagination" *ngIf="pagination.length > 0" #allButtons>
+      <button class="emp-page first-btn" (click)="getContactUsers(0,'page0')">First</button>
+      <ng-container *ngFor="let page of pagination">
+        <button (click)="getContactUsers(page,pageClass('page',page))" class="emp-page page{{page}}">{{page + 1}}</button>
+      </ng-container>
+      <button class="emp-page last-btn" (click)="getContactUsers(lastPage(),pageClass('page',lastPage()))">Last</button>
+    </div>
+  </div>
+</div>
+<ng-template #no_data>
+  No Data!!
+</ng-template>

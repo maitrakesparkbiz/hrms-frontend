@@ -1,0 +1,58 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row inner-header">
+      <div class="col-md-12 add-header">
+        <button type="button" class="btn btn-success back" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+    </div>
+    <div class="wrapper-class">
+      <form [formGroup]="teamForm" (ngSubmit)="addTeam()" class="custom-form" #team="ngForm">
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <div class="card custom-card comman-card-wrap">
+              <div class="card-header custom-blue">
+                <h4 class="c-white">
+                  <i class="fa fa-info-circle"></i>Details</h4>
+              </div>
+              <div class="card-body form-padding">
+                <div class="row">
+                  <div class="col-md-4 form-group">
+                    <label class="f-700 control-label">Supervisor </label>
+                    <ng-select [items]="employee" bindValue="value" placeholder="Select an employee..."
+                      formControlName="leader" [(ngModel)]="selectedLeader"
+                      [ngClass]="teamForm.get('leader').invalid && team.submitted?'invalid-input':''"></ng-select>
+                    <div class="invalid-error" *ngIf="teamForm.get('leader').invalid && team.submitted">
+                      Leader field is required
+                    </div>
+                  </div>
+                  <div class="col-md-8 form-group">
+                    <label class="f-700 control-label">Teammates </label>
+                    <ng-select class="bootstrap" [items]="employee" [multiple]="true"
+                      placeholder="Select an employee..." formControlName="member" [(ngModel)]="selectedMembers"
+                      #teamMembers [ngClass]="teamForm.get('member').invalid &&
+team.submitted?'invalid-input':''"></ng-select>
+                    <div class="invalid-error" *ngIf="teamForm.get('member').invalid && team.submitted">
+                      Leader can not be a member
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="button-wrap">
+          <button class="modal-delete-button" type="submit">
+            <span>{{!!edit_id?'Update':'Create'}}</span>
+          </button>&nbsp;
+          <button type="button" class="modal-cancel-button" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</main>

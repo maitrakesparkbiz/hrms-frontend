@@ -1,0 +1,136 @@
+<main class="message">
+  <div class=" animated fadeIn">
+    <div class="col-md-12 header-buttons">
+      <div class="search-section search">
+        <form [formGroup]="filterForm" class="custom-wrap">
+          <select (change)="rerender()" class="search-box ng-pristine ng-valid ng-touched custom-status"
+            [formControlName]="'status'">
+            <option value="all">Stage:All</option>
+            <option value="initial">Initial</option>
+            <option value="interview">Interview</option>
+            <option value="selected">Selected</option>
+            <option value="rejected">Rejected</option>
+            <option value="closed">Closed</option>
+          </select>
+        </form>
+      </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="table-wrap self-job-application-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width:100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 20px">
+            </th>
+            <th style="width: 90px">Name</th>
+            <th style="width: 100px">Role</th>
+            <th style="width: 100px">Current Stage</th>
+            <th style="width: 100px">Created On</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="applications?.length != 0">
+          <tr *ngFor="let item of applications" (click)="checkone(item[0].id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item[0].id}} class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item[0].id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td><span class="table-txt">{{item[0].applicant_name}}</span></td>
+            <td><span class="table-txt">{{item.role}}{{!!item.exp_required?' - ' +
+                item.exp_required + ' year': ''}}</span></td>
+            <td>
+              <span
+                [ngClass]="item.stage_name=='selected'?'status approve-tag':(item.stage_name=='rejected'?'status reject-tag':(item.stage_name=='closed'?'status color-closed':(item.stage_name=='initial' ? 'status initial-tag':'status pending-tag')))">
+                <i *ngIf="item.stage_name=='selected';else rejected" class="fa fa-check" aria-hidden="true"></i>
+                <ng-template #rejected>
+                  <i *ngIf="item.stage_name=='rejected';else closed" class="fa fa-ban" aria-hidden="true"></i>
+                </ng-template>
+                <ng-template #closed>
+                  <i *ngIf="item.stage_name=='closed';else common" class="fa fa-times" aria-hidden="true"></i>
+                </ng-template>
+                <ng-template #common>
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                </ng-template>
+                {{item.stage_name}}
+              </span>
+            </td>
+            <td><span class="table-txt">{{item[0].created_at.date | dateFilter}}</span></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="applications?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="right-part-title">
+        <span>
+          <h3>{{selectedApplication.role}}</h3>
+        </span>
+      </div>
+
+      <div class="description-detail">
+        <div class="right-part-content"><span class="left-part">Job</span>
+          <span class="right-part">{{selectedApplication.role}}{{!!selectedApplication.exp_required?' - ' +
+            selectedApplication.exp_required + ' year': ''}}</span>
+        </div>
+        <div class="right-part-content"><span class="left-part">Phase</span>
+          <span class="right-part">
+            <span
+              [ngClass]="selectedApplication.stage_name=='selected'?'status approve-tag':(selectedApplication.stage_name=='rejected'?'status reject-tag':(selectedApplication.stage_name=='closed'?'color-closed':(selectedApplication.stage_name=='initial' ? 'status initial-tag' : 'status pending-tag')))">
+              <i *ngIf="selectedApplication.stage_name=='selected';else rejected" class="fa fa-check"
+                aria-hidden="true"></i>
+              <ng-template #rejected>
+                <i *ngIf="selectedApplication.stage_name=='rejected';else closed" class="fa fa-ban"
+                  aria-hidden="true"></i>
+              </ng-template>
+              <ng-template #closed>
+                <i *ngIf="selectedApplication.stage_name=='closed';else common" class="fa fa-times"
+                  aria-hidden="true"></i>
+              </ng-template>
+              <ng-template #common>
+                <i class="fa fa-code" aria-hidden="true"></i>
+              </ng-template>
+              {{selectedApplication.stage_name}}
+            </span>
+          </span>
+        </div>
+        <div class="right-part-content"><span class="left-part">Name</span>
+          <span class="right-part">{{selectedApplication.applicant_name}}</span>
+        </div>
+        <div class="right-part-content"><span class="left-part">Email</span>
+          <span class="right-part email"> <a href="mailto:{{selectedApplication.contact_email}}">
+              {{selectedApplication.contact_email}}</a></span>
+        </div>
+        <div class="right-part-content"><span class="left-part">Location</span>
+          <span class="right-part">{{selectedApplication.location ? selectedApplication.location : '-'}}</span>
+        </div>
+        <div class="right-part-content"><span class="left-part">Phone 1</span>
+          <span
+            class="right-part">{{selectedApplication.phone_number1 ? selectedApplication.phone_number1 : '-'}}</span>
+        </div>
+        <div class="right-part-content"><span class="left-part">Phone 2</span>
+          <span
+            class="right-part">{{selectedApplication.phone_number2 ? selectedApplication.phone_number2 : '-'}}</span>
+        </div>
+        <div class="right-part-content"><span class="left-part">Resume</span>
+          <span class="right-part"><a href={{FILE_URL+selectedApplication.resume}}
+              target="blank">{{selectedApplication.resume}}</a></span>
+        </div>
+        <div class="right-part-content"><span class="left-part">Source</span>
+          <span class="right-part">{{selectedApplication.source ? selectedApplication.source : '-'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc no-data">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+</main>

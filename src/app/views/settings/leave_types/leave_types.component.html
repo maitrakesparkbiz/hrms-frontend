@@ -1,0 +1,158 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 header-buttons setting-header">
+      <button type="button" class="new-button" [routerLink]="'create'" [appCheckPermission]="'LEAVETYPES.ADD'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1" type="button" class="edit-button" (click)="EditAward()" [appCheckPermission]="'LEAVETYPES.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <!-- <button *ngIf="allcheck_id_count==1" type="button" class="btn btn-danger delbtn" (click)="deleteModel(delete)">
+                <i class="fa fa-trash "></i>
+                Delete
+            </button> -->
+    </div>
+
+    <div class="table-wrap">
+      <table class="table table-striped" style="width: 100%" [mfData]="dept " #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th style="width: 5%">
+              <!-- <input type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+              <label></label> -->
+            </th>
+            <th style="width: 2%">
+              <mfDefaultSorter by="name">Name</mfDefaultSorter>
+            </th>
+            <th style="width: 2%">
+              <mfDefaultSorter by="name">No.of Leaves</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="status">Status</mfDefaultSorter>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data" (click)="checkone(item.id);$event.stopPropagation()" style="cursor: pointer;">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+
+            </td>
+            <td>{{item.leavetype}}</td>
+            <td>{{item.count}}</td>
+            <td>
+              <div *ngIf="item.status['key_text']=='Enabled'" class="status approve-tag">
+                <i class="fa fa-check"></i>&nbsp;{{item.status['key_text']}}
+              </div>
+              <div *ngIf="item.status['key_text']=='Disabled'" class="status reject-tag">
+                <i class="fa fa-ban"></i>&nbsp;{{item.status['key_text']}}</div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-scroll">
+        <!-- do here-->
+          <h2 class="red-color">{{leavedetail.leavetype}}</h2>
+
+          <div *ngIf="leavedetail.status=='Enabled'" class="status approve-tag">
+            <i class="fa fa-check"></i>&nbsp;{{leavedetail.status}}
+          </div>
+          <div *ngIf="leavedetail.status=='Disabled'" class="status reject-tag">
+            <i class="fa fa-ban"></i>&nbsp;{{leavedetail.status}}
+          </div>
+
+          <h4 class="green-color">Details</h4>
+
+
+          <div class="details-wrap">
+            <div class="detail">
+              <h3 class="title">Number of leaves</h3>
+              <h4 class="detail-txt">{{leavedetail.count}}</h4>
+            </div>
+
+            <div class="detail">
+              <h3 class="title">Gender</h3>
+              <h4 class="detail-txt">{{leavedetail.gender}}</h4>
+            </div>
+
+            <div class="detail">
+              <h3 class="title">Allowed in Probation</h3>
+              <h4 class="detail-txt">{{leavedetail.probation}}</h4>
+            </div>
+
+            <div class="detail">
+              <h3 class="title">Max Leaves per Month</h3>
+              <h4 class="detail-txt">{{leavedetail.max_leave_month}}</h4>
+            </div>
+
+            <div class="detail">
+              <h3 class="title">Max Consecutive Leaves per Month</h3>
+              <h4 class="detail-txt">{{leavedetail.max_consecutive_leave_month}}</h4>
+            </div>
+
+            <div class="detail">
+              <h3 class="title">Half Day</h3>
+              <h4 class="detail-txt">{{leavedetail.half_day}}</h4>
+            </div>
+
+            <div class="detail">
+              <h3 class="title">Intervening Holidays Allowed</h3>
+              <h4 class="detail-txt">{{leavedetail.intervening_holiday}}</h4>
+            </div>
+
+            <div class="detail">
+              <h3 class="title">Over Utilization</h3>
+              <h4 class="detail-txt">{{leavedetail.over_utilization}}</h4>
+            </div>
+
+            <div class="detail">
+              <h3 class="title">Unused Leave</h3>
+              <h4 class="detail-txt">{{leavedetail.unused_leave}}</h4>
+            </div>
+
+          </div>
+        </div>
+    </div>
+
+
+    <ng-template class="test_content" #other_content>
+      <div class="abc">
+        <h3> Select a row to view it's Detail</h3>
+      </div>
+    </ng-template>
+  </div>
+  <ng-template #delete>
+    <!-- <div class="modal-dialog modal-confirm"> -->
+    <!-- <div class="modal-content"> -->
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deletedepartment()">Delete</button>
+    </div>
+
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+</main>

@@ -1,0 +1,95 @@
+main.message {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+.modal-header {
+  padding: 23px 26px;
+  background-color: rgb(2, 136, 209);
+  color: #fff;
+  border-radius: 2px;
+  border-bottom: 1px solid transparent;
+}
+
+
+select {
+  font-size: 13px !important;
+  color: #333333 !important;
+
+  border-radius: 2px !important
+}
+
+select:focus {
+  border-color: #2f88d2 !important;
+  box-shadow: none !important
+}
+
+
+.form-control {
+  margin: 6px 0;
+}
+
+.close {
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: none;
+}
+
+.close:not(:disabled):not(.disabled):hover {
+  color: #fff;
+}
+
+input.form-control.ng-pristine.ng-valid.ng-touched,
+input.form-control.ng-untouched.ng-pristine.ng-valid,
+input.form-control.ng-valid.ng-dirty.ng-touched,
+input.form-control.ng-valid.ng-dirty.ng-untouched {
+  height: 35px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+input.form-control.ng-pristine.ng-valid.ng-touched:focus,
+input.form-control.ng-untouched.ng-pristine.ng-valid:focus,
+input.form-control.ng-valid.ng-dirty.ng-touched:focus,
+input.form-control.ng-valid.ng-dirty.ng-untouched:focus {
+  border-color: #2f88d2 !important;
+  box-shadow: none;
+}
+
+.modal-title {
+  font-size: 17px;
+
+}
+
+
+table.dataTable thead th {
+  position: relative;
+}
+
+.col-md-2.setting-add-button {
+  padding-top: 7px;
+}
+
+.plus-btn {
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.cross-btn {
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  margin-top: 8px;
+}
+
+
+.header-buttons {
+  left: 458px;
+}
+
+.email-app {
+  min-height: 867px;
+}

@@ -1,0 +1,163 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="row">
+      <!-- <div class="col-md-12 header-buttons"> -->
+      <button type="button" class="btn btn-success" (click)="onBack()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Back
+      </button>
+      <!-- </div> -->
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <div class="card">
+          <div class="card-header custom-blue">
+            <h4 class="c-white">
+              <i class="fa fa-info-circle"></i>Project Details</h4>
+          </div>
+          <div class="card-body form-padding">
+            <div class="row">
+              <div class="col-md-4">
+                <h4>Client Name</h4>
+                <p>{{projectData.client_name}}</p>
+              </div>
+              <div class="col-md-4">
+                <h4>Project Name</h4>
+                <p>{{projectData.project_name}}</p>
+              </div>
+              <div class="col-md-4">
+                <h4>Project Document</h4>
+                <ng-container *ngIf="projectData.project_doc && projectData.project_doc.length > 0; else nullData">
+                  <a *ngFor="let doc of projectData.project_doc" target="blank" href="{{FILE_URL}}{{doc}}">
+                    {{doc}}
+                  </a>
+                </ng-container>
+                <ng-template #nullData>
+                  -
+                </ng-template>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Client Email</h4>
+                <p>{{projectData.client_email}}</p>
+              </div>
+              <div class="col-md-6">
+                <h4>Skype Contact</h4>
+                <p>{{projectData.skype_contact}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h4>Project Description</h4>
+                <p>{{projectData.project_description}}</p>
+              </div>
+            </div>
+            <form [formGroup]="projectForm" (ngSubmit)="saveProject()" #projectform="ngForm">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Estimated Hours</label>
+                  <br />
+                  <input type="text" name="est_time" formControlName="est_time" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Assign BA</label>
+                  <br />
+                  <!-- <ng-select #empSelect [items]="employee" [selectOnTab]="true" bindValue="value" placeholder="Select Employee"
+                    formControlName="jr_ba" class="custom-input form-control">
+                  </ng-select> -->
+
+
+                  <ng-multiselect-dropdown class="news-custom-select" formControlName="jr_ba" [data]="jba_list"
+                    [(ngModel)]="selectedItems" [settings]="dropdownSettings">
+                  </ng-multiselect-dropdown>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="button-wrap">
+                  <button class="btn btn-primary custom-create" type="submit">
+                    <span>Update</span>
+                  </button>&nbsp;
+                  <button type="button" class="btn btn-default custom-cancel" (click)="onBack()">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <div class="card">
+          <div class="card-header custom-blue">
+            <h4 class="c-white">
+              <i class="fa fa-info-circle"></i>Comments Sales</h4>
+          </div>
+          <div class="card-body form-padding">
+            <div class="row">
+
+              <div class="col-md-6">
+                <div *ngIf="projectData.srConvs">
+                  <h4>Sales Comments</h4>
+                  <ng-container *ngFor="let cmt of projectData.srConvs.comments">
+                    <div class="msg" [ngClass]="cmt.u_id == userId ? 'sender' : 'receiver'">
+                      {{cmt.msg_text}}
+                    </div>
+                  </ng-container>
+                  <div class="cmt-form">
+                    <form [formGroup]="commentFormSales" (ngSubmit)="doCommentSr()">
+                      <input type="text" class="cmt-box" formControlName="msg_text" placeholder="type comment ... ">
+                      <button type="submit" class="btn btn-primary" [disabled]="!commentFormSales.valid"
+                        appDisableButton><i class="fa fa-paper-plane"></i></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <div class="card">
+          <div class="card-header custom-blue">
+            <h4 class="c-white">
+              <i class="fa fa-info-circle"></i>Comments BA</h4>
+          </div>
+          <ng-container>
+            <form [formGroup]="commentFormJrBa" (ngSubmit)="onSubmit()">
+              <div class="card-body form-padding row" formArrayName="comments" *ngIf="projectData.jrConvs">
+                <div class="col-md-6" *ngFor="let ctrl of commentFormJrBa.get('comments')['controls']; let i=index"
+                  [formGroupName]="i">
+                  <h4>{{BAName(i)}}</h4>
+                  <ng-container *ngFor="let cmt of projectData.jrConvs[i].comments">
+                    <div class="msg" [ngClass]="cmt.u_id == userId ? 'sender' : 'receiver'">
+                      {{cmt.msg_text}}
+                    </div>
+                  </ng-container>
+                  <div class="cmt-form">
+                    <input type="text" class="cmt-box" formControlName="msg_text" placeholder="type comment ... "
+                      (keyup.enter)="doCommentJr(ctrl,i)">
+                    <button type="button" (click)="doCommentJr(ctrl,i)" class="btn btn-primary"
+                      [disabled]="!ctrl.get('msg_text').valid" appDisableButton><i
+                        class="fa fa-paper-plane"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</main>

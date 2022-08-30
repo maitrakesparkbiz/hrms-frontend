@@ -1,0 +1,58 @@
+<div class="animated fadeIn">
+  <div class="row unpaid-section">
+    <div class="unpaid-search">
+      <input type="text" placeholder="Search..." [(ngModel)]="search" class="search-box">
+    </div>
+    <div class="unpaid-year form-group">
+      <select class="form-control m-input custom-year" name="year" (change)="loaduserYear($event.target.value)">
+        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="email-app">
+    <div class="custom-scroll">
+      <nav class="col-md-3">
+        <ul class="nav unpaid-leave-ul" #leaveList>
+          <ng-container *ngFor="let emp of employee|filter:search ; let i = index">
+            <li class="nav-item" (click)="onClick(i,emp.id)">
+              <a class="nav-link" routerLinkActive="active" style="cursor: pointer">
+                <span class="custom-image"> <img style="width: 38px; height: 38px" *ngIf="emp.profile_image ;else other_content"
+                    [src]=IMAGE_URL+emp.profile_image class="img-avatar" />
+                  <ng-template #other_content><img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" /></ng-template>
+                </span>&nbsp;&nbsp;
+                <div class="image-text">
+                  <span>{{emp.firstname}} {{emp.lastname}}</span>
+                  <h6>{{emp.location}}</h6>
+                </div>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </nav>
+    </div>
+    <div class="custom-table">
+      <div class="row table-row-wrap">
+        <table class="table table-striped" style="width: 100%" [mfData]="(unpaidLeaves) " #mf="mfDataTable"
+          [mfRowsOnPage]="12">
+          <thead>
+            <tr>
+              <th>
+                <mfDefaultSorter by="month">Month</mfDefaultSorter>
+              </th>
+              <th style="width: 60%">
+                <mfDefaultSorter by="count">Unpaid Leaves</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="unpaidLeaves" class="animated fadeIn">
+            <tr *ngFor="let item of mf.data">
+              <td>{{item.month}}</td>
+              <td>{{item.leave_count}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

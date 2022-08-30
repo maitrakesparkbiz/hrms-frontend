@@ -1,0 +1,128 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 header-buttons">
+      <button type="button" class="button new-button" [routerLink]="['add-team']" [appCheckPermission]="'TEAMS.ADD'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1 && selectedTeam.id" type="button" class="button edit-button"
+        [routerLink]="['edit-team',selectedTeam.id]" [appCheckPermission]="'TEAMS.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <button *ngIf="allcheck_id_count==1 && selectedTeam['team_employee']?.length==0" (click)="openModel(delete)"
+        type="button" class="button del-button" [appCheckPermission]="'TEAMS.DELETE'">
+        <i class="fa fa-close "></i>
+        Delete
+      </button>
+    </div>
+
+    <div class="table-wrap team-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 7%">
+            </th>
+            <th>Supervisor</th>
+            <th>Teammates</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="allTeams?.length != 0">
+          <tr *ngFor="let item of allTeams" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td>
+              <ng-container *ngIf="item.emp_id;else nodata">
+                <span class="custom-emp-img">
+                  <img style="width: 38px; height: 38px" *ngIf="item.profile_image ;else other_content"
+                    [src]=IMAGE_URL+item.profile_image class="img-avatar" />
+                  <ng-template #other_content>
+                    <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                  </ng-template>
+                </span>
+
+                <span class="img-txt-center"> {{item.firstname }} {{item.lastname }}</span>
+
+              </ng-container>
+            </td>
+            <td><span class="table-txt">{{item.members}}</span></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="allTeams?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+
+      <div class="custom-details">Supervisor</div>
+      <div class="employee-profile" *ngIf="selectedTeam.leader;else nodata">
+        <div class="emp-img">
+          <img style="width: 38px; height: 38px" *ngIf="selectedTeam.leader.profile_image;else other_content"
+            [src]=IMAGE_URL+selectedTeam.leader.profile_image class="img-avatar" />
+
+          <ng-template #other_content>
+            <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+          </ng-template>
+        </div>
+        <div class="emp-details">
+          <a [routerLink]="['../','self','profile',selectedTeam.leader.id]"
+            class="emp-name blue-txt">{{selectedTeam.leader.firstname}}
+            {{selectedTeam.leader.lastname}}</a>
+        </div>
+      </div>
+
+      <div class="custom-details">Teammates</div>
+      <div class="" *ngIf="selectedTeam['team_employee'] && selectedTeam['team_employee'].length > 0 ;else nodata">
+        <ng-container *ngFor="let emp of selectedTeam['team_employee']">
+          <div class="employee-profile">
+            <div class="emp-img">
+              <img style="width: 38px; height: 38px" *ngIf="emp.member.profile_image;else other_content"
+                [src]=IMAGE_URL+emp.member.profile_image class="img-avatar" />
+
+              <ng-template #other_content>
+                <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+              </ng-template>
+            </div>
+            <div class="emp-details">
+              <a [routerLink]="['../','self','profile',emp.member.id]"
+                class="emp-name blue-txt">{{emp.member.firstname}}
+                {{emp.member.lastname}}</a>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+
+  <ng-template #delete>
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center"><img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar"
+          alt="admin@bootstrapmaster.com" /></div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteTeam()">Delete</button>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+  <ng-template #nodata>
+    -
+  </ng-template>
+</main>

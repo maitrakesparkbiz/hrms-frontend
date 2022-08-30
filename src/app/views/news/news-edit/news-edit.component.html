@@ -1,0 +1,96 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row inner-header">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-success back" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+    <form [formGroup]="newsForm" (ngSubmit)="SaveNews()" class="custom-form" #news="ngForm">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card custom-card comman-card-wrap">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Details</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="news-edit-title">
+                <div class="form-group news-title">
+                  <label class="f-700 control-label">Title</label>
+                  <br />
+                  <input type="hidden" formControlName="id">
+                  <input type="text" name="title" class="form-control" formControlName="title"
+                    [ngClass]="newsForm.get('title').invalid && news.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="newsForm.get('title').invalid && news.submitted">
+                    Title is required
+                  </div>
+                </div>
+                <div class="form-group news-employee">
+                  <label class="f-700 control-label">Employees </label>
+                  <br />
+                  <!-- <ng-select [items]="employee" [selectOnTab]="true" [multiple]="true" bindValue="value" placeholder="Select Employees"
+                  formControlName="emp_id" class="custom-employee">
+                </ng-select> -->
+                  <!-- <ng-container *ngIf="dropdownList.length > 0 && id == '';else editMode"> -->
+                  <ng-container *ngIf="dropdownList.length > 0 && objLen == 0;else editMode">
+                    <ng-multiselect-dropdown class="news-custom-select" formControlName="emp_id" [data]="dropdownList"
+                      [(ngModel)]="selectedItems" [settings]="dropdownSettings">
+                    </ng-multiselect-dropdown>
+                  </ng-container>
+                  <ng-template #editMode>
+                    <ng-multiselect-dropdown class="news-custom-select" formControlName="emp_id" [data]="dropdownList"
+                      [(ngModel)]="selectedItems" [settings]="dropdownSettings">
+                    </ng-multiselect-dropdown>
+                  </ng-template>
+                  <!-- <ng-multiselect-dropdown formControlName="emp_id" [data]="dropdownList" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown> -->
+                </div>
+                <div class="form-group news-status">
+                  <label class="f-700 control-label">Status</label>
+                  <br />
+                  <div class="btn-group btn-group-toggle custom-toggle" ngbRadioGroup name="status"
+                    formControlName="status" [(ngModel)]="newsEdit.status">
+                    <label ngbButtonLabel class="btn-primary custom-draft">
+                      <!-- <input ngbButton type="radio" value="Draft" (click)="getnewsStatus()"> Draft -->
+                      <input ngbButton type="radio" value="Draft"> Draft
+                    </label>
+                    <label ngbButtonLabel class="btn-default custom-publish"
+                      [ngClass]="newsEdit.status=='Publish'? 'btn-danger':''">
+                      <input ngbButton type="radio" value="Publish"> Published
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="news-edit-content">
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Description</label>
+                  <div class="card-body description custom-description">
+                    <quill-editor formControlName="description"></quill-editor>
+                  </div>
+                  <!--<div class="invalid-feedback"-->
+                  <!--*ngIf="invoiceForm.get('start_date').touched && invoiceForm.get('start_date').invalid">-->
+                  <!--The start date is required-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-wrap">
+        <button class="btn btn-primary update" type="submit">
+          <span>{{!!id?'Update':'Create'}}</span>
+        </button>&nbsp;
+        <button class="btn btn-primary" class="btn btn-default cancel" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

@@ -1,0 +1,799 @@
+.custom-holiday {
+  display: block;
+  padding: 1px 28.42px;
+  background: #f44336;
+  color: #fff;
+  float: left;
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 3px;
+  text-align: left;
+  margin: 0 0 5px 10px;
+
+}
+
+.year-festival {
+  display: block;
+  padding: 1px 28.42px;
+  background: #66bb6a;
+  color: #fff;
+  float: left;
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 3px;
+  text-align: left;
+  margin: 0 0 5px 10px;
+
+}
+
+.year-events {
+  color: #fff;
+  background: #00bcd4;
+  display: block;
+  float: left;
+  border-radius: 3px;
+  margin: 0 0 5px 10px;
+  padding: 1px 11.89px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cal-month-view .cal-cell-row:hover {
+  background: transparent;
+}
+
+span.cal-day-number {
+  color: #ccc !important;
+  font-size: 25px !important;
+  float: left !important;
+  padding-left: 10px;
+  margin-top: 0 !important;
+}
+
+.select {
+  float: none;
+  width: 106.95px !important;
+  background: #4f585d !important;
+  color: #fff !important;
+  font-weight: 500;
+  font-size: 15px;
+  height: 29px !important;
+  padding: 0 9px;
+  border-radius: 0;
+  border: none;
+  display: inline-block;
+}
+
+select:focus {
+  box-shadow: none !important
+}
+
+select:active:focus {
+  box-shadow: none !important
+}
+
+.custom-year {
+  padding-top: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: right;
+  float: none;
+  margin-right: 10px;
+  padding-right: 0 !important
+}
+
+.custom-office {
+  float: none;
+  width: 156.95px;
+  background: #4f585d !important;
+  color: #fff !important;
+  font-weight: 500;
+
+  font-size: 15px;
+  height: 29px !important;
+  padding: 0 9px;
+  border-radius: 0;
+  border: none;
+  display: inline-block;
+}
+
+.custom-office:focus {
+  box-shadow: none
+}
+
+.custom-office:active:focus {
+  box-shadow: none !important
+}
+
+.custom-batch {
+  padding-top: 10px !important;
+
+  font-size: 13px;
+  font-weight: 500 !important;
+  margin-left: 30px !important;
+  margin-right: 10px !important;
+  float: none !important;
+}
+
+.cal-cell {
+  color: #c2c2c2 !important;
+
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+.cal-days {
+  cursor: pointer !important;
+}
+
+.cal-month-view .cal-days {
+  border: 1px solid #f3f3f3;
+}
+
+.cal-month-view .cal-days .cal-cell-row {
+  border-bottom: 1px solid #f3f3f3
+}
+
+.cal-month-view .cal-day-cell:not(:last-child) {
+  border-right: 1px solid #f3f3f3
+}
+
+.row.text-center {
+  float: left;
+  width: 100%;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.btn.btn-outline-secondary {
+  float: left;
+  background: #4f585d;
+  border: none;
+  padding: 5.5px 10.26px;
+  border-radius: 3px;
+  color: #fff;
+  width: 10% !important;
+  margin-top: 6px;
+}
+
+.right {
+  float: right !important;
+}
+
+.row.text-center h3 {
+
+  font-size: 18px;
+  font-weight: 500;
+  padding-top: 10px;
+}
+
+.custom-month-holiday {
+  float: left;
+  width: 80% !important;
+  text-align: center !important;
+  padding-top: 8px;
+}
+
+.custom-event-span1 {
+  width: 12px;
+  background: #00bcd4;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.custom-event-paragraph1 {
+  float: left;
+  width: auto;
+  text-align: left;
+  padding-left: 5px;
+  margin: 0;
+  font-size: 13px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+
+.custom-year-span1 {
+  width: 12px;
+  background: #66bb6a;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.custom-year-paragraph1 {
+  float: left;
+  width: auto;
+  text-align: left;
+  padding-left: 5px;
+  margin: 0;
+  font-size: 13px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+
+.custom-holiday-span1 {
+  width: 12px;
+  background: #f44336;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.custom-holiday-paragraph1 {
+  float: left;
+  width: auto;
+  text-align: left;
+  padding-left: 5px;
+  margin: 0;
+  font-size: 13px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+
+.description h4 {
+  font-size: 23px;
+  color: #2196f3;
+  font-weight: 500;
+
+  text-transform: capitalize;
+}
+
+.text-center .col-md-3.custom-color {
+  flex: 0 0 23%;
+  max-width: 23%;
+  float: right;
+}
+
+.col-md-2.year-custom {
+  text-align: right;
+  padding-left: 0;
+  float: left;
+}
+
+.action-btn {
+  float: left;
+  width: 100%;
+  padding: 10px 0 30px 0;
+}
+
+.edit-btn {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  border-radius: 2px;
+  padding: 2px 3.3px;
+  font-size: 11px;
+
+  margin: 0 5px;
+  background: #4caf50;
+  border: none;
+}
+
+.edit-btn i {
+  padding-right: 5px;
+}
+
+.dlt-btn i {
+  padding-right: 5px;
+}
+
+.dlt-btn {
+  padding: 2px 3.46px;
+  border-radius: 2px;
+  font-size: 11px;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  border: none;
+  background: #f44336;
+}
+
+.description h5 {
+  font-size: 17px;
+
+  color: #3f51b5;
+  font-weight: 500;
+  padding-top: 20px;
+  text-transform: capitalize
+}
+
+.description span {
+  font-size: 13px;
+  color: #5e5e5e;
+
+}
+
+.employee-profile {
+  float: left;
+  width: 100%;
+  padding: 7px 0;
+}
+
+.employee-profile a {
+  float: left;
+  width: 20%;
+}
+
+.emp-details {
+  float: left;
+  width: 80%;
+}
+
+.emp-details a {
+  width: 100%;
+  color: #2196f3;
+
+  font-size: 13px;
+  padding-top: 2px;
+}
+
+.emp-details a:hover {
+  text-decoration: none
+}
+
+.emp-details h6 {
+
+  font-size: 13px;
+  color: #9e9e9e;
+}
+
+.emp-img {
+  float: left;
+  width: 15%;
+}
+
+
+.dropdown-btn {
+  height: 30px;
+  padding-top: 5px !important;
+  border-radius: 2px !important;
+  border: 1px solid #eee !important;
+
+  font-size: 13px;
+  color: #333333;
+}
+
+input {
+  margin: 0 !important;
+
+  font-size: 12px !important;
+  color: #000 !important;
+}
+
+.custom-intro {
+  padding: 0;
+}
+
+.ql-container.ql-snow {
+  height: 150px !important;
+  min-height: 150px !important
+}
+
+.ql-editor.ql-blank {
+  min-height: 150px !important;
+}
+
+.img-avatar,
+.avatar>img,
+.img-circle {
+  max-width: none;
+}
+
+.custom-description {
+  border-left: 1px solid #eee;
+  border-top: 0;
+  min-height: 720px;
+}
+
+.description {
+  padding: 30px 10px 10px;
+  float: left;
+}
+
+.customer-calender {
+  padding-right: 0
+}
+
+.create-btn {
+  padding: 4.5px 9.5px;
+  border-radius: 2px;
+  color: #333333;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  border: none;
+  background: #fff;
+  font-size: 13px;
+}
+
+.cancel-btn:hover {
+  opacity: .9;
+  background: #2196f3;
+  color: #fff
+}
+
+.cancel-btn:focus {
+  opacity: .9;
+  box-shadow: none
+}
+
+.cancel-btn:active {
+  opacity: .9;
+  background: #2196f3 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12) !important;
+}
+
+.cancel-btn:active:focus {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12) !important;
+}
+
+.cancel-btn {
+  padding: 5.5px 12.02px;
+  font-size: 13px;
+
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #2196f3;
+  border: none;
+  color: #fff;
+}
+
+.create-btn:hover {
+  opacity: .9;
+  background: #fff;
+  color: #333333;
+}
+
+.create-btn:focus {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  opacity: .9;
+}
+
+.create-btn:active {
+  opacity: .9;
+  background: #fff !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  color: #333333 !important;
+}
+
+.create-btn:active:focus {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+}
+
+.custom-colors {
+  float: left;
+  width: 30%;
+  padding-top: 10px;
+}
+
+.color-code {
+  float: left;
+  width: 100%;
+  padding-top: 0 !important
+}
+
+.text-center .col-md-4 {
+  flex: 0 0 37.333333%;
+  max-width: 37.333333%;
+  padding-left: 60px;
+  padding-top: 10px
+}
+
+
+.custom-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  font-size: 15px;
+
+}
+
+button.btn.btn-info.cancel.cancel-btn {
+  font-size: 13px;
+  color: #333333 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12) !important;
+  border-radius: 2px !important;
+  padding: 5px 12px;
+  border: none;
+}
+
+button.btn.btn-info.cancel.cancel-btn:hover {
+  opacity: .9;
+}
+
+button.btn.btn-info.cancel.cancel-btn:active {
+  opacity: .9;
+}
+
+button.btn.btn-info.cancel.cancel-btn:focus {
+  opacity: .9;
+}
+
+button.btn.btn-info.cancel.cancel-btn:active:focus {
+  opacity: .9;
+}
+
+button.btn.btn-danger.danger.delete-btn {
+  font-size: 13px;
+
+  padding: 5px 12px;
+  border-radius: 2px !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12) !important;
+  border: none;
+}
+
+button.btn.btn-danger.danger.delete-btn:hover {
+  opacity: .9;
+}
+
+button.btn.btn-danger.danger.delete-btn:active {
+  opacity: .9;
+}
+
+button.btn.btn-danger.danger.delete-btn:focus {
+  opacity: .9;
+}
+
+button.btn.btn-danger.danger.delete-btn:active:focus {
+  opacity: .9;
+}
+
+.ql-toolbar.ql-snow {
+  border: 1px solid #ccc !important;
+}
+
+.text-center .col-md-4 {
+  padding-right: 0
+}
+
+.text-center-holiday {
+  display: inline-block;
+  width: 100%;
+  padding: 15px 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.text-center-holiday .col-md-3.custom-color {
+  flex: 0 0 23%;
+  max-width: 23%;
+
+  text-align: right;
+}
+
+.row.text-center-holiday h3 {
+
+  font-size: 18px;
+  font-weight: 500;
+  padding-top: 10px;
+}
+
+
+.capitalize-class {
+  text-transform: capitalize
+}
+
+
+.switch-views {
+  float: left;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+}
+
+
+.table th {
+  border-top: transparent
+}
+
+.table thead th {
+  border-bottom: 1px solid #eee;
+  color: #757575;
+}
+
+.table td {
+  border-top: 1px solid #eee
+}
+
+table#claim_table tr:last-child td {
+  border-bottom: 1px solid #eee
+}
+
+table#claim_table tr td input[type="checkbox"]+label:before,
+table#claim_table tr td input[type="checkbox"]:checked+label:after {
+  left: 20px;
+}
+
+
+button.button.calender-btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+button.button.calender-btn i {
+  font-size: 18px;
+}
+
+button.button.list-btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+button.button.list-btn i {
+  font-size: 18px;
+}
+
+
+
+.is-active {
+  background: #4caf50
+}
+
+
+.holiday-events {
+  float: left;
+  width: 15%;
+  margin: 0 15px;
+  padding-top: 0px;
+}
+
+.calender {
+  float: left;
+  width: 25%;
+  margin: 0 15px;
+
+}
+
+.listing-view {
+  float: left;
+  width: 20%;
+  margin: 0 15px;
+  margin-top: -5px;
+}
+
+.custom-color {
+  float: left;
+  width: 20%;
+  margin: 0 15px;
+
+}
+
+.year-custom {
+  float: left;
+  width: 10%;
+  margin: 0 15px;
+  text-align: center;
+}
+
+
+.modal-header.holiday-modal-header {
+  float: left;
+  width: 100%;
+  background-color: #0288d1;
+  color: #fff;
+}
+
+.holiday-title {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 300;
+}
+
+.close {
+  color: #fff
+}
+
+.close:not(:disabled):not(.disabled):hover,
+.close:not(:disabled):not(.disabled):focus {
+  color: #fff
+}
+
+.modal-label {
+  font-weight: 700;
+  color: #5e5e5e;
+}
+
+
+input {
+  height: 30px !important;
+}
+
+.multiselect-dropdown .dropdown-btn {
+  height: 30px;
+  border: 1px solid #eee !important;
+}
+
+
+.ql-toolbar.ql-snow+.ql-container.ql-snow {
+  border: 1px solid #eee;
+  border-top: 0;
+}
+
+
+.color-1-1 {
+  float: left;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media(min-width:1300px) {
+  .custom-batch {
+    margin-left: 20px !important;
+  }
+}
+
+@media(max-width:1500px) {
+  .emp-img {
+    width: 21%
+  }
+
+  .emp-details {
+    width: 79%
+  }
+
+  .holiday-events {
+    width: 15%;
+    margin: 0
+  }
+
+  .listing-view {
+    width: 12%;
+    margin: 0 15px;
+    margin-top: -5px;
+  }
+
+  .custom-color {
+    margin: 0;
+  }
+
+  .year-custom {
+    width: 20%
+  }
+}
+
+
+@media (max-width: 1400px) {
+  .emp-details {
+    padding-left: 8px;
+  }
+
+  .text-center-holiday {
+    padding: 15px 0 15px 30px;
+  }
+
+  .listing-view {
+    width: 12%;
+  }
+
+  .custom-batch {
+    margin-left: 0 !important;
+  }
+
+  .year-custom {
+    margin: 0;
+  }
+
+  .custom-description {
+    min-height: 450px;
+  }
+
+}

@@ -1,0 +1,445 @@
+input.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched,
+input.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-untouched,
+select.form-control.m-input.ng-pristine.ng-valid.ng-touched,
+select.form-control.m-input.ng-pristine.ng-valid.ng-untouched,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-untouched {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px !important;
+  border-radius: 2px;
+}
+
+input.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-untouched:focus,
+select.form-control.m-input.ng-pristine.ng-valid.ng-touched,
+select.form-control.m-input.ng-pristine.ng-valid.ng-untouched,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-untouched:focus {
+  border-color: #2f88d2 !important;
+  box-shadow: none;
+}
+
+
+span.switch-slider.toggle-switch:before {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: -4px;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 90px;
+  transition: 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .28);
+  background: #fff;
+}
+
+span.switch-slider.toggle-switch:after {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 40px;
+  height: 16px;
+  background: rgba(0, 0, 0, .26);
+  display: block;
+  border-radius: 100px;
+  position: relative;
+}
+
+span.switch-slider.toggle-switch {
+  border: none;
+}
+
+.switch-primary .switch-input:checked+.switch-slider {
+  background-color: transparent;
+  border-color: transparent
+}
+
+.switch-primary .switch-input:checked+.switch-slider::before {
+  border-color: transparent;
+  background: #3e6595;
+}
+
+.switch-label .switch-input:checked~.switch-slider::after {
+  background: rgba(62, 101, 149, .58);
+}
+
+.checkbox-wrap {
+  position: relative;
+  display: inline-block;
+  padding: 10px 9px;
+}
+
+.checkbox-wrap:first-child {
+  padding-left: 0;
+}
+
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+[type="radio"]:checked+label,
+[type="radio"]:not(:checked)+label {
+  position: relative;
+  padding-left: 28px;
+  cursor: pointer;
+  line-height: 20px;
+  display: inline-block;
+  color: #666;
+  padding-right: 15px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: deepskyblue;
+  color: white;
+  font-weight: bold;
+}
+
+[type="radio"]:checked+label:before,
+[type="radio"]:not(:checked)+label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #666;
+  border-radius: 100%;
+  background: #fff;
+}
+
+[type="radio"]:checked+label:after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #666;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-radius: 100%;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+[type="radio"]:not(:checked)+label:after {
+  opacity: 0;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+[type="radio"]:checked+label:after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+label.btn-primary.btn:focus {
+  color: #5e5e5e;
+}
+
+label.btn-primary.btn {
+  color: #5e5e5e;
+  font-size: 13px;
+  font-weight: 700;
+
+}
+
+.card-header .card-body.form-padding dropzone>.dropzone.dz-wrapper .dz-message {
+  position: relative;
+  display: inline-block;
+  overflow: auto;
+  width: calc(100% - 16px);
+  min-width: calc(100% - 16px);
+  min-height: 240px;
+  max-width: calc(100% - 16px);
+  max-height: 100%;
+  margin: 8px;
+  border: 2px dashed #aaa;
+  background-color: #eee;
+}
+
+.main.container-fluid {
+  padding: 0;
+}
+
+.col-md-4:first-child {
+  padding: 18px 40px;
+}
+
+button.btn.btn-success {
+  padding: 2.5px 10px;
+
+  font-size: 15px;
+  border-radius: 2px;
+}
+
+button.btn.btn-success:active:focus {
+  box-shadow: none;
+}
+
+button.btn.btn-success:active {
+  box-shadow: none;
+}
+
+.modal-body {
+  padding: 30px 30px 55px;
+  background: #f5f5f5;
+  border-top: 1px solid #eee;
+}
+
+.card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+  border: 0;
+  border-radius: .25rem;
+}
+
+.card-header:first-child {
+  padding: 13px 15px 13px 20px;
+  background: #039be5;
+  border-radius: 0;
+  color: #fff;
+
+  border-radius: .25rem .25rem 0 0;
+}
+
+.card-header h4.c-white {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.card-header h4.c-white i {
+  padding-right: 3px;
+  min-width: 21.3px;
+}
+
+.card-body.form-padding label {
+  font-size: 13px;
+  color: #5e5e5e;
+  font-weight: 700;
+}
+
+.card-body {
+  padding: 1.25rem !important;
+}
+
+.card-body.form-padding input.form-control.input-sm.fc-alt.ng-pristine.ng-invalid.ng-touched,
+.card-body.form-padding input.form-control.input-sm.fc-alt.ng-untouched.ng-pristine.ng-invalid {
+  padding: 0;
+  border-radius: 0;
+  border: 1px solid #e0e0e0;
+  height: 30px
+}
+
+.card-body.form-padding input.form-control.input-sm.fc-alt.ng-pristine.ng-invalid.ng-touched:focus,
+.card-body.form-padding input.form-control.input-sm.fc-alt.ng-untouched.ng-pristine.ng-invalid:focus {
+  outline: 1px solid #2f88d2;
+  box-shadow: none;
+}
+
+.col-md-4.form-group .card-header {
+  background: #81c784;
+  padding: 13px 15px 13px 25px;
+}
+
+ img {
+  object-fit: contain;
+  height: 252px;
+  width: 100%;
+  padding: 0;
+  margin: 0 20px;
+}
+
+.custom-file-upload {
+  padding: 3.5px 5.5px;
+  color: #fff !important;
+  border-radius: 3px;
+  background: #00bcd4;
+  border: 1px solid;
+  font-weight: 400 !important;
+  margin-left: 19px;
+  margin-top: 10px;
+}
+
+.card-body.form-padding label:hover {
+  opacity: 0.9;
+}
+
+.col-md-12:last-child .card-header {
+  background: #e57373;
+}
+
+.card-body.form-padding i {
+  color: #66bb6a;
+  font-size: 18px;
+}
+
+span.input-group-addon.last.f-13.p-l-10 i {
+  color: #fff;
+  font-size: 14px;
+}
+
+select.form-control.m-input.ng-pristine.ng-valid.ng-untouched,
+select.form-control.m-input.ng-pristine.ng-valid.ng-touched {
+  max-width: 445px;
+  float: left;
+}
+
+span.input-group-addon.last.f-13.p-l-10 {
+  float: left;
+  margin-left: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+}
+
+span.input-group-addon.last.f-13.p-l-10 .btn-info:focus {
+  box-shadow: none;
+}
+
+span.input-group-addon.last.f-13.p-l-10 a {
+  background: #00bcd4;
+  border-color: #00bcd4
+}
+
+span.input-group-addon.last.f-13.p-l-10 a:hover {
+  opacity: 0.9
+}
+
+select.form-control.m-input.ng-untouched.ng-pristine.ng-invalid,
+select.form-control.m-input.ng-pristine.ng-invalid.ng-touched {
+  height: 30px;
+  padding: 0 0.75rem;
+  font-size: 12px;
+  max-width: 445px;
+  float: left;
+}
+
+select.form-control.m-input.ng-pristine.ng-invalid.ng-touched:focus,
+select.form-control.m-input.ng-untouched.ng-pristine.ng-invalid:focus {
+  box-shadow: none;
+}
+
+.button {
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+
+button.btn.btn-primary {
+  padding: 3.5px 11px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background-color: #2196f3;
+  border-color: #2196f3;
+  border-radius: 2px;
+}
+
+button.btn.btn-primary:hover {
+  opacity: 0.9
+}
+
+button.btn.btn-primary:active:focus {
+  box-shadow: none;
+  opacity: 0.9;
+  background-color: #2196f3;
+  border-color: #2196f3;
+}
+
+button.btn.btn-primary:focus {
+  box-shadow: none;
+}
+
+button.btn.btn-default {
+  padding: 3.5px 11px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  border-radius: 2px;
+  background: #fff;
+  color: #333333;
+}
+
+button.btn.btn-default:hover {
+  opacity: 0.9
+}
+
+select.form-control.m-input.ng-pristine.ng-valid.ng-touched,
+select.form-control.m-input.ng-pristine.ng-valid.ng-untouched
+  {
+  border-color: #e4e7ea !important
+}
+
+select.form-control.m-input.ng-pristine.ng-valid.ng-touched:focus {
+  border-color: #2f88d2 !important;
+}
+
+select.form-control.m-input.ng-pristine.ng-invalid.ng-touched:focus {
+  border-color: #2f88d2 !important;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  outline: none;
+  height: 30px !important;
+  border-color: #2F88D2;
+  border-radius: 2px !important;
+}
+
+select {
+  height: 30px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0 !important;
+}
+
+select {
+  max-width: 100% !important
+}
+
+.back-btn {
+  margin-left: 5px;
+  background: #66bb6a;
+  border: none;
+  padding: 3.5px 11.16px !important;
+  border-radius: 3px !important;
+}
+
+.back-btn:hover {
+  background: #4cac51
+}
+
+.back-btn:focus {
+  box-shadow: none
+}
+
+input {
+  height: 30px !important;
+  border-radius: 2px !important;
+  font-size: 12px !important;
+  background: #fff !important;
+  padding: 5px 10px !important;
+
+  color: #000 !important
+}
+
+select {
+
+  color: #333333 !important;
+  font-size: 13px !important
+}
+
+.custom-training {
+  margin-bottom: 0
+}
+
+option {
+  text-transform: capitalize;
+}
+
+

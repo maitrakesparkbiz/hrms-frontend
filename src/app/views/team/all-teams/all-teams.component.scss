@@ -1,0 +1,107 @@
+.header-buttons {
+  margin: 0
+}
+
+a.emp-name.blue-txt {
+  float: left;
+  padding-left: 9px;
+  text-transform: capitalize;
+  color: #20a8d8;
+}
+
+.right-part-title {
+  float: left;
+  width: 100%;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.custom-name {
+  font-size: 17px;
+  color: #2196f3;
+  text-align: left;
+  font-weight: 500;
+  line-height: 24px;
+  padding-bottom: 15px;
+}
+
+.custom-details {
+  float: left;
+  width: 100%;
+  font-size: 17px;
+  text-align: left;
+  color: #4caf50;
+  padding-bottom: 5px;
+  border: none !important;
+}
+
+.employee-profile {
+  float: left;
+  width: 100%;
+  padding: 10px 0;
+}
+
+span.custom-emp-img {
+  float: left;
+  width: 10%;
+}
+
+.emp-img {
+  width: 11%;
+}
+
+a.emp-name.blue-txt {
+  padding-top: 7px;
+}
+
+table.dataTable tbody tr {
+  cursor: pointer;
+}
+
+span.img-txt-center {
+  display: inline-block;
+  padding-top: 7px;
+  text-transform: capitalize;
+}
+.border-class {
+    position: fixed;
+    z-index: 41;
+    background-color: #fff;
+    width: 100%;
+}
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+  span.custom-emp-img {
+    width: 12%
+  }
+
+}
+
+@media(max-width:1500px) {
+  span.custom-emp-img {
+    width: 14%;
+  }
+
+  .emp-img {
+    width: 15%;
+  }
+ 
+}
+
+@media(max-width:1400px) {
+  span.custom-emp-img {
+    width: 16%;
+  }
+
+  .emp-details {
+    padding-left: 7px;
+  }
+
+  .abc,
+  .description-wrap {
+    width: 25.1%;
+  }
+
+
+}

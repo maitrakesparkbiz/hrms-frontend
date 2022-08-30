@@ -1,0 +1,31 @@
+
+// 14-03-2019
+
+.description-wrap{
+ height:100%;
+ overflow-y: auto;
+ width: 25.39%;
+ margin-right:15px;
+}
+.header-buttons{	
+	height:62px;
+}
+
+.description-wrap::-webkit-scrollbar-track
+{
+  // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #f1f1f1;
+}
+
+.description-wrap::-webkit-scrollbar
+{
+  width: 3px;
+  background-color: #000;
+}
+
+.description-wrap::-webkit-scrollbar-thumb
+{
+  background-color: #000000;
+  border: 2px solid #000;
+}
+.description-detail{    text-align: left;}

@@ -1,0 +1,79 @@
+.expense-report-header {
+  float: left;
+  width: 100%;
+  padding: 25px 30px;
+}
+
+.category-list label {
+  float: left;
+  width: 16%;
+  margin: 0;
+  padding-top: 5px;
+}
+
+.category-list .ng-select {
+  float: left;
+  width: 84%
+}
+
+.year-selector label {
+  float: left;
+  width: 6%;
+  margin: 0;
+  padding-top: 5px;
+}
+
+.year-selector input.form-control {
+  float: left;
+  width: 94%
+}
+
+.year-selector input.form-control:focus,
+.year-selector input.form-control:hover {
+  box-shadow: none;
+}
+
+.card.expense-graph {
+  float: left;
+  width: 97.7%;
+  margin: 20px;
+}
+
+.expense-graph .chart-wrapper canvas {
+  width: 103% !important;
+}
+
+
+@media(max-width:1500px) {
+  .category-list label {
+    width: 25%;
+  }
+
+  .category-list .ng-select {
+    width: 75%;
+  }
+
+  .year-selector label {
+    width: 10%
+  }
+
+  .year-selector input.form-control {
+    width: 90%
+  }
+}
+
+
+@media(max-width:1400px) {
+  .category-list label {
+    width: 27%;
+  }
+
+  .category-list label {
+    padding-top: 7px !important;
+    font-size: 14px;
+  }
+
+  .category-list .ng-select {
+    width: 73%;
+  }
+}

@@ -1,0 +1,45 @@
+table.dataTable thead th {
+  position: relative;
+}
+
+.header-buttons {
+  margin: 0
+}
+
+.email {
+  color: #20a8d8;
+  text-transform: lowercase
+}
+
+.blue-txt {
+  color: #2196f3;
+  font-weight: 600;
+  text-align: left;
+  font-size: 17px;
+}
+
+.email-txt {
+  color: #2196f3;
+  font-weight: 400;
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+}
+
+.details-wrapper {
+  float: left;
+  width: 100%;
+  padding-top: 15px;
+}
+
+
+
+@media(max-width:1400px) {
+
+  .abc,
+  .description-wrap {
+    width: 25.1%;
+  }
+}

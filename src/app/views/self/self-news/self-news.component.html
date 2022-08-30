@@ -1,0 +1,31 @@
+<main class="message">
+  <div class="row animated fadeIn" *ngIf="allNews.length > 0;else no_news">
+    <ul>
+      <li (click)="getNewsData(news.id,newsDetail)" *ngFor="let news of allNews">
+        <div class="news-item">
+          <div class="custom-date">
+            <span class="custom-span">{{news.publish_date}}</span>
+          </div>
+          <div class="news-details">
+            <p>{{news.title}}</p>
+            <p [innerHTML]="news.description"></p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</main>
+
+<ng-template #no_news>
+  <div class="no-news">
+    No News Found
+  </div>
+</ng-template>
+
+<ng-template #newsDetail>
+  <div class="custom-popup">
+    <h3>{{modalData.title}}</h3>
+    <p [innerHTML]="modalData.description"></p>
+    <button type="button" class="cancel" (click)="closeModel()">Close</button>
+  </div>
+</ng-template>

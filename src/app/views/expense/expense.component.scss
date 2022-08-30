@@ -1,0 +1,141 @@
+input#emp-check+label:before {
+  left: -2px;
+}
+
+input[type=checkbox] {
+  position: absolute;
+  left: 43px;
+  z-index: 2;
+  top: 18px;
+  opacity: 0;
+  height: 17px;
+  width: 17px;
+}
+
+.table-wrap tr th label {
+  position: relative;
+}
+
+.table-wrap tr th input[type=checkbox]+label:before {
+  content: '';
+  background: #fff;
+  height: 17px;
+  width: 17px;
+  border: 2px solid #7a7a7a;
+  position: absolute;
+  left: 18px;
+  top: -7px;
+  border-radius: 2px;
+}
+
+.table-wrap tr th input[type=checkbox]:checked+label:after {
+  content: '\f00c';
+  font-family: fontawesome;
+  background: #000;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  left: 17px;
+  top: -7px;
+  height: 18px;
+  width: 17px;
+  font-size: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-wrap {
+  padding-left: 14px;
+  position: relative;
+}
+
+table.dataTable thead th {
+  position: relative;
+}
+
+.custom-list {
+  float: left;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.expense-right-part {
+  display: inline-block;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.custom-txt {
+  float: left;
+  width: 100%;
+  text-align: left;
+  text-transform: capitalize;
+  padding-bottom: 15px;
+}
+
+.custom-details {
+  width: 100%;
+  text-align: left;
+  font-size: 17px;
+  font-weight: 500;
+  color: #4caf50;
+  float: left;
+  padding-bottom: 12px;
+}
+
+.custom-title {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 20px;
+  color: #2196f3;
+  padding-bottom: 20px;
+}
+
+.emp-img {
+  width: 12%
+}
+
+.emp-details {
+  padding-top: 8px
+}
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+
+  .emp-img {
+    width: 15%
+  }
+
+}
+
+@media(max-width:1500px) {
+  .emp-img {
+    width: 17%
+  }
+
+  .emp-details {
+    width: 83%
+  }
+
+  .abc,
+  .description-wrap {
+    width: 25%;
+  }
+}
+
+@media(max-width:1400px) {
+  .emp-img {
+    width: 20%
+  }
+
+  .emp-details {
+    width: 80%;
+    padding-left: 0px;
+  }
+
+  .abc,
+  .description-wrap {
+    width: 24.7%;
+  }
+}

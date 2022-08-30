@@ -1,0 +1,171 @@
+<div class="main-section animated fadeIn">
+  <div class="">
+    <div class="col-md-12 header-buttons">
+      <div class="remaining">
+        <div class="leave-wrap-title">
+          <span class="custom-remain">Total Approved Leaves : </span>
+          <span class="leave-number">{{leaveCount}}</span>
+        </div>
+        <div class="leave-wrap">
+          <span class="custom-remain">Remaining Leaves : </span>
+
+          <span class="custom-leave-type">CL - <span class="leave-number">{{leavetypes['cl']}}</span> </span>
+          <span class="custom-leave-type">PL - <span class="leave-number">{{leavetypes['pl']}}</span> </span>
+          <span class="custom-leave-type">SL - <span class="leave-number">{{leavetypes['sl']}}</span> </span>
+        </div>
+      </div>
+
+      <div class="search-section search">
+
+        <!-- <input class="search-box ng-pristine ng-valid ng-touched" placeholder="Search..." [(ngModel)]="search" type="text"> -->
+        <form [formGroup]="leaveFilterForm" class="custom-wrap">
+          <select (change)="rerender()" class="custom-duration" [formControlName]="'duration'">
+            <option value="all">Duration:All</option>
+            <option value="this_month">This Month</option>
+            <option value="last_30_days">Last 30 days</option>
+            <option value="last_3_months">Last 3 Months</option>
+            <option value="last_6_months">Last 6 Months</option>
+            <option value="last_year">Last Year</option>
+          </select>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="table-wrap all-taken-leave-table">
+      <!-- <table class="table table-striped" style="width: 100%" [mfData]="(selectedResult|filter:search) " #mf="mfDataTable"
+        [mfRowsOnPage]="20">
+        <thead>
+          <tr>
+            <th style="width: 5%">
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="leave_type">Leave Type</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="leave_date">Date</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              <mfDefaultSorter by="leave_count">Days</mfDefaultSorter>
+            </th>
+            <th style="width: 15%">
+              <mfDefaultSorter by="status">Status</mfDefaultSorter>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" [(ngModel)]="item.isSelected"
+                (click)="checkone(item.id)" />
+              <label></label>
+            </td>
+            <td>
+              <h6>{{item.leave_type.leavetype}}</h6>
+            </td>
+            <td>
+              <h6>{{item.leave_date}}</h6>
+            </td>
+            <td>
+              <h6>{{item.leave_count}}</h6>
+            </td>
+            <td>
+              <h6>
+                <div [class]="item.status=='Pending' ? 'badge-info badge-pending' : (item.status=='Accept' ? 'badge-success badge-accept':'badge-danger badge-reject')"
+                  style="width: 70px">{{item.status=='Accept'?'Approved':item.status}}
+                </div>
+              </h6>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" class="custom-pagination">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table> -->
+
+
+
+
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 20px">
+              <!-- <input id="" type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+              <label for=""></label> -->
+            </th>
+            <th style="width: 100px">Leave Type</th>
+            <th style="width: 100px">Date</th>
+            <th style="width: 100px">Days</th>
+            <th style="width: 100px">Status</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="AllLeaves?.length != 0">
+          <tr *ngFor="let item of AllLeaves" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" [(ngModel)]="item.isSelected"
+                (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td><span class="table-txt">{{item.leave_type.leavetype}}</span></td>
+            <td><span class="table-txt">{{ item.leave_date.date | dateFilter }}</span></td>
+            <td><span class="table-txt lower-case-txt">{{ item.leave_count }}</span></td>
+            <td>
+              <h6>
+                <div [class]="item.status=='Pending' ? 'status pending-tag' : (item.status=='Accept' ? 'status approve-tag':'status reject-tag')">
+                  {{item.status=='Accept' ? 'Approved' : (item.status == 'Reject' ? 'Rejected':item.status)}}
+                </div>
+              </h6>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="AllLeaves?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <h4 class="leave-heading">{{leavedetail.leave_type.leavetype}}</h4>
+      <div class="row" *ngIf="leavedetail.status=='Pending'" class="status pending-tag" style="width: 70px">
+        {{leavedetail.status}}
+      </div>
+      <div class="row" *ngIf="leavedetail.status=='Accept'" class="status approve-tag" style="width: 70px">
+        Approved
+      </div>
+      <div class="row" *ngIf="leavedetail.status=='Reject'" class="status reject-tag" style="width: 70px">
+        Rejected
+      </div>
+
+      <div class="description-content">
+        <div class="right-part-content">
+          <span class="left-part">Date</span>
+          <span class="right-part">{{leavedetail.leave_date.date | dateFilter}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Half Day</span>
+          <span class="right-part">{{leavedetail.half_day ? 'Yes' : 'No'}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Days</span>
+          <span class="right-part">{{leavedetail.leave_count}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Reason</span>
+          <span class="right-part">{{leavedetail.reason}}</span>
+        </div>
+      </div>
+    </div>
+    <ng-template class="test_content" #other_content>
+      <div class="abc">
+        <h3> Select a row to view it's Detail</h3>
+      </div>
+    </ng-template>
+  </div>
+</div>

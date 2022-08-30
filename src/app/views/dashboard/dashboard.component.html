@@ -1,0 +1,400 @@
+<div class="main-class">
+  <div class="animated fadeIn">
+    <div class="active-tabs">
+      <div class="active-emps">
+        <span class="active-employee">Active Employees</span>
+        <h4 class="att-count">{{activeEmpCount}}</h4>
+      </div>
+      <div class="jobs-info">
+        <ng-container *ngIf="job_cardData">
+          <div class="row-id1 jobs-caption">
+            <a [routerLink]="['../','jobs','today-scheduled']">
+              <span class="interview-txt">Today's Interviews -</span>
+              <span class="interview-count">{{job_cardData.today_interview}}</span>
+            </a>
+          </div>
+          <div class="row-id1 jobs-caption">
+            <a [routerLink]="['../','jobs','scheduled']">
+              <span class="interview-txt">Sche. Candidates -</span>
+              <span class="interview-count">{{job_cardData.scheduled_count}}</span>
+            </a>
+          </div>
+          <div class="row-id1 jobs-caption">
+            <a [routerLink]="['../','jobs','applications']">
+              <span class="interview-txt">Total Candidates -</span>
+              <span class="interview-count">{{job_cardData.total_candidate}}</span>
+            </a>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card custom-card pending-approvals-tab">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-bell" aria-hidden="true"></i> Pending Approvals</h4>
+          </div>
+          <div class="pending-approval-content">
+            <div class="tab-wrap">
+              <tabset>
+                <tab>
+                  <ng-template tabHeading><i class="icon-rocket"></i> Recent Leaves
+                    <span class="leave-count" *ngIf="recentLeaveslLen > 0">{{recentLeaveslLen}}</span></ng-template>
+                  <div class="myclass">
+                    <ul class="recent-leaves-list" *ngIf="recentLeaveslLen > 0;else pandingTemplate">
+                      <ng-container *ngFor="let leave of recentLeaves">
+                        <li *ngIf="leave[0].status=='Pending'" placement="right" [outsideClick]="true"
+                          [popover]="popTemplate" class="recent-leaves-inner">
+                          <span class="dash-emp-img pending-leaves-img">
+                            <img *ngIf="leave.profile_image ;else other_content" [src]=IMAGE_URL+leave.profile_image
+                              class="img-avatar bday-img" />
+                            <ng-template #other_content>
+                              <img [src]="employee_image" class="img-avatar" />
+                            </ng-template>
+                          </span>
+
+                          <div class="dash-emp-details">
+                            <a class="person-name">{{leave.firstname}} {{leave.lastname}}{{leave[0].half_day ? '- HDL' : ''}}</a>
+                            <span class="dash-emp-content">{{leave[0].leave_date.date | dateFilter}} -
+                              {{leave[0].reason}}</span>
+                          </div>
+
+
+                          <div class="action-btns selective-bttn" *ngIf="leave">
+                            <button type="button" (click)="openModal(leave[0].id,approve);$event.stopPropagation()"
+                              class="tick-btn">
+                              <i class="fa fa-check"></i>
+                            </button>
+                            <button type="button" (click)="openModal(leave[0].id,reject);$event.stopPropagation()"
+                              class="cross-btn">
+                              <i class="fa fa-close"></i>
+                            </button>
+                          </div>
+                          <ng-template #popTemplate>
+                            <div class="custom-popover">
+                              <h5 class="popup-title">Leave Application</h5>
+                              <div class="popup-detail">
+                                <span class="popup-left-part">Applied By : </span>
+                                <span class="popup-right-part">{{leave.firstname}} {{leave.lastname}}</span>
+                              </div>
+                              <div class="popup-detail">
+                                <span class="popup-left-part">Leave Type : </span>
+                                <span class="popup-right-part">{{leave.leavetype}}</span>
+                              </div>
+                              <div class="popup-detail">
+                                <span class="popup-left-part">Date : </span>
+                                <span class="popup-right-part">{{leave[0].leave_date.date | dateFilter}}</span>
+                              </div>
+                              <div class="popup-detail">
+                                <span class="popup-left-part">Days : </span>
+                                <span class="popup-right-part">{{leave[0].leave_count}}</span>
+                              </div>
+                              <div class="popup-detail">
+                                <span class="popup-left-part">Half Day : </span>
+                                <span class="popup-right-part">{{leave[0].half_day ? 'Yes' :'No'}}</span>
+                              </div>
+                              <div class="popup-detail">
+                                <span class="popup-left-part">Reason : </span>
+                                <span class="popup-right-part">{{leave[0].reason}}</span>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </div>
+                  <ng-template #pandingTemplate>
+                    <div class="empty-msg-txt">
+                      No Pending leaves
+                    </div>
+                  </ng-template>
+                </tab>
+                <tab>
+                  <ng-template tabHeading><i class="icon-rocket"></i> Today's Leaves
+                    <span class="leave-count" *ngIf="todayLeavesLen > 0">{{todayLeavesLen}}</span></ng-template>
+                  <ul class="recent-leaves-list" *ngIf="todayLeaves.length > 0;else todayLeaveTemplate">
+                    <li *ngFor="let leave of todayLeaves" placement="right" [outsideClick]="true"
+                      [popover]="popTemplate" class="recent-leaves-inner">
+                      <span class="dash-emp-img pending-leaves-img">
+                        <img *ngIf="leave.profile_image ;else other_content" [src]=IMAGE_URL+leave.profile_image
+                          class="img-avatar bday-img" />
+                        <ng-template #other_content>
+                          <img [src]="employee_image" class="img-avatar" />
+                        </ng-template>
+                      </span>
+                      <div class="dash-emp-details">
+                        <a class="person-name">{{leave.firstname}} {{leave.lastname}}{{leave[0].half_day ? '- HDL' : ''}}</a>
+                        <span class="dash-emp-content">{{leave[0].leave_date.date | dateFilter}} -
+                          {{leave[0].reason}}</span>
+                      </div>
+                      <ng-container *ngIf="!leave[0]['final_approve'];else isApproved">
+                        <div class="action-btns selective-bttn" *ngIf="leave">
+                          <button type="button" (click)="openModal(leave[0].id,approveFinal);$event.stopPropagation()"
+                            class="tick-btn">
+                            <i class="fa fa-check"></i>
+                          </button>
+                          <button type="button" (click)="openModal(leave[0].id,reject);$event.stopPropagation()"
+                            class="cross-btn">
+                            <i class="fa fa-close"></i>
+                          </button>
+                        </div>
+                      </ng-container>
+                      <ng-template #isApproved>
+                        <div class="approved-tag">
+                          <label class="status approve-tag">Approved</label>
+                        </div>
+                      </ng-template>
+                      <ng-template #popTemplate>
+                        <div class="custom-popover">
+                          <h5 class="popup-title">Leave Application</h5>
+                          <div class="popup-detail">
+                            <span class="popup-left-part">Applied By : </span>
+                            <span class="popup-right-part">{{leave.firstname}} {{leave.lastname}}</span>
+                          </div>
+                          <div class="popup-detail">
+                            <span class="popup-left-part">Leave Type : </span>
+                            <span class="popup-right-part">{{leave.leavetype}}</span>
+                          </div>
+                          <div class="popup-detail">
+                            <span class="popup-left-part">Date : </span>
+                            <span class="popup-right-part">{{leave[0].leave_date.date | dateFilter}}</span>
+                          </div>
+                          <div class="popup-detail">
+                            <span class="popup-left-part">Days : </span>
+                            <span class="popup-right-part">{{leave[0].leave_count}}</span>
+                          </div>
+                          <div class="popup-detail">
+                            <span class="popup-left-part">Half Day : </span>
+                            <span class="popup-right-part">{{leave[0].half_day ? 'Yes' :'No'}}</span>
+                          </div>
+                          <div class="popup-detail">
+                            <span class="popup-left-part">Reason : </span>
+                            <span class="popup-right-part">{{leave[0].reason}}</span>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </li>
+                  </ul>
+                  <ng-template #todayLeaveTemplate>
+                    <div class="empty-msg-txt">
+                      No one is on leave today
+                    </div>
+                  </ng-template>
+                </tab>
+                <tab>
+                  <app-dashboard-expense></app-dashboard-expense>
+                </tab>
+              </tabset>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card custom-card todays-attendance-tab">
+          <div class="card-header custom-blue todays-attendance-tabdash-emp-content">
+            <h4 class="c-white"><i class="fa fa-clock-o" aria-hidden="true"></i> Today's Attendance</h4>
+          </div>
+          <div class="todays-attendance-content">
+            <app-dashboard-attendance></app-dashboard-attendance>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card custom-card calender-tab">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-clock-o" aria-hidden="true"></i> Calender</h4>
+          </div>
+          <div class="calender-content">
+            <app-dashboard-calender></app-dashboard-calender>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="card custom-card upcoming-bday-tab">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Upcoming Birthdays</h4>
+          </div>
+          <div>
+            <div class="upcoming-bday-content">
+              <ul class="recent-leaves-list" *ngIf="birthDays.length > 0;else bdayTemplate">
+                <li *ngFor="let bday of today_birthday" class="custom-li-list">
+                  <span class="dash-emp-img">
+                    <img style="width: 38px; height: 38px" *ngIf="bday.profile_image ;else other_content"
+                      [src]=IMAGE_URL+bday.profile_image class="img-avatar bday-img" />
+                    <ng-template #other_content>
+                      <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                    </ng-template>
+                  </span>
+
+                  <div class="dash-emp-details">
+                    <a class="person-name">{{bday.firstname}}
+                      {{bday.lastname}} <span class="today-bday">{{bday.isToday ? '(today)' : ''}}</span></a>
+                    <span class="dash-emp-content">{{bday.date_of_birth.date | date:'dd-MM-'}}{{currentYear}}</span>
+                  </div>
+                </li>
+                <li *ngFor="let bday of month_birthday" class="custom-li-list">
+                  <span class="dash-emp-img">
+                    <img style="width: 38px; height: 38px" *ngIf="bday.profile_image ;else other_content"
+                      [src]=IMAGE_URL+bday.profile_image class="img-avatar bday-img" />
+                    <ng-template #other_content>
+                      <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                    </ng-template>
+                  </span>
+
+                  <div class="dash-emp-details">
+                    <a class="person-name">{{bday.firstname}}
+                      {{bday.lastname}} <span class="today-bday">{{bday.isToday ? '(today)' : ''}}</span></a>
+                    <span class="dash-emp-content">{{bday.date_of_birth.date | date:'dd-MM-'}}{{currentYear}}</span>
+                  </div>
+                </li>
+              </ul>
+              <ng-template #bdayTemplate>
+                <div class="empty-msg-txt">
+                  No birthdays in this month
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="card custom-card increments-tab">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-clock-o" aria-hidden="true"></i> Increments - {{currentMonth}}</h4>
+          </div>
+          <div class="increments-content">
+            <ul class="recent-leaves-list" *ngIf="increments.length > 0;else incTemplate">
+              <li *ngFor="let emp of increments" class="custom-li-list">
+
+                <span class="dash-emp-img">
+                  <img *ngIf="emp.profile_image ;else other_content" [src]=IMAGE_URL+emp.profile_image
+                    class="img-avatar bday-img" />
+                  <ng-template #other_content>
+                    <img [src]="employee_image" class="img-avatar" />
+                  </ng-template>
+                </span>
+                <div class="dash-emp-details">
+                  <a [routerLink]="['../','self','profile',emp.id]" class="person-name">{{emp.firstname}}
+                    {{emp.lastname}}</a>
+                  <span class="dash-emp-content">{{emp.increment_date.date | date:'dd-MM-yyyy'}}</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <ng-template #incTemplate>
+            <div class="empty-msg-txt">
+              No Increments in this month
+            </div>
+          </ng-template>
+        </div>
+
+
+
+        <div class="card custom-card on-probation-tab">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-undo" aria-hidden="true"></i> On Probation</h4>
+          </div>
+          <div class="on-probation-content">
+            <ul class="recent-leaves-list" *ngIf="probationEmp.length > 0;else probTemplate">
+              <li *ngFor="let emp of probationEmp" class="custom-li-list">
+
+
+                <span class="dash-emp-img">
+                  <img *ngIf="emp.profile_image ;else other_content" [src]=IMAGE_URL+emp.profile_image
+                    class="img-avatar bday-img" />
+                  <ng-template #other_content>
+                    <img [src]="employee_image" class="img-avatar" />
+                  </ng-template>
+                </span>
+                <div class="dash-emp-details">
+                  <a [routerLink]="['../','self','profile',emp.id]" class="person-name">{{emp.firstname}}
+                    {{emp.lastname}}</a>
+                  <span class="dash-emp-content">{{emp.probation_end_date.date | dateFilter}}</span>
+                </div>
+
+
+              </li>
+            </ul>
+          </div>
+          <ng-template #probTemplate>
+            <div class="empty-msg-txt">
+              No one is on probation period
+            </div>
+
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card custom-card expense-report-tab">
+          <div class="card-header custom-blue">
+            <h4 class="c-white"><i class="fa fa-bar-chart" aria-hidden="true"></i> Expense Report</h4>
+          </div>
+          <div>
+            <app-dashboard-report></app-dashboard-report>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #approve>
+  <!-- <div class="modal-dialog modal-confirm"> -->
+  <!-- <div class="modal-content"> -->
+  <!-- <div class="modal-body text"> -->
+  <div class="center img-center">
+    <img src="../../../assets/img/info.png" class="img-avatar" alt="admin@bootstrapmaster.com" />
+  </div>
+  <h4 class="modal-title title-center">Continue?</h4>
+  <div class="modal-body modal-body-txt">
+    <p class="delete-txt">Are you sure you want to approve this leave ?</p>
+  </div>
+  <div class="modal-footer-buttons">
+    <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+    <button type="button" class="modal-delete-button" (click)="onApprove()">Approve</button>
+  </div>
+  <!-- </div> -->
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-template>
+
+
+<ng-template #reject>
+  <h4 class="modal-title title-center custom-reject-modal">Reject Leave</h4>
+  <form [formGroup]="rejectForm" (ngSubmit)="onReject()" #rejectform="ngForm">
+    <div class="modal-body modal-body-txt">
+      <p class="delete-txt">Are you sure you want to reject this leave ?</p>
+      <input class="form-control modal-input-box" formControlName="reject_reason" placeholder="reject reason"
+        [ngClass]="rejectForm.get('reject_reason').invalid && rejectform.submitted ? 'is-invalid':''">
+      <div class="invalid-feedback" *ngIf="rejectForm.get('reject_reason').invalid && rejectform.submitted">
+        Reject Reason is Required
+      </div>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="submit" class="modal-delete-button">Reject</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #approveFinal>
+  <div class="center img-center"><img src="../../../assets/img/avatars/info.png" class="img-avatar"
+      alt="admin@bootstrapmaster.com" /></div>
+  <h4 class="modal-title title-center">Continue?</h4>
+  <div class="modal-body modal-body-txt">
+    <p>Are you sure you want to grant this leave?.</p>
+  </div>
+  <div class="modal-footer modal-footer-buttons">
+    <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+    <button type="button" class="modal-delete-button" (click)="onFinalApprove()">Accept</button>
+  </div>
+</ng-template>

@@ -1,0 +1,332 @@
+<div class="wrapper-class animated fadeIn">
+  <main class="message">
+    <div class="role-header inner-header">
+      <div class="col-md-12">
+        <button type="button" class="new-button" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+
+    </div>
+
+    <div class="form-wrapper">
+      <form class="m-form custom-form" [formGroup]="roleEditForm" (ngSubmit)="SaveRole()">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card comman-card-wrap">
+              <div class="card-header role-blue-bg">
+                <h4 class="c-white">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i> Role Details</h4>
+              </div>
+              <div class="card-body form-padding">
+                <div class="row">
+                  <div class="col-md-12 form-group">
+                    <input type="hidden" formControlName="id" [(ngModel)]="role.id">
+                    <label class="f-700 control-label role-heading">Name</label>
+                    <input type="text" formControlName="name" [(ngModel)]="role.name"
+                      class="form-control input-sm fc-alt role-details-input">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 form-group">
+                    <label class="f-700 control-label role-heading">Description</label>
+                    <textarea name="description" formControlName="description" [(ngModel)]="role.description"
+                      class="form-control input-sm fc-alt role-details-txtarea"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header role-red-bg">
+                <h4 class="c-white">
+                  <i class="fa fa-lock" aria-hidden="true"></i> Permissions</h4>
+              </div>
+
+              <!-- manager permissions -->
+              <!-- <label>
+                <h3>Manager Permissions</h3>
+                <input type="checkbox" formControlName="manager-all" [(ngModel)]="managerCheckAll" (change)="managerAll($event)">
+              </label> -->
+              <!-- <div formArrayName="manager-permissions" class="manager-permission-wrap">
+                <div class="card-body form-padding single-mange-permission" *ngFor="let per of roleEditForm.get('manager-permissions')['controls']; let i=index"
+                  [formGroupName]="i">
+                  <div class="">
+                    <div class="">
+                      <div class="form-group single-wrapper">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" formControlName="status" [(ngModel)]="managerPermissions[i]['isChecked']"
+                              (change)="managerCheck()">
+                            <i class="input-helper"></i>
+                            <div class="txt-wrap">
+                              <strong>
+                                <h4>{{managerPermissions[i]['category']['key_text']}}</h4>
+                              </strong>
+                              <small>
+                                <h5>{{managerPermissions[i]['category']['value_text']}}</h5>
+                              </small>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <!-- end -->
+
+
+              <label class="role-manager-title">
+                <div class="role-checkbox-box">
+                  <input type="checkbox" formControlName="manager-all" [(ngModel)]="managerCheckAll"
+                    (change)="managerAll($event,true)">
+                  <i class="input-helper"></i>
+                </div>
+                <h3>Manager Permissions</h3>
+              </label>
+
+              <div formArrayName="manager-permissions" class="manager-permission-wrap" *ngIf="managerPermissions">
+                <div class="card-body form-padding single-mange-permission"
+                  *ngFor="let per of roleEditForm.get('manager-permissions')['controls']; let i=index"
+                  [formGroupName]="i">
+                  <div class="form-group single-wrapper">
+                    <div class="role-checkbox-box data-check">
+                      <input type="checkbox" formControlName="status" [(ngModel)]="managerPermissions[i]['status']"
+                        (change)="managerCheckMain($event,i,true)">
+                      <i class="input-helper"></i>
+                    </div>
+                    <div class="role-manage-title">
+                      <strong>
+                        <h4>{{managerPermissions[i]['title']}}</h4>
+                      </strong>
+                    </div>
+                    <div class="wrrapper-2 role-sub-tabs" formArrayName="main_permission">
+                      <div class="custom_main_permissions" [formGroupName]="j"
+                        *ngFor="let mainPer of per['controls']['main_permission']['controls']; let j=index">
+                        <div class="role-permission-wrapper">
+                          <div class="role-checkbox-box sub-part">
+                            <input type="checkbox" formControlName="status"
+                              [(ngModel)]="managerPermissions[i]['per'][j]['status']"
+                              (change)="checkMainTabPermissions(i,true)">
+                            <i class="input-helper"></i>
+                          </div>
+                          <div class="role-manage-title">
+                            <small>
+                              <h5>{{managerPermissions[i]['per'][j]['title']}}</h5>
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <ng-container *ngIf="managerPermissions[i]['tabs']">
+                      <div class="wrrapper-3 sub-sub-part" formArrayName="sub_tab">
+                        <div [formGroupName]="k"
+                          *ngFor="let tab of per['controls']['sub_tab']['controls']; let k=index">
+                          <div class="sub-tab-intend">
+                            <div class="role-permission-wrapper">
+                              <div class="role-checkbox-box three-part-sub">
+                                <input type="checkbox" formControlName="status"
+                                  [(ngModel)]="managerPermissions[i]['tabs'][k]['status']"
+                                  (change)="managerSubTab($event,i,k,true)">
+                                <i class="input-helper"></i>
+                              </div>
+
+                              <div class="role-manage-title">
+                                <strong>
+                                  <h4>{{managerPermissions[i]['tabs'][k]['title']}}</h4>
+                                </strong>
+                              </div>
+                            </div>
+
+                            <div class="wrrapper-4 role-sub-tabs" formArrayName="main_permission">
+                              <div [formGroupName]="l" class="custom_main_permissions"
+                                *ngFor="let subTab of tab['controls']['main_permission']['controls']; let l=index">
+                                <div class="role-permission-wrapper">
+                                  <div class="sub-tab-intend inner-sub-part">
+                                    <div class="role-checkbox-box">
+                                      <input type="checkbox" formControlName="status"
+                                        [(ngModel)]="managerPermissions[i]['tabs'][k]['per'][l]['status']"
+                                        (change)="checkSubTabPermissions(i,k,true)">
+                                      <i class="input-helper"></i>
+                                    </div>
+
+                                    <div class="role-manage-title">
+                                      <small>
+                                        <h5>{{managerPermissions[i]['tabs'][k]['per'][l]['title']}}</h5>
+                                      </small>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <label class="role-manager-title">
+                <div class="role-checkbox-box">
+                  <input type="checkbox" formControlName="self-all" [(ngModel)]="selfCheckAll"
+                    (change)="managerAll($event,false)">
+                  <i class="input-helper"></i>
+                </div>
+                <h3>Self Permissions</h3>
+              </label>
+
+
+              <div formArrayName="self-permissions" class="manager-permission-wrap" *ngIf="selfPermissions">
+                <div class="card-body form-padding single-mange-permission"
+                  *ngFor="let per of roleEditForm.get('self-permissions')['controls']; let i=index" [formGroupName]="i">
+                  <div class="form-group single-wrapper">
+                    <div class="role-checkbox-box data-check">
+                      <input type="checkbox" formControlName="status" [(ngModel)]="selfPermissions[i]['status']"
+                        (change)="managerCheckMain($event,i)">
+                      <i class="input-helper"></i>
+                    </div>
+                    <div class="role-manage-title">
+                      <strong>
+                        <h4>{{selfPermissions[i]['title']}}</h4>
+                      </strong>
+                    </div>
+                    <div class="wrrapper-2 role-sub-tabs" formArrayName="main_permission">
+                      <div [formGroupName]="j" class="custom_main_permissions"
+                        *ngFor="let mainPer of per['controls']['main_permission']['controls']; let j=index">
+                        <div class="role-permission-wrapper">
+                          <div class="role-checkbox-box sub-part">
+                            <input type="checkbox" formControlName="status"
+                              [(ngModel)]="selfPermissions[i]['per'][j]['status']"
+                              (change)="checkMainTabPermissions(i)">
+                            <i class="input-helper"></i>
+                          </div>
+                          <div class="role-manage-title">
+                            <small>
+                              <h5>{{selfPermissions[i]['per'][j]['title']}}</h5>
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <ng-container *ngIf="selfPermissions[i]['tabs']">
+                      <div class="wrrapper-3 sub-sub-part" formArrayName="sub_tab">
+                        <div [formGroupName]="k"
+                          *ngFor="let tab of per['controls']['sub_tab']['controls']; let k=index">
+                          <div class="sub-tab-intend">
+                            <div class="role-permission-wrapper">
+                              <div class="role-checkbox-box three-part-sub">
+                                <input type="checkbox" formControlName="status"
+                                  [(ngModel)]="selfPermissions[i]['tabs'][k]['status']"
+                                  (change)="managerSubTab($event,i,k)">
+                                <i class="input-helper"></i>
+                              </div>
+
+                              <div class="role-manage-title">
+                                <strong>
+                                  <h4>{{selfPermissions[i]['tabs'][k]['title']}}</h4>
+                                </strong>
+                              </div>
+                            </div>
+
+                            <div class="wrrapper-4 role-sub-tabs" formArrayName="main_permission">
+                              <div [formGroupName]="l" class="custom_main_permissions"
+                                *ngFor="let subTab of tab['controls']['main_permission']['controls']; let l=index">
+                                <div class="role-permission-wrapper">
+                                  <div class="sub-tab-intend">
+                                    <div class="role-checkbox-box inner-sub-part">
+                                      <input type="checkbox" formControlName="status"
+                                        [(ngModel)]="selfPermissions[i]['tabs'][k]['per'][l]['status']"
+                                        (change)="checkSubTabPermissions(i,k)">
+                                      <i class="input-helper"></i>
+                                    </div>
+
+                                    <div class="role-manage-title">
+                                      <small>
+                                        <h5>{{selfPermissions[i]['tabs'][k]['per'][l]['title']}}</h5>
+                                      </small>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+              <!-- self permissions -->
+              <!-- <label>
+                <h3>Self Permissions</h3>
+                <input type="checkbox" formControlName="self-all" [(ngModel)]="selfCheckAll" (change)="selfAll($event)">
+              </label>
+              <div formArrayName="self-permissions" class="manager-permission-wrap">
+                <div class="card-body form-padding single-mange-permission" *ngFor="let per of roleEditForm.get('self-permissions')['controls']; let i=index"
+                  [formGroupName]="i">
+                  <div class="">
+                    <div class="">
+                      <div class="form-group single-wrapper">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" formControlName="status" [(ngModel)]="selfPermissions[i]['isChecked']"
+                              (change)="selfCheck()">
+                            <i class="input-helper"></i>
+                            <div class="txt-wrap">
+                              <strong>
+                                <h4>{{selfPermissions[i]['category']['key_text']}}</h4>
+                              </strong>
+                              <small>
+                                <h5>{{selfPermissions[i]['category']['value_text']}}</h5>
+                              </small>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <!-- end -->
+
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group pull-center">
+              <button class="btn btn-primary updatebtn" type="submit">
+                <span>{{!!id?'Update':'Create'}}</span>
+              </button>
+              <button class="btn cancelbtn" type="button" (click)="cancel()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </main>
+</div>

@@ -1,0 +1,185 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="">
+      <div class="col-md-12 header-buttons">
+        <button type="button" class="new-button" [routerLink]="'create-contact'" [appCheckPermission]="'CONTACTS.ADD'">
+          <i class="fa fa-plus"></i>
+          New
+        </button>
+        <button *ngIf="allcheck_id_count==1" type="button" class="edit-button" (click)="EditContact()"
+          [appCheckPermission]="'CONTACTS.EDIT'">
+          <i class="fa fa-pencil"></i>
+          Edit
+        </button>
+        <button *ngIf="allcheck_id_count" type="button" class="del-button" (click)="deleteModel(delete)"
+          [appCheckPermission]="'CONTACTS.DELETE'">
+          <i class="fa fa-trash "></i>
+          Delete
+        </button>
+
+        <!-- <div class="search-section">
+        <input type="text" placeholder="Search..." [(ngModel)]="search" class="search-box">
+      </div> -->
+      </div>
+
+      <div class="table-wrap manger-contact-table">
+
+
+
+
+        <!-- <table class="table table-striped" style="width: 100%" [mfData]="(contact|filter:search)" #mf="mfDataTable" [mfRowsOnPage]=rowonpage>
+        <thead>
+          <tr class="title">
+            <th style="width: 8%">
+              <input type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+              <label></label>
+            </th>
+            <th style="width: 9%">
+              <mfDefaultSorter by="name">Name</mfDefaultSorter>
+            </th>
+            <th style="width: 18%">
+              <mfDefaultSorter by="number">Contact</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="email">Email</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="service">Service</mfDefaultSorter>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol" [(ngModel)]="item.isSelected"
+                (click)="checkone(item.id)" />
+              <label></label>
+
+            </td>
+            <td>{{item.name}}</td>
+            <td>{{item.number}}</td>
+            <td class="email-wrap">
+              <a href="mailTo:{{item.mail}}">{{item.email}}</a>
+            </td>
+            <td>{{item.service}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <td colspan="6">
+
+          </td>
+
+          <tr>
+            <td colspan="6">
+
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table> -->
+
+
+
+
+
+
+        <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+          class="row-border hover" style="width: 100%">
+          <thead>
+            <tr class="custom-th">
+              <th style="width: 8%">
+                <input type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+                <label></label>
+              </th>
+              <th style="width: 9%">Name</th>
+              <th style="width: 18%">Contact</th>
+              <th style="width: 20%">Email</th>
+              <th style="width: 20%">Service</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="contact?.length != 0">
+            <tr *ngFor="let item of contact" (click)="checkone(item.id);$event.stopPropagation()">
+              <td>
+                <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                  [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" /><label></label>
+              </td>
+              <td><span class="table-txt">{{item.name}}</span></td>
+              <td><span class="table-txt">{{item.number}}</span></td>
+              <td>
+                <a href="mailTo:{{item.mail}}" class="email">{{item.email}}</a>
+              </td>
+              <td><span class="table-txt">{{item.service}}</span></td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="contact?.length == 0">
+            <tr>
+              <td colspan="6" class="no-data-available">No data!</td>
+            </tr>
+          <tbody>
+        </table>
+
+
+
+
+      </div>
+
+
+      <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+        <div class="blue-txt">Contact Info</div>
+
+        <div class="description-detail">
+          <div class="right-part-content">
+            <span class="left-part">Name</span>
+            <span class="right-part">{{contactdetail.name}}</span>
+          </div>
+          <div class="right-part-content">
+            <span class="left-part">Email</span>
+            <span class="right-part email-txt"><a href="mailto:{{contactdetail.email}}"> {{contactdetail.email}}</a></span>
+          </div>
+          <div class="right-part-content">
+            <span class="left-part">Contact Number</span>
+            <span class="right-part">{{contactdetail.number}}</span>
+          </div>
+          <div class="right-part-content">
+            <span class="left-part">Service</span>
+            <span class="right-part">{{contactdetail.service}}</span>
+          </div>
+          <div class="right-part-content">
+            <span class="left-part">Description</span>
+            <span class="right-part">{{contactdetail.description}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+  <ng-template #delete>
+    <!-- <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="center">
+            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+          </div>
+          <h4 class="modal-title">Are you sure?</h4>
+          <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button>
+        </div> -->
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button class="modal-cancel-button" type="button" (click)="closeModel()">Cancel</button>
+      <button class="modal-delete-button" type="button" (click)="deleteContact()">Delete</button>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+</main>

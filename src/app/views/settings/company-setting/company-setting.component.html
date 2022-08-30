@@ -1,0 +1,112 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <form class="m-form" name="CompanySettingForm" [formGroup]="ComppanySettingForm" (ngSubmit)="SaveCompany()">
+      <div class="">
+        <div class="custom-main">
+          <div class="card">
+            <div class="card-header" style="background-color:#42A5F5;color: white;">
+              <h4 class="c-white"><i class="fa fa-cog" aria-hidden="true"></i> Settings</h4>
+            </div>
+            <div class="card-body form-padding">
+              <h5>Localization</h5>
+              <div class="row">
+                <!-- <div class="col-md-4 form-group">
+                <label class="f-700 control-label">Currency</label>
+                <select name="currency" class="form-control input-sm fc-alt" formControlName="currency" [(ngModel)]="company.currency">
+                  <option *ngFor="let currency of currencys; let index = index" value="{{currency.id}}">
+                    {{currency.value_text}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-2 form-group">
+                <label class="f-700 control-label">Symbol</label>
+                <input type="text" name="currency_symbol" formControlName="currency_symbol" [(ngModel)]="company.currency_symbol"
+                  class="form-control input-sm fc-alt">
+              </div>
+              <div class="col-md-6 form-group">
+                <label class="f-700 control-label">Timezone </label>
+                <select name="timezone" class="form-control input-sm fc-alt" formControlName="timezone" [(ngModel)]="company.timezone">
+                  <option *ngFor="let timezone of timezones; let index = index" value="{{timezone.id}}">
+                    {{timezone.value_text}}
+                  </option>
+                </select>
+              </div> -->
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Date and Time Format</label>
+                  <select name="timezone" class="form-control input-sm fc-alt" formControlName="datetimeformat"
+                    [(ngModel)]="company.datetimeformat">
+                    <option *ngFor="let datetime of datetimes; let index = index" value="{{datetime.id}}">
+                      {{datetime.value_text}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body form-padding top-bottom-padding">
+              <h5>Financial Year</h5>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Expense & Payroll Start Month</label>
+                  <select name="financial_year_start_month" formControlName="financial_year_start_month" [(ngModel)]="company.financial_year_start_month"
+                    class="form-control input-sm fc-alt">
+                    <option *ngFor="let finansial_start_month of finansial_start_months; let index = index" value="{{finansial_start_month.id}}">{{finansial_start_month.value_text}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Leaves Start Month
+                  </label>
+                  <select name="leave_start_month" formControlName="leave_start_month" [(ngModel)]="company.leave_start_month"
+                    class="form-control input-sm fc-alt">
+                    <option *ngFor="let finansial_start_month of finansial_start_months; let index = index" value="{{finansial_start_month.id}}">{{finansial_start_month.value_text}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body form-padding top-bottom-padding">
+              <h5>Default BreakTime</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Time In Minutes
+                  </label>
+                  <input type="text" name="default_break_time" [(ngModel)]="company.default_break_time" formControlName="default_break_time"
+                         class="form-control input-sm fc-alt">
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card-body form-padding">
+                        <h5>Email</h5>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="f-700 control-label">Reply To Name</label>
+                                <input type="text" name="from_name" formControlName="from_name" [(ngModel)]="company.from_name"
+                                    class="form-control input-sm fc-alt">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="f-700 control-label">Reply To Email</label>
+                                <input type="text" name="from_email" formControlName="from_email" [(ngModel)]="company.from_email"
+                                    [ngClass]="(ComppanySettingForm.get('from_email').touched && ComppanySettingForm.get('from_email').invalid)?'is-invalid':''"
+                                    class="form-control input-sm fc-alt">
+                                <div class="invalid-feedback" *ngIf="ComppanySettingForm.get('from_email').touched && ComppanySettingForm.get('from_email').invalid">
+                                    The from email field is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group button-wrap">
+                <button class="btn btn-primary btn-save" type="submit" *ngIf="editAllowed">
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</main>

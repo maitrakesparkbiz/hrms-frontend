@@ -1,0 +1,94 @@
+<div class="row animated fadeIn">
+  <div class="text-center">
+
+    <div class="col-md-4 cus-month">
+      <div class="btn btn-outline-secondary" (click)="decrement()" [hidden]="(viewDate | date:'MMM') == 'Jan'">
+        <i class="fa fa-angle-left"></i>
+      </div>
+      <div class="custom-month">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      </div>
+      <div class="btn btn-outline-secondary right" (click)="increment()" [hidden]="(viewDate | date:'MMM') == 'Dec'">
+        <i class="fa fa-angle-right"></i>
+      </div>
+    </div>
+    <div class="col-md-5 custom-color">
+      <div class="color-code">
+        <div class="color-1 event">
+          <span class="custom-event-span"></span>
+          <p class="custom-event-paragraph">Event</p>
+        </div>
+        <div class="color-1">
+          <span class="custom-year-span"></span>
+          <p class="custom-year-paragraph">Year Holiday</p>
+        </div>
+        <div class="color-1">
+          <span class="custom-holiday-span"></span>
+          <p class="custom-holiday-paragraph">Weekend Holiday</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-2">
+
+    </div>
+  </div>
+  <div class="col-md-9 customer-calender">
+    <div [ngSwitch]="view" *ngIf="afterChangeStatus && events.length > 0">
+      <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [cellTemplate]="customCellTemplate">
+      </mwl-calendar-month-view>
+    </div>
+    <ng-template #customCellTemplate let-day="day" let-locale="locale">
+      <div class="cal-cell-top">
+        <!-- <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span> -->
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+      </div>
+      <div *ngIf="day.events?.length > 0">
+        <div *ngFor="let days of day.events">
+          <!-- <span [class]=days.cssClass *ngIf="days['cssClass']=='custom-holiday'" (click)="editOtherHoliday(days);$event.stopPropagation()">{{days['title']}}</span>-->
+          <span [class]=days.cssClass *ngIf="days['cssClass']=='custom-holiday'" (click)="editOtherHoliday(days);$event.stopPropagation()">{{days['title']}}</span>
+          <span [class]=days.cssClass *ngIf="days['cssClass']!=='custom-holiday'" (click)="editYearEvent(days['id']);$event.stopPropagation()">{{days['title']}}</span>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="col-md-3 custom-description">
+    <div *ngIf="editStatus;else otherPart" class="description">
+      <h4>{{editEventArray.event_name}}</h4>
+      <h5>Start</h5>
+      <span class="lower-case-txt">{{editEventArray.start_date.date ?
+        (editEventArray.start_date.date | dateFilter) :
+        (editEventArray.start_date| dateFilter)}}</span>
+      <h5>End</h5>
+      <span class="lower-case-txt">{{editEventArray.end_date.date ?
+        (editEventArray.end_date.date | dateFilter) :
+        (editEventArray.end_date| dateFilter)}}</span>
+      <div *ngIf="editEventArray.description!== undefined">
+        <h5>Details</h5>
+        <span [innerHTML]="editEventArray.description" class="lower-case-txt"></span>
+      </div>
+      <div class="employees" *ngIf="editEventArray.assoc_emp?.length > 0">
+        <h5>Employees</h5>
+        <div class="employee-profile" *ngFor="let item of editEventArray.assoc_emp">
+          <div class="emp-img">
+            <img style="width: 38px; height: 38px" *ngIf="item.profile_image;else other_content" [src]=IMAGE_URL+item.profile_image
+              class="img-avatar" />
+          </div>
+          <ng-template #other_content>
+            <div class="emp-img">
+              <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+            </div>
+          </ng-template>
+          <div class="emp-details">
+            <a>{{item.firstname}} {{item.lastname}} </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #otherPart>
+      <div class="custom-text">Select an event to view it's details here</div>
+    </ng-template>
+  </div>
+</div>

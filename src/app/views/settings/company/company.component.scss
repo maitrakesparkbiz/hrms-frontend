@@ -1,0 +1,264 @@
+.pull-left {
+  float: left;
+}
+
+main.message {
+  width: 100%;
+  margin-top: 2%;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.card-header {
+  padding: 13px 13px 13px 18px;
+  background-color: #039be5 !important;
+  border-radius: 0;
+}
+
+.card-header h4 {
+  margin-bottom: 0;
+  font-size: 16px;
+
+  font-weight: 700
+}
+
+label.f-700.control-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5e5e5e;
+
+}
+
+input.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched,
+input.form-control.input-sm.fc-alt.ng-untouched.ng-pristine.ng-valid,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-untouched,
+input.form-control.input-sm.fc-alt.ng-dirty.ng-invalid.is-invalid.ng-touched,
+input.form-control.input-sm.fc-alt.ng-pristine.ng-invalid.is-invalid.ng-touched,
+input.form-control.input-sm.fc-alt.ng-dirty.ng-invalid.is-invalid.ng-untouched,
+input.form-control.input-sm.fc-alt.ng-invalid.ng-dirty.is-invalid.ng-touched,
+input.form-control.input-sm.fc-alt.ng-invalid.ng-dirty.is-invalid.ng-untouched,
+input.form-control.input-sm.fc-alt.ng-untouched.ng-pristine.ng-invalid,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-untouched,
+select.form-control.input-sm.fc-alt.ng-valid.ng-touched.ng-dirty,
+select.form-control.input-sm.fc-alt.ng-valid.ng-untouched.ng-dirty {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+input.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-untouched.ng-pristine.ng-valid:focus,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched:focus,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-untouched:focus,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-untouched:focus,
+input.form-control.input-sm.fc-alt.ng-dirty.ng-invalid.is-invalid.ng-untouched:focus select.form-control.input-sm.fc-alt.ng-valid.ng-touched.ng-dirty:focus,
+input.form-control.input-sm.fc-alt.ng-dirty.ng-invalid.is-invalid.ng-touched:focus,
+select.form-control.input-sm.fc-alt.ng-valid.ng-untouched.ng-dirty:focus,
+input.form-control.input-sm.fc-alt.ng-pristine.ng-invalid.is-invalid.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-invalid.ng-dirty.is-invalid.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-invalid.ng-dirty.is-invalid.ng-untouched:focus,
+input.form-control.input-sm.fc-alt.ng-untouched.ng-pristine.ng-invalid:focus {
+  border-color: #2f88d2 !important;
+  box-shadow: none;
+}
+
+.custom-file-upload {
+  border-radius: 2px;
+  display: inline-block;
+  padding: 3.5px 17px;
+  cursor: pointer;
+  color: white;
+  background: #00bcd4;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  font-weight: 400;
+  outline: none;
+  border: none;
+}
+
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched {
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 2px !important;
+  padding: 5px 10px !important;
+  box-shadow: none;
+}
+
+.card-body {
+  padding-bottom: 0
+}
+
+.card-body h5 {
+  color: #4caf50;
+  font-size: 17px;
+  font-weight: 600;
+
+}
+
+textarea.form-control.input-sm.fc-alt.contact_address.ng-pristine.ng-valid.ng-touched {
+  resize: none;
+  border-color: #2f88d2 !important;
+  box-shadow: none;
+  border-radius: 2px;
+}
+
+textarea.form-control.input-sm.fc-alt.contact_address.ng-pristine.ng-valid.ng-touched:focus {
+  resize: none;
+  border-color: #2f88d2 !important;
+  box-shadow: none;
+  border-radius: 2px;
+}
+
+textarea.form-control.input-sm.fc-alt.contact_address.ng-untouched.ng-pristine.ng-valid:focus {
+  resize: none;
+  border-color: #2f88d2 !important;
+  box-shadow: none;
+  border-radius: 2px;
+}
+
+textarea.form-control.input-sm.fc-alt.contact_address.ng-untouched.ng-pristine.ng-valid {
+  resize: none;
+  border-radius: 2px;
+}
+
+.form-group.button-wrap {
+  text-align: center;
+}
+
+.form-group.button-wrap .btn {
+  padding: 3.5px 11px;
+}
+
+.form-group.button-wrap .btn-primary {
+  background-color: #2196f3
+}
+
+.form-group.button-wrap button.btn.btn-primary:focus {
+  box-shadow: none;
+}
+
+.card {
+  border-radius: 1px;
+  padding-bottom: 18px;
+}
+
+app-setting-options {
+  background: #fff;
+}
+
+.email-app {
+  display: flex;
+  flex-direction: row;
+  background: #f5f5f5;
+  border: 1px solid #c8ced3;
+}
+
+.row.col-md-12.img-wrap {
+  height: 100px;
+  max-width: 400px;
+  width: 100%;
+}
+
+// 19-11-2018
+main.message {
+  margin: 0 !important;
+  padding: 0px !important
+}
+
+.custom-main {
+  padding: 30px;
+  background: #f5f5f5;
+  min-height: 87vh;
+}
+
+input,
+textarea {
+  font-size: 12px;
+  color: #000 !important;
+
+}
+
+select {
+  font-size: 13px !important;
+  color: #333333 !important;
+
+}
+
+.img-wrap {
+  border: 1px solid #e4e7ea;
+  margin: 0 15px;
+  width: 100%
+}
+
+.removebtn {
+  margin-top: 15px;
+  color: #fff;
+  margin-left: 15px;
+  float: left;
+  width: 100%;
+}
+
+img.view_images {
+  width: 100%;
+  padding: 0;
+  width: 373px;
+  height: 135px;
+  object-fit: contain;
+  object-position: left;
+}
+
+.btn-remove {
+  font-size: 13px;
+
+  border-radius: 2px;
+  padding: 5.5px 12px;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #f44336;
+}
+
+.btn-remove:hover {
+  opacity: .9;
+}
+
+.btn-remove:focus {
+  opacity: .9;
+  box-shadow: none;
+}
+
+.btn-remove:active:focus {
+  opacity: .9;
+  box-shadow: none !important;
+}
+
+.btn-save {
+  font-size: 13px;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #2196f3;
+  padding: 5.5px 12.02px !important;
+
+}
+
+.btn-save:hover {
+  opacity: .9;
+}
+
+.btn-save:focus {
+  box-shadow: none;
+  opacity: .9;
+}
+
+.btn-save:active:focus {
+  box-shadow: none !important;
+  opacity: .9;
+}
+
+.custom-country {
+  padding-left: 0;
+}

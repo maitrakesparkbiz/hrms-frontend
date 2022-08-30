@@ -1,0 +1,88 @@
+.description-wrap h2.red-color {
+  font-size: 20px;
+  color: red;
+  text-align: left;
+  padding-bottom: 5px;
+}
+
+
+.description-wrap h4.green-color {
+  font-size: 17px;
+  color: #4caf50;
+  font-weight: 400;
+  padding-top: 20px;
+
+  text-align: left;
+  width: 100%;
+  display: inline-block;
+
+}
+
+.details-wrap {
+  float: left;
+  width: 100%;
+  padding-top: 10px;
+
+}
+
+.details-wrap .detail {
+  float: left;
+  width: 100%;
+  margin-bottom: 7px;
+  text-align: left;
+}
+
+.details-wrap .detail h3.title {
+  font-weight: 700;
+  font-size: 13px;
+  color: #5e5e5e;
+  margin-bottom: 2px;
+
+  text-align: left;
+  width: 100%;
+}
+
+.details-wrap .detail h4.detail-txt {
+  font-size: 13px;
+  font-weight: 400;
+
+  text-align: left;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  border-top: 1px solid #eee;
+}
+
+.table thead th {
+  border-bottom: 1px solid #eee
+}
+
+// 07-02-2019
+
+.abc,
+.description-wrap {
+  width: 23%
+}
+
+.header-buttons {
+  left: 458px;
+}
+
+
+@media(max-width:1500px) {
+
+  .abc,
+  .description-wrap {
+    width: 21%;
+  }
+}
+
+@media(max-width:1400px) {
+
+  .abc,
+  .description-wrap {
+    width: 20.2%;
+  }
+}

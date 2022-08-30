@@ -1,0 +1,1516 @@
+<div class="animated fadeIn">
+  <div class="row back-btn">
+    <div class="col-md-4">
+      <button type="button" class="back-button" (click)="cancel()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Back
+      </button> &nbsp;&nbsp;
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+  <form [formGroup]="EmployeeeEditForm" (ngSubmit)="updateEmployee()" #employeeEditForm="ngForm" class="emp-edit-tab">
+
+    <ngb-tabset orientation="vertical">
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <i class="fa fa-info-circle" aria-hidden="true"></i>Basic Info</ng-template>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-8 form-group">
+              <div class="card custom-contact">
+                <div class="card-header custom-blue">
+                  <h4 class="c-white">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>Basic Info</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">First Name</label>
+                      <input type="text" name="firstname" id="firstname" [(ngModel)]="employee.firstname"
+                        formControlName="firstname" class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Last Name</label>
+                      <input type="text" name="lastname" id="lastname" [(ngModel)]="employee.lastname"
+                        formControlName="lastname" class="form-control input-sm fc-alt">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Personal Email</label>
+                      <input type="text" name="email" id="email" [(ngModel)]="employee.email" formControlName="email"
+                        class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Gender</label>
+                      <select class="form-control m-input" name="gender" [(ngModel)]="employee.gender"
+                        formControlName="gender" id="gender">
+                        <option value="23">Male</option>
+                        <option value="24">Female</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="f-700 control-label">Company Email</label>
+                      <input type="text" name="company_email" id="company_email" [(ngModel)]="employee.company_email"
+                        formControlName="company_email" class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Date of Birth</label>
+                      <input [owlDateTimeTrigger]="date_of_birth" [owlDateTime]="date_of_birth" name="date_of_birth"
+                        [(ngModel)]="employee.date_of_birth" formControlName="date_of_birth" id="date_of_birth"
+                        class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #date_of_birth></owl-date-time>
+                    </div>
+                  </div>
+
+                  <div class="row custom-id">
+                    <div class="col-md-12 form-group">
+                      <label class="f-700 control-label">Employee ID
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                      </label>
+                      <input type="text" name="employee_id" formControlName="employee_id"
+                        [(ngModel)]="employee.employee_id"
+                        [ngClass]="(EmployeeeEditForm.get('employee_id').touched && EmployeeeEditForm.get('employee_id').invalid)?'is-invalid':''"
+                        class="form-control input-sm fc-alt">
+                      <div class="invalid-feedback"
+                        *ngIf="EmployeeeEditForm.get('employee_id').errors && EmployeeeEditForm.get('employee_id').errors['dup_id']">
+                        Employee ID is Already Exists
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label>Allow Login
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                      </label>
+                      <br>
+                      <label class="switch switch-label switch-primary">
+                        <input type="checkbox" name="allowed_login" class="switch-input "
+                          formControlName="allowed_login" [(ngModel)]="employee.allowed_login" checked>
+                        <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                      </label>
+                    </div>
+                    <div class="col-md-6 form-group" *ngIf="employee.allowed_login">
+                      <label class="f-700 control-label">Password </label>
+                      <input type="password" name="password" placeholder="********" [disabled]=""
+                        [(ngModel)]="employee.password" formControlName="password" id="password"
+                        class="form-control input-sm fc-alt custom-password">
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label>Marital Status</label>
+                      <br>
+                      <label class="switch switch-label switch-primary">
+                        <input type="checkbox" name="marrital_status" formControlName="marrital_status"
+                          class="switch-input " [(ngModel)]="employee.marital_status" checked>
+                        <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                      </label> &nbsp;
+                      <div class="merried-cls" *ngIf="employee.marital_status; else status">
+                        Married
+                      </div>
+                      <ng-template class="unmerried-cls" #status>
+                        <h6 class="unmerried-cls">Unmarried</h6>
+                      </ng-template>
+                    </div>
+                    <div class="col-md-6 form-group" *ngIf="employee.marital_status">
+                      <div>
+                        <label class="f-700 control-label">Marriage Anniversary</label>
+                        <input [owlDateTimeTrigger]="marriage_anniversary_date"
+                          [(ngModel)]="employee.marriage_anniversary_date" [owlDateTime]="marriage_anniversary_date"
+                          name="marriage_anniversary_date" formControlName="marriage_anniversary_date"
+                          id="marriage_anniversary_date" class="form-control input-sm fc-alt">
+                        <owl-date-time [pickerType]="'calendar'" #marriage_anniversary_date></owl-date-time>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 form-group">
+              <div class="card custom-contact">
+                <div class="card-header custom-orange">
+                  <h4 class="c-white">
+                    <i aria-hidden="true" class="fa fa-smile-o"></i> Photo</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <img *ngIf="employee.profile_image;else other_content"
+                        src="{{IMAGE_URL}}{{employee.profile_image}}" style="width: 300px;height: 300px"
+                        alt="admin@bootstrapmaster.com" />
+                      <ng-template #other_content>
+                        <img [src]=profile_image style="width: 300px;height: 300px" alt="admin@bootstrapmaster.com" />
+                      </ng-template>
+                    </div>
+                    <div class="row col-md-12" *ngIf="employee.profile_image">
+                      <a class="btn btn-danger remove-btn" (click)="RemoveImages('profile_image')">Remove</a>
+                    </div>
+                  </div>
+                  <div class="row" [hidden]="employee.profile_image">
+                    <label for="profile_image" class="custom-file-upload basic-select-btn select">
+                      Select
+                    </label>
+                    <input id="profile_image" type="file" formControlName="profile_image"
+                      (change)="uploadImage($event)" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <i class="fa fa-university" aria-hidden="true"></i>Company Relations</ng-template>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-contact">
+                <div class="card-header custom-blue">
+                  <h4 class="c-white">
+                    <i class="fa fa-university" aria-hidden="true"></i>Company Relations</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Department
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                      </label>
+                      <select class="form-control m-input" name="department" [(ngModel)]="employee.department"
+                        formControlName="department" (change)="onDepSelect($event.target.value)">
+                        <option *ngFor="let department of departments" value="{{department.id}}">
+                          {{department.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Designation
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                      </label>
+                      <select class="form-control m-input" name="designation" id="designation"
+                        [(ngModel)]="employee.designation" formControlName="designation">
+                        <option *ngFor="let designation of designations" value="{{designation.id}}">
+                          {{designation.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Batch
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                      </label>
+                      <select class="form-control m-input" name="location" [(ngModel)]="employee.location"
+                        formControlName="location">
+                        <option *ngFor="let location of locations" value="{{location.id}}">
+                          {{location.name}}
+                        </option>
+                      </select>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-contact">
+                <div class="card-header custom-red">
+                  <h4 class="c-white">
+                    <i class="fa fa-unlock-alt" aria-hidden="true"></i>Roles and Permissions</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Reports to
+                        <i aria-hidden="true" class="fa fa-question-circle"></i>
+                      </label>
+                      <select class="form-control m-input" name="report_to" id="report_to"
+                        [(ngModel)]="employee.report_to" formControlName="report_to">
+                        <option *ngFor="let report of report_user" value="{{report.id}}">
+                          {{report.firstname}} {{report.lastname}}
+                        </option>
+                      </select>
+
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label>Is Manager
+                        <i class="fa fa-question-circle"
+                          tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." placement="top"
+                          aria-hidden="true"></i>
+                      </label>
+                      <br>
+                      <label class="switch switch-label switch-primary">
+                        <input type="checkbox" name="is_manager" formControlName="is_manager" class="switch-input"
+                          [(ngModel)]="employee.is_manager" checked>
+                        <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="employee.is_manager">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Role</label>
+                      <select class="form-control m-input" name="role" id="role" formControlName="role"
+                        [(ngModel)]="employee.role"
+                        [ngClass]="(EmployeeeEditForm.get('role').touched && EmployeeeEditForm.get('role').invalid)?'is-invalid':''">
+                        <option [ngValue]=null>Select An option</option>
+                        <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}
+                        </option>
+                      </select>
+                      <div class="invalid-feedback"
+                        *ngIf="EmployeeeEditForm.get('role').touched && EmployeeeEditForm.get('role').invalid">
+                        The role is requird if Is manager Yes
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header custom-violet">
+                  <h4 class="c-white">
+                    <i class="fa fa-wrench" aria-hidden="true"></i>Status</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <!-- <div class="row">
+                  <div class="col-md-6 form-group">
+                    <div class="checkbox-wrap">
+                      <input type="radio" [(ngModel)]="employee.on_training" [value]="1" id="test1" formControlName="on_training">
+                      <label for="test1">Training</label>
+                    </div>
+                    <div class="checkbox-wrap">
+                      <input type="radio" [(ngModel)]="employee.on_training" [value]="0" id="test2" formControlName="on_training">
+                      <label for="test2">Probation</label>
+                    </div>
+                  </div>
+                </div> -->
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label>Joining Date</label>
+                      <input [owlDateTimeTrigger]="joining_date" formControlName="joining_date"
+                        [(ngModel)]="employee.joining_date" [owlDateTime]="joining_date" name="joining_date"
+                        id="joining_date" class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #joining_date></owl-date-time>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label>Probation End Date</label>
+                      <input [owlDateTimeTrigger]="probation_end_date" formControlName="probation_end_date"
+                        [(ngModel)]="employee.probation_end_date" [owlDateTime]="probation_end_date"
+                        name="probation_end_date" id="probation_end_date" class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #probation_end_date></owl-date-time>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label>Increment Date</label>
+                      <input [owlDateTimeTrigger]="increment_date" formControlName="increment_date"
+                        [(ngModel)]="employee.increment_date" [owlDateTime]="increment_date"
+                        name="increment_date" id="increment_date" class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #increment_date></owl-date-time>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label>Status</label>
+                      <br>
+                      <label class="switch switch-label switch-primary">
+                        <input type="checkbox" name="user_exit_status" formControlName="user_exit_status"
+                          [(ngModel)]="employee.user_exit_status" class="switch-input" checked>
+                        <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                      </label>
+                    </div>
+                    <div class="col-md-6 form-group" *ngIf="!employee.user_exit_status">
+                      <label>Exit Date</label>
+                      <input [owlDateTimeTrigger]="exit_date" [owlDateTime]="exit_date" name="exit_date"
+                        formControlName="exit_date" id="exit_date" [(ngModel)]="employee.exit_date"
+                        class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #exit_date></owl-date-time>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <i class="fa fa-phone"></i>Contact Info</ng-template>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-contact">
+                <div class="card-header violet">
+                  <h4 class="c-white">
+                    <i class="fa fa-phone" aria-hidden="true"></i>Contact Information</h4>
+                </div>
+                <div class="card-body form-padding custom-address">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Current Address</label>
+                      <textarea formControlName="address" [(ngModel)]="employee.address" name="address" id="address"
+                        class="form-control input-sm fc-alt"></textarea>
+                      <!-- <input type="text" formControlName="address" [(ngModel)]="employee.address" name="address" id="address"
+                      class="form-control input-sm fc-alt"> -->
+                      <label class="f-700 control-label">Permanent Address</label>
+                      <textarea formControlName="per_address" [(ngModel)]="employee.per_address" name="per_address"
+                        id="per_address" class="form-control input-sm fc-alt"></textarea>
+                      <!-- <input type="text" formControlName="per_address" [(ngModel)]="employee.per_address" name="per_address"
+                      id="per_address" class="form-control input-sm fc-alt"> -->
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Contact Number</label>
+                      <input type="text" formControlName="contact_no" [(ngModel)]="employee.contact_no"
+                        name="contact_no" id="contact_no" class="form-control input-sm fc-alt">
+
+                      <label class="f-700 control-label">Emergency Contact Number</label>
+                      <input type="text" name="emergency_contact_no" id="emergency_contact_no"
+                        formControlName="emergency_contact_no" [(ngModel)]="employee.emergency_contact_no"
+                        class="form-control input-sm fc-alt">
+
+                      <label class="f-700 control-label">Emergency Contact Person</label>
+                      <input type="text" name="emergency_contact_person" formControlName="emergency_contact_person"
+                        [(ngModel)]="employee.emergency_contact_person" id="emergency_contact_person"
+                        class="form-control input-sm fc-alt">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <i class="fa fa-file" aria-hidden="true"></i>Documents</ng-template>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-document">
+                <div class="card-header blue">
+                  <h4 class="c-white">
+                    <i class="zmdi zmdi-info"></i>Document Numbers</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Driving License Number</label>
+                      <input type="text" name="driving_license_number" formControlName="driving_license_number"
+                        [(ngModel)]="employee.driving_license_number" id="driving_license_number"
+                        class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">PAN Number</label>
+                      <input type="text" name="pan_number" formControlName="pan_number" id="pan_number"
+                        [(ngModel)]="employee.pan_number" class="form-control input-sm fc-alt">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Aadhar Number/SSN</label>
+                      <input type="text" name="aadhar_number" formControlName="aadhar_number"
+                        [(ngModel)]="employee.aadhar_number" id="aadhar_number" class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Voter ID Number</label>
+                      <input type="text" name="voter_id_number" id="voter_id_number"
+                        [(ngModel)]="employee.voter_id_number" formControlName="voter_id_number"
+                        class="form-control input-sm fc-alt">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">UAN Number</label>
+                      <input type="text" name="uan_number" formControlName="uan_number"
+                             [(ngModel)]="employee.uan_number" id="uan_number" class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">PF Number</label>
+                      <input type="text" name="pf_number" id="pf_number"
+                             [(ngModel)]="employee.pf_number" formControlName="pf_number"
+                             class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">ESIC Number</label>
+                      <input type="text" name="esic_number" id="esic_number"
+                             [(ngModel)]="employee.esic_number" formControlName="esic_number"
+                             class="form-control input-sm fc-alt">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-document">
+                <div class="card-header red">
+                  <h4 class="c-white">
+                    <i class="zmdi zmdi-info"></i>Document Copies</h4>
+                </div>
+                <div class="card-body form-padding border-box">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Driving License</label>
+
+                      <div class="row col-md-12 document-image" *ngIf="employee.driving_license_image">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.driving_license_image}}">{{employee.driving_license_image}}</a>
+                      </div>
+                      <div class="row col-md-8" *ngIf="employee.driving_license_image">
+                        <button type="button" (click)="RemoveFile('driving_license_image')" class="btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.driving_license_image">
+                        <label for="driving_license_image" class="custom-file-upload document-select-btn">
+                          Select
+                        </label>
+                        <input type="file" name="driving_license_image" id="driving_license_image"
+                          (change)="uploadFile($event)" formControlName="driving_license_image"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">PAN Card</label>
+                      <div class="row col-md-12" *ngIf="employee.pan_id_image">
+                        <a target="blank" href="{{FILE_URL}}{{employee.pan_id_image}}">{{employee.pan_id_image}}</a>
+                        <!-- <img src="{{IMAGE_URL}}{{employee.pan_id_image}}" class="view_images" /> -->
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.pan_id_image">
+                        <!-- <a [href]="DOWNLOAD_URL+employee.pan_id_image">
+                        <button type="button" class="btn-download">
+                          Download
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('pan_id_image')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.pan_id_image">
+                        <label for="pan_id_image" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="pan_id_image" id="pan_id_image" (change)="uploadFile($event)"
+                          formControlName="pan_id_image" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Aadhar/SSN</label>
+                      <div *ngIf="employee.aadhar_id_image">
+                        <div class="row col-md-12">
+                          <a target="blank"
+                            href="{{FILE_URL}}{{employee.aadhar_id_image}}">{{employee.aadhar_id_image}}</a>
+                          <!-- <img src="{{IMAGE_URL}}{{employee.aadhar_id_image}}" class="view_images" /> -->
+                        </div>
+                        <div class="row col-md-12" *ngIf="employee.aadhar_id_image">
+                          <!-- <a [href]="DOWNLOAD_URL+employee.aadhar_id_image">
+                          <button type="button" class="btn-download">
+                            Download
+                          </button>
+                        </a> -->
+                          <button type="button" (click)="RemoveFile('aadhar_id_image')" class=" btn btn-remove">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row custom-row" [hidden]="employee.aadhar_id_image">
+                        <label for="aadhar_id_image" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="aadhar_id_image" id="aadhar_id_image" formControlName="aadhar_id_image"
+                          (change)="uploadFile($event)" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Voter ID</label>
+                      <div *ngIf="employee.voter_id_image">
+                        <div class="row col-md-12">
+                          <a target="blank"
+                            href="{{FILE_URL}}{{employee.voter_id_image}}">{{employee.voter_id_image}}</a>
+                          <!-- <img src="{{IMAGE_URL}}{{employee.voter_id_image}}" class="view_images" /> -->
+                        </div>
+                        <div class="row col-md-12" *ngIf="employee.voter_id_image">
+                          <!-- <a [href]="DOWNLOAD_URL+employee.voter_id_image">
+                          <button type="button" class="btn-download">
+                            Download
+                          </button>
+                        </a> -->
+                          <button type="button" (click)="RemoveFile('voter_id_image')" class=" btn btn-remove">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row custom-row" [hidden]="employee.voter_id_image">
+                        <label for="voter_id_image" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="voter_id_image" id="voter_id_image" formControlName="voter_id_image"
+                          (change)="uploadFile($event)" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">School Leaving Certificate</label>
+                      <div *ngIf="employee.lc">
+                        <div class="row col-md-12">
+                          <a target="blank" href="{{FILE_URL}}{{employee.lc}}">{{employee.lc}}</a>
+                          <!-- <img src="{{IMAGE_URL}}{{employee.aadhar_id_image}}" class="view_images" /> -->
+                        </div>
+                        <div class="row col-md-12" *ngIf="employee.lc">
+                          <!-- <a [href]="DOWNLOAD_URL+employee.lc">
+                          <button type="button" class="btn-download">
+                            Download
+                          </button>
+                        </a> -->
+                          <button type="button" (click)="RemoveFile('lc')" class=" btn btn-remove">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row custom-row" [hidden]="employee.lc">
+                        <label for="lc" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="lc" id="lc" formControlName="lc" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Marksheet</label>
+                      <div *ngIf="employee.marksheet">
+                        <div class="row col-md-12">
+                          <a target="blank" href="{{FILE_URL}}{{employee.marksheet}}">{{employee.marksheet}}</a>
+                          <!-- <img src="{{IMAGE_URL}}{{employee.voter_id_image}}" class="view_images" /> -->
+                        </div>
+                        <div class="row col-md-12" *ngIf="employee.marksheet">
+                          <!-- <a [href]="DOWNLOAD_URL+employee.marksheet">
+                          <button type="button" class="btn-download">
+                            Download
+                          </button>
+                        </a> -->
+                          <button type="button" (click)="RemoveFile('marksheet')" class=" btn btn-remove">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row custom-row" [hidden]="employee.marksheet">
+                        <label for="marksheet" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="marksheet" id="marksheet" formControlName="marksheet"
+                          (change)="uploadFile($event)" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-document">
+                <div class="card-header deep-orange">
+                  <h4 class="c-white">
+                    <i class="zmdi zmdi-info"></i>Company Documents</h4>
+                </div>
+                <div class="card-body form-padding border-box">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Offer Letter</label>
+                      <div *ngIf="employee.offer_later_file">
+                        <div class="row col-md-12">
+                          <a target="blank"
+                            href="{{FILE_URL}}{{employee.offer_later_file}}">{{employee.offer_later_file}}</a>
+                        </div>
+                        <div class="row col-md-12" *ngIf="employee.offer_later_file">
+                          <!-- <a [href]="DOWNLOAD_URL +employee.offer_later_file">
+                          <button type="button" class="btn-download">
+                            Download
+                          </button>
+                        </a> -->
+                          <button type="button" (click)="RemoveFile('offer_later_file')" class=" btn btn-remove">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row custom-row" [hidden]="employee.offer_later_file">
+                        <label for="offer_later_file" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="offer_later_file" id="offer_later_file"
+                          formControlName="offer_later_file" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Welcome Letter</label>
+                      <div class="row col-md-12" *ngIf="employee.joining_letter_file">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.joining_letter_file}}">{{employee.joining_letter_file}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.joining_letter_file">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.joining_letter_file">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('joining_letter_file')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.joining_letter_file">
+                        <label for="joining_letter_file" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="joining_letter_file" id="joining_letter_file"
+                          formControlName="joining_letter_file" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Contract</label>
+
+                      <div class="row col-md-12" *ngIf="employee.contract_file">
+                        <a target="blank" href="{{FILE_URL}}{{employee.contract_file}}">{{employee.contract_file}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.contract_file">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.contract_file">
+                        <button type="button" class="btn-download">
+                          Download
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('contract_file')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.contract_file">
+                        <label for="contract_file" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="contract_file" id="contract_file" formControlName="contract_file"
+                          (change)="uploadFile($event)" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Resume</label>
+
+                      <div class="row col-md-12" *ngIf="employee.resume_file">
+                        <a target="blank" href="{{FILE_URL}}{{employee.resume_file}}">{{employee.resume_file}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.resume_file">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.resume_file">
+                        <button type="button" class="btn-download">
+                          Download
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('resume_file')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.resume_file">
+                        <label for="resume_file" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="resume_file" id="resume_file" (change)="uploadFile($event)" s
+                          formControlName="resume_file" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Appointment Letter</label>
+                      <div class="row col-md-12" *ngIf="employee.appointment_letter">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.appointment_letter}}">{{employee.appointment_letter}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.appointment_letter">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.appointment_letter">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('appointment_letter')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.appointment_letter">
+                        <label for="appointment_letter" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="appointment_letter" id="appointment_letter"
+                          formControlName="appointment_letter" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Increment Letter</label>
+                      <div class="row col-md-12" *ngIf="employee.increment_letter">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.increment_letter}}">{{employee.increment_letter}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.increment_letter">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.increment_letter">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('increment_letter')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.increment_letter">
+                        <label for="increment_letter" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="increment_letter" id="increment_letter"
+                          formControlName="increment_letter" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Promotion Letter</label>
+                      <div class="row col-md-12" *ngIf="employee.promotion_letter">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.promotion_letter}}">{{employee.promotion_letter}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.promotion_letter">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.promotion_letter">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('promotion_letter')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.promotion_letter">
+                        <label for="promotion_letter" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="promotion_letter" id="promotion_letter"
+                          formControlName="promotion_letter" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Relieving Letter</label>
+                      <div class="row col-md-12" *ngIf="employee.relieving_letter">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.relieving_letter}}">{{employee.relieving_letter}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.relieving_letter">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.relieving_letter">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('relieving_letter')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.relieving_letter">
+                        <label for="relieving_letter" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="relieving_letter" id="relieving_letter"
+                          formControlName="relieving_letter" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Experience Letter</label>
+                      <div class="row col-md-12" *ngIf="employee.exp_letter">
+                        <a target="blank" href="{{FILE_URL}}{{employee.exp_letter}}">{{employee.exp_letter}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.exp_letter">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.exp_letter">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('exp_letter')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.exp_letter">
+                        <label for="exp_letter" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="exp_letter" id="exp_letter" formControlName="exp_letter"
+                          (change)="uploadFile($event)" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Appreciation Letter</label>
+                      <div class="row col-md-12" *ngIf="employee.appreciation_letter">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.appreciation_letter}}">{{employee.appreciation_letter}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.appreciation_letter">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.appreciation_letter">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('appreciation_letter')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.appreciation_letter">
+                        <label for="appreciation_letter" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="appreciation_letter" id="appreciation_letter"
+                          formControlName="appreciation_letter" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Document Returns</label>
+                      <div class="row col-md-12" *ngIf="employee.document_returns_letter">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.document_returns_letter}}">{{employee.document_returns_letter}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.document_returns_letter">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.document_returns_letter">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('document_returns_letter')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.document_returns_letter">
+                        <label for="document_returns_letter" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="document_returns_letter" id="document_returns_letter"
+                          formControlName="document_returns_letter" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">No Due Certificate</label>
+                      <div class="row col-md-12" *ngIf="employee.no_due_certificate">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.no_due_certificate}}">{{employee.no_due_certificate}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.no_due_certificate">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.no_due_certificate">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('no_due_certificate')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.no_due_certificate">
+                        <label for="no_due_certificate" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="no_due_certificate" id="no_due_certificate"
+                          formControlName="no_due_certificate" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Acknowledgement Letter</label>
+                      <div class="row col-md-12" *ngIf="employee.acknowledgement_letter">
+                        <a target="blank"
+                          href="{{FILE_URL}}{{employee.acknowledgement_letter}}">{{employee.acknowledgement_letter}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.acknowledgement_letter">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.acknowledgement_letter">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('acknowledgement_letter')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.acknowledgement_letter">
+                        <label for="acknowledgement_letter" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="acknowledgement_letter" id="acknowledgement_letter"
+                          formControlName="acknowledgement_letter" (change)="uploadFile($event)"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Warning Letter</label>
+                      <div class="row col-md-12" *ngIf="employee.warning_letter">
+                        <a target="blank" href="{{FILE_URL}}{{employee.warning_letter}}">{{employee.warning_letter}}</a>
+                      </div>
+                      <div class="row col-md-12" *ngIf="employee.warning_letter">
+                        <!-- <a [href]="DOWNLOAD_URL +employee.warning_letter">
+                        <button type="button" class="btn-download">
+                          Downolad
+                        </button>
+                      </a> -->
+                        <button type="button" (click)="RemoveFile('warning_letter')" class=" btn btn-remove">
+                          Remove
+                        </button>
+                      </div>
+
+                      <div class="row custom-row" [hidden]="employee.warning_letter">
+                        <label for="warning_letter" class="custom-file-upload">
+                          Select
+                        </label>
+                        <input type="file" name="warning_letter" id="warning_letter" formControlName="warning_letter"
+                          (change)="uploadFile($event)" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <i class="fa fa-university" aria-hidden="true"></i>Bank Details</ng-template>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-document">
+                <div class="card-header green">
+                  <h4 class="c-white">
+                    <i class="zmdi zmdi-info"></i>Bank Details</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Primary Bank Account</label>
+                      <select class="form-control m-input" name="primary_account" formControlName="primary_account"
+                        [(ngModel)]="employee.primary_account" id="primary_account">
+                        <option *ngFor="let user_account of pbankaccount; let i= index" value="{{user_account.id}}">
+                          {{user_account.key_text}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div formArrayName="user_account">
+            <div class="row" *ngFor="let per of EmployeeeEditForm.get('user_account')['controls']; let i=index"
+              [formGroupName]="i">
+              <div class="col-md-12">
+                <div class="card custom-document">
+                  <div class="card-header" [ngClass]="i==0?'blue':'red'">
+                    <h4 class="c-white">
+                      <i class="zmdi zmdi-info"></i>Account {{i+1}}</h4>
+                  </div>
+                  <div class="card-body form-padding">
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <input type="hidden" formControlName="id">
+                        <label class="f-700 control-label">Account Type</label>
+                        <select class="form-control m-input" name="account_type_{{i}}" id="account_type_{{i}}"
+                          formControlName="account_type">
+                          <option *ngFor="let account of accounttype" value="{{account.id}}">
+                            {{account.key_text}}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label class="f-700 control-label">Account Holder Name</label>
+                        <input type="text" name="account_holder_name_{{i}}" formControlName="account_holder_name"
+                          id="account_holder_name_{{i}}" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label class="f-700 control-label">Account Number</label>
+                        <input type="text" name="account_number_{{i}}" formControlName="account_number"
+                          id="account_number_{{i}}" class="form-control input-sm fc-alt">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label class="f-700 control-label">Bank Code</label>
+                        <input type="text" name="bank_code_{{i}}" id="bank_code_{{i}}" formControlName="bank_code"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label class="f-700 control-label">Bank Name</label>
+                        <input type="text" name="bank_name_{{i}}" id="bank_name_{{i}}" formControlName="bank_name"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label class="f-700 control-label">Bank Branch</label>
+                        <input type="text" name="bank_branch_{{i}}" formControlName="bank_branch" id="bank_branch_{{i}}"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label class="f-700 control-label">CRN number</label>
+                        <input type="text" name="crn_number_{{i}}" id="crn_number_{{i}}" formControlName="crn_number"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab id="user_qualification">
+        <ng-template ngbTabTitle>
+          <i class="fa fa-graduation-cap" aria-hidden="true"></i>Qualification</ng-template>
+        <ng-template ngbTabContent>
+          <div formArrayName="user_qualification">
+            <div class="row" *ngFor="let per of EmployeeeEditForm.get('user_qualification')['controls']; let i=index"
+              [formGroupName]="i">
+              <div class="col-md-12">
+                <div class="card custom-document custom-university">
+                  <div class="card-header custom-deep-orange" [ngClass]="i==0?'blue':(i==1?'red':'orange')">
+                    <h4 class="c-white">
+                      <i class="zmdi zmdi-info"></i>{{i==0
+                            ? 'SSC'
+                            :(i==1?'HSC':(i==2?'Graduation':
+                                    (i==3?'Post Graduation':'Doctorate')))}}</h4>
+                  </div>
+                  <div class="card-body form-padding">
+
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <input type="hidden" formControlName="id">
+                        <input type="hidden" formControlName="education_type">
+                        <label class="f-700 control-label">School/University</label>
+                        <input type="text" name="university_name_{{i}}" formControlName="university_name"
+                          id="university_name_{{i}}" class="form-control input-sm fc-alt">
+
+                        <label class="f-700 control-label">Start Date</label>
+                        <input [owlDateTimeTrigger]="start_date" [owlDateTime]="start_date" formControlName="start_date"
+                          name="start_date" class="form-control input-sm fc-alt">
+                        <owl-date-time [pickerType]="'calendar'" #start_date></owl-date-time>
+
+                        <label class="f-700 control-label">End Date</label>
+                        <input [owlDateTimeTrigger]="end_date" [owlDateTime]="end_date" formControlName="end_date"
+                          name="end_date_{{i}}" id="end_date_{{i}}" class="form-control input-sm fc-alt">
+                        <owl-date-time [pickerType]="'calendar'" #end_date></owl-date-time>
+                      </div>
+
+                      <div class="col-md-6 form-group">
+                        <label class="f-700 control-label">Degree</label>
+                        <input type="text" name="degree_{{i}}" formControlName="degree" id="degree_{{i}}"
+                          class="form-control input-sm fc-alt">
+                        <label class="f-700 control-label">Document</label>
+                        <div class="row col-md-12 document-image" *ngIf="quali_images[i]['image']">
+                          <a target="blank"
+                            href="{{FILE_URL}}{{quali_images[i]['image']}}">{{quali_images[i]['image']}}</a>
+                        </div>
+
+                        <div class="row col-md-8" *ngIf="quali_images[i]['image']">
+                          <!-- <a [href]="DOWNLOAD_URL+quali_images[i]['image']">
+                          <button type="button" class="btn-download">
+                            Download
+                          </button>
+                        </a> -->
+                          <button type="button" (click)="RemoveDoc(i)" class=" btn btn-remove">
+                            Remove
+                          </button>
+                        </div>
+                        <div class="row custom-row" [hidden]="quali_images[i]['image']">
+                          <label for="doc_copy_{{i}}" class="custom-file-upload document-select-btn">
+                            Select
+                          </label>
+                          <input type="file" name="doc_copy_{{i}}" id="doc_copy_{{i}}" (change)="uploadDoc($event,i)"
+                            formControlName="doc_copy" class="form-control input-sm fc-alt">
+                        </div>
+                        <!-- </ng-container> -->
+                        <!-- <label class="f-700 control-label">Start Date</label>
+                      <input [owlDateTimeTrigger]="start_date" [owlDateTime]="start_date" formControlName="start_date"
+                        name="start_date" class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #start_date></owl-date-time> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header red">
+                  <h4 class="c-white">
+                    <i class="zmdi zmdi-info"></i>Certifications/Courses</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <label class="f-700 control-label">Details</label>
+                      <textarea class="form-control m-input" name="certifications_courses"
+                        [(ngModel)]="employee.certifications_courses"
+                        formControlName="certifications_courses"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab id="user_experiance">
+        <ng-template ngbTabTitle>
+          <i class="fa fa-briefcase" aria-hidden="true"></i>Work Experience</ng-template>
+        <ng-template ngbTabContent>
+          <div formArrayName="user_work_experience">
+            <div class="row" *ngFor="let per of EmployeeeEditForm.get('user_work_experience')['controls']; let i=index"
+              [formGroupName]="i">
+              <div class="col-md-12">
+                <div class="card custom-document">
+                  <div class="card-header" [ngClass]="i==0?'blue':(i == 1?'red':'deep-orange')">
+                    <h4 class="c-white">
+                      <i class="zmdi zmdi-info"></i>Work Experience {{i+1}}</h4>
+                  </div>
+                  <div class="card-body form-padding">
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <input type="hidden" formControlName="id">
+                        <label class="f-700 control-label">Company Name</label>
+                        <input type="text" name="comapny_name_{{i}}" formControlName="company_name"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label class="f-700 control-label">Designation</label>
+                        <input type="text" name="designation_{{i}}" formControlName="designation" id="designation_{{i}}"
+                          class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label class="f-700 control-label">Start Date</label>
+                        <input [owlDateTimeTrigger]="from_date" [owlDateTime]="from_date" formControlName="from_date"
+                          name="from_date{{i}}" id="from_date_{{i}}" class="form-control input-sm fc-alt">
+                        <owl-date-time [pickerType]="'calendar'" #from_date></owl-date-time>
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label class="f-700 control-label">End Date</label>
+                        <input [owlDateTimeTrigger]="to_date" [owlDateTime]="to_date" formControlName="to_date"
+                          name="to_date_{{i}}" id="to_date_{{i}}" class="form-control input-sm fc-alt">
+                        <owl-date-time [pickerType]="'calendar'" #to_date></owl-date-time>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <!-- <div class="col-md-12 form-group">
+                      <label class="f-700 control-label">Details</label>
+                      <textarea name="details_{{i}}" rows="2" formControlName="details" class="form-control input-sm fc-alt"></textarea>
+                    </div> -->
+                      <div class="col-md-4 form-group">
+                        <label class="f-700 control-label">Relieving Letter</label>
+                        <div class="row col-md-12 document-image" *ngIf="work_exp_images[i]['relieving_letter']">
+                          <a target="blank" href="{{FILE_URL}}{{work_exp_images[i]['relieving_letter']}}"
+                            class="custom-work">{{work_exp_images[i]['relieving_letter']}}</a>
+                          <button type="button" (click)="RemoveEmpDoc('relieving_letter',i)"
+                            class=" btn btn-remove btn-work">
+                            Remove
+                          </button>
+                        </div>
+                        <div class="row custom-row" [hidden]="work_exp_images[i]['relieving_letter']">
+                          <label for="relieving_letter_{{i}}" class="custom-file-upload document-select-btn">
+                            Select
+                          </label>
+                          <input type="file" name="relieving_letter_{{i}}" id="relieving_letter_{{i}}"
+                            (change)="uploadEmpDoc('relieving_letter',$event,i)" formControlName="relieving_letter"
+                            class="form-control input-sm fc-alt">
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 form-group">
+                        <label class="f-700 control-label">Experience Letter</label>
+                        <div class="row col-md-12 document-image" *ngIf="work_exp_images[i]['exp_letter']">
+                          <a target="blank" href="{{FILE_URL}}{{work_exp_images[i]['exp_letter']}}"
+                            class="custom-work">{{work_exp_images[i]['exp_letter']}}</a>
+                          <button type="button" (click)="RemoveEmpDoc('exp_letter',i)" class=" btn btn-remove btn-work">
+                            Remove
+                          </button>
+                        </div>
+                        <div class="row custom-row" [hidden]="work_exp_images[i]['exp_letter']">
+                          <label for="exp_letter_{{i}}" class="custom-file-upload document-select-btn">
+                            Select
+                          </label>
+                          <input type="file" name="exp_letter_{{i}}" id="exp_letter_{{i}}"
+                            (change)="uploadEmpDoc('exp_letter',$event,i)" formControlName="exp_letter"
+                            class="form-control input-sm fc-alt">
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 form-group">
+                        <label class="f-700 control-label">Salary Slip</label>
+                        <div class="row col-md-12 document-image" *ngIf="work_exp_images[i]['salary_slip']">
+                          <a target="blank" href="{{FILE_URL}}{{work_exp_images[i]['salary_slip']}}"
+                            class="custom-work">{{work_exp_images[i]['salary_slip']}}</a>
+                          <button type="button" (click)="RemoveEmpDoc('salary_slip',i)"
+                            class=" btn btn-remove btn-work">
+                            Remove
+                          </button>
+                        </div>
+                        <div class="row custom-row" [hidden]="work_exp_images[i]['salary_slip']">
+                          <label for="salary_slip_{{i}}" class="custom-file-upload document-select-btn">
+                            Select
+                          </label>
+                          <input type="file" name="salary_slip_{{i}}" id="salary_slip_{{i}}"
+                            (change)="uploadEmpDoc('salary_slip',$event,i)" formControlName="salary_slip"
+                            class="form-control input-sm fc-alt">
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header red">
+                  <h4 class="c-white">
+                    <i class="zmdi zmdi-info"></i>Other Work Experiences</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <label class="f-700 control-label">Details</label>
+                      <textarea class="form-control m-input" name="certifications_courses"
+                        [(ngModel)]="employee.other_work_experirnce" formControlName="other_work_experirnce"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab id="user_immigration">
+        <ng-template ngbTabTitle>
+          <i class="fa fa-globe" aria-hidden="true"></i>Immigration</ng-template>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-document">
+                <div class="card-header blue">
+                  <h4 class="c-white">
+                    <i class="zmdi zmdi-info"></i>Passport</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Number</label>
+                      <input type="text" name="passport_number" formControlName="passport_number"
+                        [(ngModel)]="employee.passport_number" id="passport_number"
+                        class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Issue Date</label>
+                      <input [owlDateTimeTrigger]="passport_issue_date" [(ngModel)]="employee.passport_issue_date"
+                        [owlDateTime]="passport_issue_date" name="passport_issue_date"
+                        formControlName="passport_issue_date" class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #passport_issue_date></owl-date-time>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Expiry Date</label>
+                      <input [owlDateTimeTrigger]="passport_expiry_date" [(ngModel)]="employee.passport_expiry_date"
+                        [owlDateTime]="passport_expiry_date" name="passport_expiry_date"
+                        formControlName="passport_expiry_date" class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #passport_expiry_date></owl-date-time>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Scan Copy</label>
+                      <div class="row" *ngIf="employee.passport_image">
+                        <div class="row col-md-12">
+                          <a target="blank" href="{{FILE_URL}}{{employee.passport_image}}"
+                            class="custom-target">{{employee.passport_image}}</a>
+                          <!-- <img src="{{IMAGE_URL}}{{employee.passport_image}}" class="view_images custom-image" /> -->
+                        </div>
+                        <div class="row col-md-12 button-wrap">
+                          <!-- <a [href]="IMAGE_URL+employee.passport_image" download target="_blank">
+                          <button type="button" class="btn-download">
+                            Download
+                          </button>
+                        </a> -->
+                          <button type="button" (click)="RemoveFile('passport_image')" class="btn-remove btn btn-work">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row custom-row" [hidden]="employee.passport_image">
+                        <label for="passport_image" class="custom-file-upload immigration-select-btn">Select</label>
+                        <input type="file" (change)="uploadFile($event)" name="passport_image"
+                          formControlName="passport_image" id="passport_image" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-document">
+                <div class="card-header red">
+                  <h4 class="c-white">
+                    <i class="zmdi zmdi-info"></i>Visa</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Number</label>
+                      <input type="text" name="visa_number" formControlName="visa_number"
+                        [(ngModel)]="employee.visa_number" id="visa_number" class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Issue Date</label>
+                      <input [owlDateTimeTrigger]="visa_issue_date" [owlDateTime]="visa_issue_date"
+                        name="visa_issue_date" formControlName="visa_issue_date" [(ngModel)]="employee.visa_issue_date"
+                        id="visa_issue_date" class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #visa_issue_date></owl-date-time>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Expiry Date</label>
+                      <input [owlDateTimeTrigger]="visa_expiry_date" [owlDateTime]="visa_expiry_date"
+                        name="visa_expiry_date" formControlName="visa_expiry_date"
+                        [(ngModel)]="employee.visa_expiry_date" id="visa_expiry_date"
+                        class="form-control input-sm fc-alt">
+                      <owl-date-time [pickerType]="'calendar'" #visa_expiry_date></owl-date-time>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Scan Copy</label>
+                      <div class="row" *ngIf="employee.visa_image">
+                        <div class="row col-md-12">
+                          <a target="blank" class="custom-blank"
+                            href="{{FILE_URL}}{{employee.visa_image}}">{{employee.visa_image}}</a>
+                          <!-- <img src="{{IMAGE_URL}}{{employee.visa_image}}" class="view_images custom-image" /> -->
+                        </div>
+                        <div class="row col-md-12 button-wrap">
+                          <!-- <a [href]="IMAGE_URL+employee.visa_image" download target="_blank">
+                          <button type="button" class="btn-download">
+                            Download
+                          </button>
+                        </a> -->
+                          <button type="button" (click)="RemoveFile('visa_image')" class="btn-remove btn btn-work">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row custom-row" [hidden]="employee.visa_image">
+                        <label for="visa_image" class="custom-file-upload immigration-select-btn">Select</label>
+                        <input type="file" (change)="uploadFile($event)" name="visa_image" formControlName="visa_image"
+                          id="visa_image" class="form-control input-sm fc-alt">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab id="user_social_network">
+        <ng-template ngbTabTitle>
+          <i class="fa fa-share-alt" aria-hidden="true"></i>Social Network</ng-template>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-document">
+                <div class="card-header green">
+                  <h4 class="c-white">
+                    <i class="zmdi zmdi-info"></i>Social Network</h4>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Slack username</label>
+                      <input type="text" name="slack_username" formControlName="slack_username" id="slack_username"
+                        [(ngModel)]="employee.slack_username" class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Facebook username</label>
+                      <input type="text" name="facebook_username" formControlName="facebook_username"
+                        [(ngModel)]="employee.facebook_username" id="facebook_username"
+                        class="form-control input-sm fc-alt">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">Twitter username</label>
+                      <input type="text" name="twitter_username" formControlName="twitter_username"
+                        [(ngModel)]="employee.twitter_username" id="twitter_username"
+                        class="form-control input-sm fc-alt">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <label class="f-700 control-label">LinkedIn username</label>
+                      <input type="text" name="linkdin_username" formControlName="linkdin_username"
+                        [(ngModel)]="employee.linkdin_username" id="linkdin_username"
+                        class="form-control input-sm fc-alt">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+      </ngb-tab>
+    </ngb-tabset>
+
+    <div class="update-button">
+      <button class="btn btn-primary update-btn" type="submit">
+        Update
+      </button>
+    </div>
+  </form>
+</div>

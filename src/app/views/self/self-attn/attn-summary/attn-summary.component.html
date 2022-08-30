@@ -1,0 +1,149 @@
+<div class="animated fadeIn">
+  <div class="datepicker-wrap">
+    <div class="col-md-12 custom-date date-picker-wrap-last ">
+      <div>
+        <input type="text" class="form-control custom-datepicker" name="daterangeInput" daterangepicker [options]="options"
+          (selected)="selectedDate($event, daterange)" autocomplete="off" />
+          <i class="fa fa-chevron-down"></i>
+      </div>
+    </div>
+  </div>
+  <div class="details-wrap">
+    <div class="details-section custom-days">
+      <span class="white-font pb-10">Days</span>
+      <h4 class="white-font">{{generalData.presentDays}}</h4>
+    </div>
+    <div class="details-section custom-late">
+      <span class="white-font pb-10">Late</span>
+      <h4 class="white-font">{{generalData.lateDaysRatio}}% ({{generalData.lateDays}} Days)</h4>
+    </div>
+    <div class="details-section custom-absent">
+      <span class="white-font pb-10">Absent</span>
+      <h4 class="white-font">{{generalData.absentDaysRatio}}% ({{generalData.absentDays}} Days)</h4>
+    </div>
+    <div class="details-section custom-half-day">
+      <span class="white-font pb-10">Half Days</span>
+      <h4 class="white-font">{{generalData.halfDays}}</h4>
+    </div>
+    <div class="details-section custom-total-office">
+      <ng-container *ngIf="generalData.required_staffing">
+        <span class="white-font pb-10">Total Office</span>
+        <h4 class="white-font">{{generalData.required_staffing.hours}} hrs
+          {{generalData.required_staffing.minutes > 0 ? generalData.required_staffing.minutes+' mins' : ''}}
+        </h4>
+      </ng-container>
+    </div>
+    <div class="details-section custom-total-worked">
+      <ng-container *ngIf="generalData.emp_staffing">
+        <span class="white-font pb-10">Total worked</span>
+        <h4 class="white-font">{{generalData.emp_staffing.hours}} hrs
+          {{generalData.emp_staffing.minutes > 0 ? generalData.emp_staffing.minutes+' mins' : ''}}</h4>
+      </ng-container>
+    </div>
+    <div class="details-section custom-ratio">
+      <span class="white-font pb-10">Productivity Ratio</span>
+      <h4 class="white-font">{{generalData.productivity_ratio}}%</h4>
+    </div>
+  </div>
+  <div class="">
+    <div class="table-wrap self-attn-summary">
+      <!-- <table class="table custom-table" style="width: 100%" [mfData]="(allAttn|filter:search)" #mf="mfDataTable"
+      [mfRowsOnPage]="10">
+      <thead>
+        <tr class="custom-row">
+          <th style="width: 7%">
+            <mfDefaultSorter by="date" class="gray-font">Date</mfDefaultSorter>
+          </th>
+          <th style="width: 5%">
+            <mfDefaultSorter by="entry_time" class="gray-font">Entry Time</mfDefaultSorter>
+          </th>
+          <th style="width: 5%">
+            <mfDefaultSorter by="exit_time" class="gray-font">Exit time</mfDefaultSorter>
+          </th>
+          <th style="width: 5%">
+            <mfDefaultSorter by="break_time" class="gray-font">Break time</mfDefaultSorter>
+          </th>
+          <th style="width: 5%">
+            <mfDefaultSorter by="working_time" class="gray-font">Working Hours</mfDefaultSorter>
+          </th>
+          <th style="width: 10%">
+            <mfDefaultSorter by="publish_date" class="gray-font">Other details</mfDefaultSorter>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mf.data" class="custom-row">
+          <td>{{item.date}}</td>
+          <td>{{item.entry_time}}</td>
+          <td>{{item.exit_time ? item.exit_time : '-'}}</td>
+          <td>{{item.break_time ? item.break_time : '-'}}</td>
+          <td>{{item.working_time ? item.working_time : '-'}}</td>
+          <td>
+            <div class="other_details"><span class="bold-font">Check-In IP: </span>
+              <span>{{item.attn_data.check_in_ip ? item.attn_data.check_in_ip : '-'}}</span></div>
+            <div class="other_details"><span class="bold-font">Check-Out IP: </span>
+              <span>{{item.attn_data.check_out_ip ? item.attn_data.check_out_ip : '-'}}</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="7">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table> -->
+
+
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 5%" class="summary-table">Date</th>
+            <th style="width: 5%">Entry Time</th>
+            <th style="width: 5%">Exit time</th>
+            <th style="width: 5%">Break time</th>
+            <th style="width: 5%">Working Hours</th>
+            <th style="width: 10%">Other details</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="allAttn?.length != 0">
+          <tr *ngFor="let item of allAttn">
+            <td class="summary-table"><span class="table-txt">{{item.date.date | dateFilter}}</span></td>
+            <td><span class="table-txt">{{item.entry_time}}</span></td>
+            <td><span class="table-txt">{{item.exit_time ? item.exit_time : '-'}}</span></td>
+            <td><span class="table-txt">{{item.break_time ? item.break_time : '-'}}</span></td>
+            <td>
+              <progressbar *ngIf="item.staffing" class="progress progress-striped progress-animated" [type]="(generalData.office_staffing < item.staffing.bar_data ? 'success' : 'danger')"
+                [value]=item.staffing.bar_data [max]="(generalData.office_staffing < item.staffing.bar_data ? item.staffing.bar_data : generalData.office_staffing)">
+              </progressbar>
+              <!-- <p>office : {{generalData.office_staffing}}</p>
+            <p>emp : {{item.staffing}}</p> -->
+              <!-- <span class="table-txt">{{item.working_time ? (item.working_time) : '-'}}</span> -->
+              <span class="table-text" *ngIf="item.staffing;else no_data">{{item.staffing.hours > 0 ?
+                item.staffing.hours+' hrs': ''}}
+                {{item.staffing.minutes > 0 ? item.staffing.minutes+' mins' : ''}}
+              </span>
+              <ng-template #no_data> - </ng-template>
+            </td>
+            <td>
+              <div class="other_details"><span class="bold-font">Check-In IP: </span>
+                <span>{{item.attn_data.check_in_ip ? item.attn_data.check_in_ip : '-'}}</span></div>
+              <div class="other_details"><span class="bold-font">Check-Out IP: </span>
+                <span>{{item.attn_data.check_out_ip ? item.attn_data.check_out_ip : '-'}}</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="allAttn?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

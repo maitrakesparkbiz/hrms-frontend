@@ -1,0 +1,44 @@
+.custom-select {
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 2px;
+  width: 90px
+}
+
+.custom-select:focus {
+  border-color: #2f88d2;
+  box-shadow: none
+}
+
+.pull-left {
+  float: left;
+}
+
+.select-year {
+  max-width: 121px;
+  padding-left: 19px;
+}
+
+.header-buttons {
+  float: left;
+  margin: 0
+}
+
+.col-md-4.pull-left.select-year {
+  padding: 0;
+  max-width: 90px;
+}
+
+
+// 07-02-2019
+
+.header-buttons {
+  left: 458px;
+}
+
+.back-fix {
+    position: fixed;
+    z-index: 1;
+    background-color: #fff;
+    width: 100%;
+}

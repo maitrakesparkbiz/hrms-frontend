@@ -1,0 +1,137 @@
+<main class="messaage">
+  <div class="">
+    <div class="col-md-12 section-title">
+      <button type="button" class="btn btn-success" (click)="cancel()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Back
+      </button>
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+
+  <form [formGroup]="expenseForm" (ngSubmit)="Saveexpense()" #expenseform="ngForm">
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <div class="card">
+          <div class="card-header custom-blue">
+            <h4 class="c-white">
+              <i class="fa fa-info-circle"></i>Description</h4>
+          </div>
+          <div class="card-body form-padding">
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label class="f-700 control-label">Title</label>
+                <br />
+                <input type="text" name="title" formControlName="title" class="form-control" [ngClass]="expenseForm.get('title').invalid && expenseform.submitted?'is-invalid':''">
+                <div class="invalid-feedback" *ngIf="expenseForm.get('title').invalid && expenseform.submitted">
+                  The title is required
+                </div>
+              </div>
+              <div class="col-md-4 form-group">
+                <label class="f-700 control-label">Rotation</label>
+                <br>
+                <select class="form-control" formControlName="rotation" (change)="onSelectRotation($event.target.value)"
+                  [ngClass]="expenseForm.get('rotation').invalid && expenseform.submitted?'is-invalid':''">
+                  <option value="" [selected]="true">-- select --</option>
+                  <option *ngFor="let item of rotations" [value]=item.id>{{item.value_text}}</option>
+                  <!-- <option value="Daily">Daily</option>
+                  <option value="Weekly">Weekly</option>
+                  <option value="Bi-Weekly">Bi-Weekly</option>
+                  <option value="Monthly">Monthly</option>
+                  <option value="Quarterly">Quarterly</option>
+                  <option value="Half Yearly">Half Yearly</option>
+                  <option value="Annually">Annually</option> -->
+                </select>
+                <div class="invalid-feedback" *ngIf="expenseForm.get('rotation').invalid && expenseform.submitted">
+                  The rotation is required
+                </div>
+              </div>
+              <div class="col-md-4 form-group">
+                <label class="f-700 control-label">Category</label>
+                <br />
+                <select class="form-control" formControlName="category_id" [ngClass]="expenseForm.get('category_id').invalid && expenseform.submitted?'is-invalid':''">
+                  <option value="">-- select --</option>
+                  <option *ngFor='let cat of catList' [value]=cat.id>{{cat.name}}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="expenseForm.get('category_id').invalid && expenseform.submitted">
+                  The category is required
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <label class="f-700 control-label">Description</label>
+                <br>
+                <textarea class="form-control" formControlName="description" [ngClass]="expenseForm.get('description').invalid && expenseform.submitted?'is-invalid':''"></textarea>
+                <div class="invalid-feedback" *ngIf="expenseForm.get('description').invalid && expenseform.submitted">
+                  The description is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <div class="card">
+          <div class="card-header custom-purple">
+            <h4 class="c-white">
+              <i class="fa fa-rupee"></i>Expense Details</h4>
+          </div>
+          <div class="card-body form-padding">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="f-700 control-label">Payment Method</label>
+                <br>
+                <input type="text" name="payment_method" formControlName="payment_method" class="form-control"
+                  [ngClass]="expenseForm.get('payment_method').invalid && expenseform.submitted?'is-invalid':''">
+                <div class="invalid-feedback" *ngIf="expenseForm.get('payment_method').invalid && expenseform.submitted">
+                  The payment_method is required
+                </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <label class="f-700 control-label">Merchant</label>
+                <br>
+                <input type="text" name="merchant" formControlName="merchant" class="form-control" [ngClass]="expenseForm.get('merchant').invalid && expenseform.submitted?'is-invalid':''">
+                <div class="invalid-feedback" *ngIf="expenseForm.get('merchant').invalid && expenseform.submitted">
+                  The merchant is required
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="f-700 control-label">Amount</label>
+                <input type="number" name="amount" formControlName="amount" [ngClass]="expenseForm.get('amount').invalid && expenseform.submitted?'is-invalid':''"
+                  class="form-control input-sm fc-alt">
+                <div class="invalid-feedback" *ngIf="expenseForm.get('amount').invalid && expenseform.submitted">
+                  The amount is required
+                </div>
+              </div>
+              <div class="col-md-6 form-group" [hidden]="expenseForm.get('rotation').value==58">
+                <label class="f-700 control-label">Day of {{expenseForm.get('rotation').value > 60 ? 'Month' : 'Week'}}</label>
+                <br>
+                <input type="number" name="day_of_month" formControlName="day_of_month" class="form-control"
+                  placeholder="Bills on which day" [ngClass]="expenseForm.get('day_of_month').invalid && expenseform.submitted?'is-invalid':''">
+                <div class="invalid-feedback" *ngIf="expenseForm.get('day_of_month').invalid && expenseform.submitted">
+                  The day_of_month is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-wrap ">
+        <button class="btn btn-primary custom-create" type="submit">
+          <span>{{!!id?'Update':'Create'}}</span>
+        </button>&nbsp;
+        <button class="btn btn-primary" class="btn btn-default custom-cancel" (click)="cancel()" style="color: black">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+  </form>
+</main>

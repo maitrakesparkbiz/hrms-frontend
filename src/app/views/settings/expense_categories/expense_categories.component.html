@@ -1,0 +1,152 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 header-buttons setting-header">
+      <button type="button" class="new-button" (click)="openModal(template)" [appCheckPermission]="'EXPENSE-CATEGORIES.ADD'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count" type="button" class="edit-button" (click)="EditDepartment(edittemplate)"
+        [appCheckPermission]="'EXPENSE-CATEGORIES.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <button *ngIf="allcheck_id_count" type="button" class="del-button" (click)="deleteModel(delete)"
+        [appCheckPermission]="'EXPENSE-CATEGORIES.DELETE'">
+        <i class="fa fa-trash "></i>
+        Delete
+      </button>
+    </div>
+
+    <div class="table-wrap setting-table expense-category-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover">
+        <thead>
+          <tr class="custom-th">
+            <th style="width:5%">
+              <input type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" /><label></label>
+            </th>
+            <th style="width:12%">Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="dept?.length != 0">
+          <tr *ngFor="let item of dept" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" /><label></label>
+            </td>
+            <td><span class="table-txt">{{item.name}}</span></td>
+            <td><span class="table-txt">{{item.description}}</span></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="dept?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #template>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Manage Expense Categories 123</h4>
+        <button type="button" class="close" (click)="closeModel()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="invoiceForm" (ngSubmit)="SaveExpenseCategory()" #catForm="ngForm">
+          <div class="row dept-wrap">
+            <div class="col-md-5">
+              <input type="text" formControlName="name" class="form-control" placeholder="Category name" ngModel>
+              <div class="error-div" *ngIf="invoiceForm.get('name').invalid && catForm.submitted">Category name is
+                required</div>
+            </div>
+            <div class="col-md-5">
+              <input type="text" formControlName="description" class="form-control" placeholder="Category Description"
+                ngModel>
+              <div class="error-div" *ngIf="invoiceForm.get('description').invalid && catForm.submitted">Category
+                Description is required</div>
+            </div>
+            <div class="col-md-2 setting-add-button">
+              <button type="button" (click)="AddDepartment()" class="btn-primary plus-btn"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+          <div formArrayName="addsub">
+            <div *ngFor="let dep of invoiceForm.get('addsub').controls; let i=index" [formGroupName]="i" class="row">
+              <div class="col-md-5">
+                <input type="text" formControlName="name" class="form-control" placeholder="Category name" ngModel>
+                <div class="error-div" *ngIf="dep.get('name').invalid && catForm.submitted">Category name is
+                  required</div>
+              </div>
+              <div class="col-md-5">
+                <input type="text" formControlName="description" class="form-control" placeholder="Category Description"
+                  ngModel>
+                <div class="error-div" *ngIf="dep.get('description').invalid && catForm.submitted">Category
+                  Description is required</div>
+              </div>
+              <div class="col-sm-1">
+                <button class="btn btn-danger cross-btn" (click)="deleteSubRow(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <div class="modal-footer modal-footer-buttons setting-footer-modal">
+              <button type="button" class="modal-cancel-button" (click)="closeModel()">Close</button>
+              <button type="submit" class="modal-delete-button">Add Expense </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #edittemplate>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Manage Expense Categories</h4>
+        <button type="button" class="close" (click)="closeModel()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" [formGroup]="editForm" (ngSubmit)="editexpensecategory()">
+          <div formArrayName="editdept">
+            <div *ngFor="let dept123 of editForm.get('editdept').controls; let i=index" [formGroupName]="i">
+              <div class="row">
+                <div class="col-md-4">
+                  <input type="hidden" name="id" formControlName="id" value="{{dept_edit[i].id}}">
+                  <input type="text" formControlName="name" class="form-control" placeholder="Category name">
+                </div>
+                <div class="col-md-8">
+                  <input type="text" name="description" formControlName="description" class="form-control" placeholder="Category Description">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer modal-footer-buttons setting-footer-modal">
+            <button type="button" class="modal-cancel-button" (click)="closeModel()">Close</button>
+            <button type="submit" class="modal-delete-button" [disabled]="editForm.invalid">Edit
+              Expense
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #delete>
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deletedesignation()">Delete</button>
+    </div>
+  </ng-template>
+
+</main>

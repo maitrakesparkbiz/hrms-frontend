@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAGA,iBAAiB;EAChB,MAAM,EAAC,IAAI;EACX,UAAU,EAAE,IAAI;EAChB,KAAK,EAAE,MAAM;EACb,YAAY,EAAC,IAAI;;AAElB,eAAe;EACd,MAAM,EAAC,IAAI;;AAGZ,0CACA;EAEE,gBAAgB,EAAE,OAAO;;AAG3B,oCACA;EACE,KAAK,EAAE,GAAG;EACV,gBAAgB,EAAE,IAAI;;AAGxB,0CACA;EACE,gBAAgB,EAAE,OAAO;EACzB,MAAM,EAAE,cAAc;;AAExB,mBAAmB;EAAK,UAAU,EAAE,IAAI",
+"sources": ["project-ba-approved.component.scss"],
+"names": [],
+"file": "project-ba-approved.component.css"
+}

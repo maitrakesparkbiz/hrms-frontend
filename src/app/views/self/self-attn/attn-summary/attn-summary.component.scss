@@ -1,0 +1,151 @@
+.other_details {
+  display: block;
+}
+
+input.custom-datepicker {
+  float: left;
+  width: auto;
+  background: #383d40;
+  color: #fff;
+  margin: 20px 0 20px 22px;
+}
+
+.custom-date {
+  border-bottom: 1px solid #e4e7ea;
+  position: fixed;
+  background: #fff;
+  z-index: 10;
+  padding: 0 7px;
+}
+
+.details-wrap {
+  float: left;
+  width: 100%;
+  margin: 80px 15px 6px
+}
+
+.details-section {
+  padding: 15px;
+  color: #fff;
+  height: 90px;
+  margin: 15px;
+  width: 22.8%;
+  float: left;
+  ;
+}
+
+.custom-days {
+  background: #f06292;
+}
+
+.white-font {
+  color: #fff
+}
+
+.custom-late {
+  background: #ef5350;
+}
+
+.custom-absent {
+  background: #4dd0e1;
+}
+
+.custom-half-day {
+  background: #ffb74d;
+}
+
+.custom-total-office {
+  background-color: #81c784;
+}
+
+.custom-total-worked {
+  background-color: #7986cb;
+}
+
+.custom-ratio {
+  background-color: #d46f74;
+}
+
+.pb-10 {
+  padding-bottom: 5px;
+  display: inline-block;
+}
+
+.custom-table {
+  margin-left: 7px;
+  margin-top: 30px;
+}
+
+.gray-font {
+  color: #757575
+}
+
+.bold-font {
+  color: #5e5e5e;
+  font-weight: 700;
+  padding-right: 6px;
+}
+
+.table td,
+.table thead th {
+  border: 0
+}
+
+.custom-row {
+  border-bottom: 1px solid #e4e7ea
+}
+
+.table-wrap {
+  width: 100%;
+}
+
+.table-wrap table#claim_table {
+  width: 100% !important;
+}
+
+td.summary-table {
+  padding-left: 31px !important;
+}
+
+th.summary-table.sorting_disabled {
+  padding-left: 30px;
+}
+
+
+.progress {
+  background-color: #d6d6d6;
+  height: 5px;
+  border-radius: 0
+}
+
+.custom-date.date-picker-wrap-last {
+    width: 100%;
+    float: left;
+}
+
+.custom-date.date-picker-wrap-last > div {
+    display: inline-block;
+}
+
+.custom-date.date-picker-wrap-last > div input {
+    padding: 20px 30px 20px 20px;
+}
+@media screen and(max-width:1700px) and (min-width:1501px) {
+  .details-section {
+    width: 21.8%;
+  }
+
+}
+
+@media(max-width:1440px) {
+  .details-section {
+    width: 22%;
+  }
+}
+
+
+@media(max-width:1366px) {
+  .details-section {
+    width: 21.7%;
+  }
+}

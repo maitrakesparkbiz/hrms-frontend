@@ -1,0 +1,110 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <form name="CompanyForm" class="m-form" [formGroup]="CompanyForm" (ngSubmit)="SaveCompany()">
+
+      <div class="custom-main">
+        <div class="card" style="width: 100%">
+          <div class="card-header" style="background-color:#42A5F5;color: white;">
+            <h4><i class="fa fa-info-circle"></i> General Admin</h4>
+          </div>
+          <div class="card-body form-padding">
+            <div class="row">
+              <div class="col-md-6 custom-country">
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Name</label>
+                  <input type="text" name="name" class="form-control input-sm fc-alt" formControlName="name"
+                    [(ngModel)]="company.name">
+                </div>
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Country</label>
+                  <select name="country" class="form-control input-sm fc-alt" [(ngModel)]="company.country"
+                    formControlName="country">
+                    <option *ngFor="let country of countrys; let index = index" value="{{country.id}}">
+                      {{country.value_text}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Website</label>
+                  <input type="text" name="website" class="form-control input-sm fc-alt" formControlName="website"
+                    [(ngModel)]="company.website">
+                </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <label class="f-700 control-label">Logo</label><br />
+                <div class="row image_class" *ngIf="company.logo">
+                  <div class=" img-wrap">
+                    <img src="{{IMAGE_URL}}{{company.logo}}" class="view_images" />
+                  </div>
+                  <div class=" removebtn" *ngIf="editAllowed">
+                    <a class="btn btn-danger btn-remove" (click)="RemoveImages('logo')">Remove</a>
+                  </div>
+                </div>
+                <div class="" [hidden]="company.logo">
+                  <label for="file-upload" class="custom-file-upload">
+                    Select
+                  </label>
+                  <input id="file-upload" type="file" (change)="uploadImage($event)" formControlName="logo" />
+                </div>
+                <!--<div class="row" >-->
+                <!--<input  type="file"  name="driving_license_image" id="driving_license_image" (change)="uploadImage($event)" class="form-control input-sm fc-alt">-->
+                <!--</div>-->
+              </div>
+
+            </div>
+            <!-- <div class="row">
+            <div class="col-md-6 form-group">
+
+            </div>
+          </div> -->
+          </div>
+          <div class="card-body form-padding">
+            <h5>Contact Information</h5>
+            <div class="row">
+              <div class="col-md-6 pull-left">
+                <div class="form-group">
+                  <label class="f-700 control-label">Contact Email</label>
+                  <input type="text" name="contact_email" [(ngModel)]="company.contact_email" formControlName="contact_email"
+                    [ngClass]="(CompanyForm.get('contact_email').touched && CompanyForm.get('contact_email').invalid)?'is-invalid':''"
+                    class="form-control input-sm fc-alt">
+                  <div class="invalid-feedback" *ngIf="CompanyForm.get('contact_email').touched && CompanyForm.get('contact_email').invalid">
+                    The contact email field is required.
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="f-700 control-label">Contact Person</label>
+                  <input type="text" name="contact_number" [(ngModel)]="company.contact_person" formControlName="contact_person"
+                    class="form-control input-sm fc-alt">
+                </div>
+                <div class="form-group">
+                  <label class="f-700 control-label">Contact Number</label>
+                  <input type="text" name="contact_person" [(ngModel)]="company.contact_number" formControlName="contact_number"
+                    class="form-control input-sm fc-alt">
+                </div>
+              </div>
+
+              <div class="col-md-6 pull-left">
+                <div class="form-group">
+                  <label class="f-700 control-label">Contact Address</label>
+                  <textarea rows="4" name="contact_address" [(ngModel)]="company.contact_address" formControlName="contact_address"
+                    class="form-control input-sm fc-alt contact_address"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group button-wrap">
+              <button *ngIf="editAllowed" class="center" class="btn btn-primary btn-save" type="submit" [disabled]="!CompanyForm.valid">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</main>

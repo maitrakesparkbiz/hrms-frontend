@@ -1,0 +1,38 @@
+<div class="animated fadeIn">
+
+<div class="expense-report-header">
+  <form [formGroup]="chartForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-6 category-list" *ngIf="categories.length > 0">
+        <label>
+          Expense Category :
+        </label>
+        <ng-select [items]="categories" [selectOnTab]="true" formControlName="category_id" bindValue="value"
+          placeholder="Select an option..." (change)="onChange()" #catOpt>
+        </ng-select>
+      </div>
+
+      <div class="col-md-6 year-selector">
+        <label>
+          Year :
+        </label>
+        <input formControlName="year" class="form-control" [owlDateTimeTrigger]="year" [owlDateTime]="year">
+        <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" (yearSelected)="chosenYearHandler($event,year)"
+          (afterPickerClosed)="onChange()" #year="owlDateTime"></owl-date-time>
+      </div>
+    </div>
+  </form>
+</div>
+
+  <div class=" card expense-graph">
+    <div class="card-header">
+      Bar Chart
+    </div>
+    <div class="card-body">
+      <div class="chart-wrapper">
+        <canvas baseChart class="chart" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+          [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

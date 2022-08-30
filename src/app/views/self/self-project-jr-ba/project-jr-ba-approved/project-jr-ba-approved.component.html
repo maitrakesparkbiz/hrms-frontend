@@ -1,0 +1,146 @@
+<main class="message">
+  <div class="row animated fadeIn">
+    <div class="col-md-12 header-buttons">
+      <button *ngIf="allcheck_id_count==1" type="button" class="edit-button" [routerLink]="['update-project',projectDetails.id]"
+        [appCheckPermission]="'SELF-JR-BA.APPROVED-PROJECTS.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+    </div>
+
+    <div class="table-wrap expense-claim-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 40px">
+            </th>
+            <th style="width: 180px">Project Name</th>
+            <th style="width: 150px">Created On</th>
+            <th style="width: 180px">Approved Estimated Hours</th>
+            <th style="width: 100px">Status</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="allProjects.length > 0;else no_data">
+          <tr *ngFor="let project of allProjects" (click)="checkone(project.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{project.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="project.isSelected" (click)="checkone(project.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td>
+              <span class="table-txt">{{ project.project_name }}</span>
+            </td>
+            <td><span class="table-txt">{{ project.created_at.date | dateFilter }} {{project.created_at.date |
+                date:'h:mm a'}}</span></td>
+            <td><span class="table-txt">{{ project.approved_est_time!==0 ? project.approved_est_time : '-' }}</span></td>
+            <td>
+              <span class="status" [ngClass]="(project.key_text=='comment_sent' || project.key_text =='comment_received')
+              ? 'comment-tag' 
+              : project.key_text=='not_started_yet' 
+              ? 'pending-tag' 
+              : 'approve-tag'">
+                {{project.value_text}}</span>
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #no_data>
+          <tbody>
+            <tr>
+              <td colspan="6" class="no-data-available">No data!</td>
+            </tr>
+          <tbody>
+        </ng-template>
+      </table>
+    </div>
+    <div *ngIf="allcheck_id_count==1;else default" class="description-wrap">
+      <div class="custom-detail green-txt">Project Details</div>
+      <span class="status" [ngClass]="(projectDetails.key_text=='comment_sent' || projectDetails.key_text =='comment_received')
+              ? 'comment-tag' 
+              : projectDetails.key_text=='not_started_yet' 
+              ? 'pending-tag' 
+              : 'approve-tag'">
+        {{projectDetails.value_text}}</span>
+      <div class="description-detail">
+        <div class="right-part-content">
+          <span class="left-part">Project Name</span>
+          <span class="right-part">{{projectDetails.project_name}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Project Document</span>
+          <ng-container *ngIf="projectDetails.project_doc.length > 0; else nullData">
+            <a *ngFor="let doc of projectDetails.project_doc" target="blank" href="{{FILE_URL}}{{doc}}">
+              {{doc}}
+            </a>
+          </ng-container>
+          <ng-template #nullData>
+            -
+          </ng-template>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Created On</span>
+          <span class="right-part">{{projectDetails.created_at.date | dateFilter}} {{projectDetails.created_at.date |
+            date:'h:mm a'}}</span>
+        </div>
+
+        <div class="right-part-content">
+          <span class="left-part">Approved Estimated Hours</span>
+          <span class="right-part">{{projectDetails.approved_est_time ? projectDetails.approved_est_time : '-'}}</span>
+        </div>
+
+        <div class="right-part-content">
+          <span class="left-part">Threshold Limit1</span>
+          <span class="right-part">{{projectDetails.threshold_limit1 ? projectDetails.threshold_limit1 : '-'}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Threshold Limit2</span>
+          <span class="right-part">{{projectDetails.threshold_limit2 ? projectDetails.threshold_limit2 : '-'}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Deadline</span>
+          <span class="right-part">{{projectDetails.deadline ? ( projectDetails.deadline.date | dateFilter ) : '-'}}</span>
+        </div>
+      </div>
+      <div class="right-part-content">
+        <div class="custom-detail  green-txt">Project Description</div>
+        <span>{{projectDetails.project_description}}</span>
+      </div>
+      <div class="right-part-content">
+        <div class="custom-detail  green-txt">Comments</div>
+        <ng-container *ngFor="let cmt of allComments">
+          <div class="msg" [ngClass]="cmt.u_id == userId ? 'sender' : 'receiver'">
+            {{cmt.msg_text}}
+          </div>
+        </ng-container>
+        <div class="cmt-form">
+          <form [formGroup]="commentForm" (ngSubmit)="doComment()">
+            <input type="text" class="cmt-box" formControlName="msg_text" placeholder="type comment ... ">
+            <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid || isDisabled"><i class="fa fa-paper-plane"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-template class="test_content" #default>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+
+  <ng-template #delete>
+    <div class="center img-center">
+      <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+    </div>
+    <div class="modal-body modal-body-txt">
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteExpense()">Delete</button>
+    </div>
+  </ng-template>
+
+</main>

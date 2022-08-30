@@ -1,0 +1,203 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row inner-header">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-success" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="expenseForm" (ngSubmit)="Saveexpense()" #expenseform="ngForm">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card comman-card-wrap">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Description</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-4 form-group" *ngIf="selfUrl==''">
+                  <label class="f-700 control-label">Employee</label>
+                  <br />
+                  <ng-select [items]="employee" [selectOnTab]="true" bindValue="value" placeholder="Select an option"
+                    formControlName="emp_id" class="custom-input" #emp_opts>
+                  </ng-select>
+                  <div class="custom-feedback" *ngIf="expenseForm.get('emp_id').invalid && expenseform.submitted">
+                    Employee is required
+                  </div>
+                </div>
+
+                <ng-template>
+                  <input type="text" name="emp_id" formControlName="emp_id" class="form-control" [hidden]="true">
+                </ng-template>
+
+                <div class="form-group" [ngClass]="selfUrl==''?'col-md-4':'col-md-6'">
+                  <label class="f-700 control-label">Title</label>
+                  <br />
+                  <input type="text" name="title" formControlName="title" class="form-control"
+                    [ngClass]="expenseForm.get('title').invalid && expenseform.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="expenseForm.get('title').invalid && expenseform.submitted">
+                    The title is required
+                  </div>
+                </div>
+                <div class="form-group" [ngClass]="selfUrl==''?'col-md-4':'col-md-6'">
+                  <label class="f-700 control-label">Category</label>
+                  <br />
+                  <select class="form-control" formControlName="category_id"
+                    [ngClass]="expenseForm.get('category_id').invalid && expenseform.submitted?'is-invalid':''">
+                    <option value="">-- select --</option>
+                    <option *ngFor='let cat of catList' [value]="cat.id">{{cat.name}}</option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="expenseForm.get('category_id').invalid && expenseform.submitted">
+                    The category is required
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Description</label>
+                  <br>
+                  <textarea class="form-control" formControlName="description"
+                    [ngClass]="expenseForm.get('description').invalid && expenseform.submitted?'is-invalid':''">
+
+                </textarea>
+                  <div class="invalid-feedback" *ngIf="expenseForm.get('description').invalid && expenseform.submitted">
+                    The description is required
+                  </div>
+                  <!--<input [owlDateTimeTrigger]="date" [owlDateTime]="date" formControlName="date"-->
+                  <!--name="date" class="form-control input-sm fc-alt">-->
+                  <!--<owl-date-time [pickerType]="'calendar'" #date></owl-date-time>-->
+                  <!--<div class="invalid-feedback"-->
+                  <!--*ngIf="invoiceForm.get('start_date').touched && invoiceForm.get('start_date').invalid">-->
+                  <!--The start date is required-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-purple">
+              <h4 class="c-white">
+                <i class="fa fa-rupee"></i>Expense Details</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Amount</label>
+                  <input type="number" name="amount" formControlName="amount"
+                    [ngClass]="expenseForm.get('amount').invalid && expenseform.submitted?'is-invalid':''"
+                    class="form-control input-sm fc-alt">
+
+                  <div class="invalid-feedback" *ngIf="expenseForm.get('amount').invalid && expenseform.submitted">
+                    The amount is required
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Bill date</label>
+                  <input [owlDateTimeTrigger]="bill_date" [owlDateTime]="bill_date" formControlName="bill_date"
+                    name="date" class="form-control input-sm fc-alt" [(ngModel)]="planModel.start_time">
+                  <owl-date-time [pickerType]="'calendar'" #bill_date></owl-date-time>
+                </div>
+              </div>
+              <div class="row">
+                <!-- <div class="col-md-6 form-group">
+                <label class="f-700 control-label">Receipt</label>
+                <br>
+                <input type="file" formControlName="receipt_image" id="receipt_image" (change)="uploadFile($event)">
+                <div class="custom-feedback" *ngIf="expenseForm.get('receipt_image').invalid && expenseform.submitted">
+                  Receipt Image is required
+                </div>
+              </div> -->
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Receipt</label>
+
+                  <div class="row col-md-12 document-image" *ngIf="expense_edit || resume_select">
+                    <div *ngIf="expense_edit.receipt_image">
+                      <p>{{expense_edit.receipt_image}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row col-md-8" *ngIf="expense_edit || resume_select">
+                    <div *ngIf="expense_edit.receipt_image">
+                      <button type="button" (click)="removeImage('receipt_image')" class="btn btn-remove">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                  <div *ngIf="expense_edit;else elsepart">
+                    <div class="row" style="margin: 2px;" [hidden]="expense_edit.receipt_image">
+                      <label for="receipt_image" class="custom-file-upload document-select-btn">
+                        Select
+                      </label>
+                      <input type="file" name="receipt_image" id="receipt_image" (change)="uploadFile($event)"
+                        formControlName="receipt_image" class="form-control input-sm fc-alt"
+                        [ngClass]="expenseForm.get('receipt_image').invalid && expenseform.submitted?'is-invalid':''">
+                      <div class="invalid-feedback"
+                        *ngIf="expenseForm.get('receipt_image').invalid && expenseform.submitted">
+                        The receipt_image is required
+                      </div>
+                    </div>
+                  </div>
+                  <ng-template #elsepart>
+                    <label for="receipt_image" class="custom-file-upload document-select-btn">
+                      Select
+                    </label>
+                    <input type="file" name="receipt_image" id="receipt_image" (change)="uploadImage($event)"
+                      formControlName="receipt_image" class="form-control input-sm fc-alt"
+                      [ngClass]="expenseForm.get('receipt_image').invalid && expenseform.submitted?'is-invalid':''">
+                    <div class="invalid-feedback"
+                      *ngIf="expenseForm.get('receipt_image').invalid && expenseform.submitted">
+                      The receipt_image is required
+                    </div>
+                  </ng-template>
+
+                </div>
+
+
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Payment Method</label>
+                  <br>
+                  <input type="text" name="payment_method" formControlName="payment_method" class="form-control"
+                    [ngClass]="expenseForm.get('payment_method').invalid && expenseform.submitted?'is-invalid':''">
+                  <div class="invalid-feedback"
+                    *ngIf="expenseForm.get('payment_method').invalid && expenseform.submitted">
+                    The payment_method is required
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Merchant</label>
+                  <br>
+                  <input type="text" name="merchant" formControlName="merchant" class="form-control"
+                    [ngClass]="expenseForm.get('merchant').invalid && expenseform.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="expenseForm.get('merchant').invalid && expenseform.submitted">
+                    The merchant is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="button-wrap">
+          <button class="btn btn-primary custom-create" type="submit">
+            <span>{{!!id?'Update':'Create'}}</span>
+          </button>&nbsp;
+          <button type="button" class="btn btn-primary" class="btn btn-default custom-cancel" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</main>

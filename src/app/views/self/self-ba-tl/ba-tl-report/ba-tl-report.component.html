@@ -1,0 +1,142 @@
+<form [formGroup]="projectForm" (ngSubmit)="getReport()" class="dev-main">
+    <div class="row dev-report" >
+        <div class="col-md-4">
+            <div class="date-picker-wrap date-picker-wrap-last">
+                <div>
+                    <input type="text" class="form-control custom-datepicker" name="daterangeInput" daterangepicker
+                           [options]="options" (selected)="selectedDate($event, daterange)" autocomplete="off"/>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 form_sec_in">
+            <ng-select #empSelect name="emp_id" [items]="all_users" [selectOnTab]="true" bindValue="value"
+                       placeholder="employee" formControlName="emp_id" class="form-control">
+                <!--(change)="getReport($event)"-->
+                <!--&gt;-->
+            </ng-select>
+        </div>
+
+        <div class="col-md-4 form_sec_in">
+            <ng-select #empSelect name="project_id" [items]="all_project" [selectOnTab]="true" bindValue="value"
+                       placeholder="project" formControlName="project_id" class="form-control">
+                <!--(change)="getReport($event)"-->
+                <!--&gt;-->
+            </ng-select>
+        </div>
+        <button type="submit" class="btn-success">Search</button>
+    </div>
+</form>
+
+
+<div class="col-md-12" *ngIf="empTimingRecord.length > 0;else no_emp_timing">
+    <table class="table" style="width: 100%" [mfData]="empTimingRecord"
+           #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+        <tr>
+            <th style="width: 10%">
+                <mfDefaultSorter by="name">Project Name</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+                <mfDefaultSorter by="name">Date</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+                <mfDefaultSorter by="name">Hours</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+                <mfDefaultSorter by="name">Redmark</mfDefaultSorter>
+            </th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of mf.data" style="cursor: pointer;">
+            <td>
+                {{item.company_project_id.project_name}}
+            </td>
+            <td>{{item.record_date.date | dateFilter}}</td>
+            <td>{{item.record_hours}}</td>
+            <td>{{item.redmark_comment ? item.redmark_comment : '-'}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="5">
+                <mfBootstrapPaginator [rowsOnPageSet]="[10,20,30]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+    <div class="total-hours">
+        <label><h6>Total Hours:{{empTimingRecordTime.total ? empTimingRecordTime.total : ''}}</h6></label>
+    </div>
+
+</div>
+<ng-template #no_emp_timing>
+    <h5>No Record Found...</h5>
+</ng-template>
+
+
+<!--<div class="table-wrap self-job-opening">-->
+<!--<table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"-->
+<!--class="row-border hover" style="width: 100%">-->
+<!--<thead>-->
+<!--<tr class="custom-th">-->
+<!--<th style="width: 40px">-->
+<!--</th>-->
+<!--<th style="width: 180px">Project Name</th>-->
+<!--<th style="width: 150px">Date</th>-->
+<!--<th style="width: 150px">Hours</th>-->
+<!--<th style="width: 87px">Redmark</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody *ngIf="allProjects.length > 0;else no_data">-->
+<!--<tr *ngFor="let project of allProjects" (click)="checkone(project.id);$event.stopPropagation()">-->
+<!--<td>-->
+<!--<input type="checkbox" name="checkselection" value={{project.id}} class="formcontrol" class="formcontrol"-->
+<!--[(ngModel)]="project.isSelected" (click)="checkone(project.id);$event.stopPropagation()" />-->
+<!--<label></label>-->
+<!--</td>-->
+
+<!--<td>-->
+<!--<span class="table-txt">{{ project.project_name }}</span>-->
+<!--</td>-->
+
+<!--<td>-->
+<!--<span class="table-txt">{{ project.created_at.date | dateFilter }}-->
+<!--{{project.created_at.date | date:'h:mm a'}}</span>-->
+<!--</td>-->
+
+<!--<td>-->
+<!--<span class="">-->
+<!--<img style="width: 38px; height: 38px" *ngIf="project.profile_image ;else other_content"-->
+<!--[src]=IMAGE_URL+project.profile_image class="img-avatar" />-->
+<!--<ng-template #other_content>-->
+<!--<img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />-->
+<!--</ng-template>-->
+<!--</span><a class="emp-name blue-txt">-->
+<!--{{project.firstname }} {{project.lastname }}</a>-->
+<!--</td>-->
+<!--<td>-->
+<!--<span class="table-txt">{{ project.est_time ? project.est_time : '-' }}</span>-->
+<!--</td>-->
+<!--<td>-->
+<!--<span class="table-txt">{{ project.total_hours ? project.total_hours : '-' }}</span>-->
+<!--</td>-->
+
+<!--<td>-->
+<!--<span class="status" [ngClass]="project.key_text">-->
+<!--{{project.value_text}}</span>-->
+<!--</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--<ng-template #no_data>-->
+<!--<tbody>-->
+<!--<tr>-->
+<!--<td colspan="6" class="no-data-available">No data!</td>-->
+<!--</tr>-->
+<!--<tbody>-->
+<!--</ng-template>-->
+<!--</table>-->
+<!--</div>-->

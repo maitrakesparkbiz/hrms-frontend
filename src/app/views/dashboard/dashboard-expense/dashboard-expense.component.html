@@ -1,0 +1,98 @@
+<ng-template tabHeading><i class="icon-calculator"></i> Expenses <span class="leave-count" *ngIf="claims.length > 0">{{claims.length}}</span></ng-template>
+<ul class="recent-leaves-list pending-expense" *ngIf="claims.length > 0;else claimsTemplate">
+  <li *ngFor="let claim of claims" placement="right" [outsideClick]="true" [popover]="popExpenseTemplate" class="recent-leaves-inner">
+
+
+
+    <span class="dash-emp-img">
+      <img *ngIf="claim.profile_image ;else other_content" [src]=IMAGE_URL+claim.profile_image class="img-avatar bday-img" />
+      <ng-template #other_content>
+        <img [src]="employee_image" class="img-avatar" />
+      </ng-template>
+    </span>
+    <div class="dash-emp-details">
+      <a class="person-name">{{claim.firstname}} {{claim.lastname}}</a>
+      <span class="dash-emp-leave">{{claim[0].bill_date.date | dateFilter}} - {{claim[0].amount}} -
+        {{claim[0].title}}</span>
+    </div>
+
+
+
+
+
+    <div class="action-btns selective-bttn" *ngIf="claim">
+      <button type="button" (click)="openModal(claim[0].id, approve);$event.stopPropagation()" class="tick-btn">
+        <i class="fa fa-check"></i>
+      </button>
+      <button type="button" (click)="openModal(claim[0].id, reject);$event.stopPropagation()" class="cross-btn">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+    <ng-template #popExpenseTemplate>
+      <div class="custom-popover">
+        <h5 class="popup-title">Expense</h5>
+        <div class="popup-detail">
+          <span class="popup-left-part">Submitted By : </span>
+          <span class="popup-right-part">{{claim.firstname}} {{claim.lastname}}</span>
+        </div>
+        <div class="popup-detail">
+          <span class="popup-left-part">Title : </span>
+          <span class="popup-right-part">{{claim[0].title ? claim[0].title : '-'}}</span>
+        </div>
+        <div class="popup-detail">
+          <span class="popup-left-part">Amount : </span>
+          <span class="popup-right-part">{{claim[0].amount ? claim[0].amount : '-'}}</span>
+        </div>
+        <div class="popup-detail">
+          <span class="popup-left-part">Bill Date : </span>
+          <span class="popup-right-part">{{claim[0].bill_date.date | dateFilter}}</span>
+        </div>
+        <div class="popup-detail">
+          <span class="popup-left-part">Payment Method : </span>
+          <span class="popup-right-part">{{claim[0].payment_method ? claim[0].payment_method : '-'}}</span>
+        </div>
+        <div class="popup-detail">
+          <span class="popup-left-part">Merchant : </span>
+          <span class="popup-right-part">{{claim[0].merchant ? claim[0].merchant :'-'}}</span>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+</ul>
+<ng-template #claimsTemplate>
+  <div class="empty-msg-txt">
+    No pending claims found
+  </div>
+</ng-template>
+<ng-template #approve>
+  <!-- <div class="modal-dialog modal-confirm"> -->
+  <!-- <div class="modal-content"> -->
+  <!-- <div class="modal-body text"> -->
+  <div class="center img-center">
+    <img src="../../../assets/img/info.png" class="img-avatar" alt="admin@bootstrapmaster.com" />
+  </div>
+  <h4 class="modal-title title-center">Continue?</h4>
+  <div class="modal-body modal-body-txt">
+    <p>Do you really want to approve this claim ?</p>
+  </div>
+  <div class="modal-footer modal-footer-buttons">
+    <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+    <button type="button" class="modal-delete-button" (click)="onApprove()">Approve</button>
+  </div>
+  <!-- </div> -->
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-template>
+
+
+<ng-template #reject>
+  <h4 class="modal-title title-center custom-reject-modal">Reject Leave</h4>
+  <div class="modal-body modal-body-txt">
+    <p>Are you sure you want to reject this claim?</p>
+  </div>
+  <div class="modal-footer modal-footer-buttons">
+    <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+    <button type="button" class="modal-delete-button" (click)="onReject()">Reject</button>
+  </div>
+
+</ng-template>

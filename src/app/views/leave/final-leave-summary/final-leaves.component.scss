@@ -1,0 +1,63 @@
+.custom-image {
+  float: left;
+  width: 100%;
+  text-align: left;
+  padding: 15px 0;
+}
+
+.search-section {
+  margin-right: 15px;
+}
+
+ng-select.custom-input {
+  border: 0 !important
+}
+
+.emp-img {
+  width: 13%;
+}
+
+span.table-txt.blue-txt.custom-emp-details {
+  padding-top: 7px;
+  cursor: pointer;
+}
+
+table.dataTable tbody tr {
+  cursor: pointer;
+}
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+  span.custom-emp-img {
+    width: 23%
+  }
+
+}
+
+
+
+@media(max-width:1500px) {
+  span.custom-emp-img {
+    width: 25% !important;
+  }
+
+  .emp-img {
+    width: 17%;
+  }
+}
+
+
+@media (max-width: 1400px) {
+  span.custom-emp-img {
+    width: 30%;
+  }
+
+  .emp-img {
+    width: 20%;
+  }
+
+  .abc,
+  .description-wrap {
+    width: 25.1%;
+  }
+}

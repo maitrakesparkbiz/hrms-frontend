@@ -1,0 +1,77 @@
+main.message {
+  float: left;
+  width: 100%;
+  padding: 0; }
+
+.edit-modal-content {
+  float: left;
+  width: 100%;
+  min-width: 600px;
+  background: #fff;
+  border-radius: 5px; }
+
+h4.edit-modal-title {
+  background-color: #0288d1;
+  padding: 20px;
+  color: #fff; }
+
+button.edit-close-btn {
+  position: absolute;
+  right: 30px;
+  top: 20px; }
+
+input.form-control {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px; }
+
+input.form-control:focus {
+  border-color: #2f88d2 !important;
+  box-shadow: none; }
+
+.close {
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: none; }
+
+.close:not(:disabled):not(.disabled):hover {
+  color: #fff; }
+
+.form-control {
+  margin: 6px 0; }
+
+.modal-title {
+  font-size: 17px; }
+
+table.dataTable thead th {
+  position: relative; }
+
+h4.new-modal-title {
+  background-color: #0288d1;
+  padding: 20px;
+  color: #fff; }
+
+button.close.new-close-btn {
+  position: absolute;
+  right: 30px;
+  top: 20px; }
+
+.col-md-2.setting-add-button {
+  padding-top: 6px; }
+
+.plus-btn {
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3); }
+
+.cross-btn {
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  margin-top: 5px; }
+
+.header-buttons {
+  left: 458px; }
+
+/*# sourceMappingURL=department.component.css.map */

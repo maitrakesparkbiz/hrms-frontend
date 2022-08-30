@@ -1,0 +1,118 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row inner-header">
+      <div class="col-md-12 custom-bttn">
+        <button type="button" class="btn btn-success" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+
+    </div>
+
+
+    <form [formGroup]="appreciationForm" (ngSubmit)="SaveAppreciation()" #appreciationform="ngForm" class="custom-form">
+      <div class="row comman-card-wrap">
+        <div class="col-md-8 form-group">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header custom-blue">
+                <h4 class="c-white">
+                  <i class="fa fa-info-circle"></i>Details</h4>
+              </div>
+              <div class="card-body form-padding">
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    <label class="f-700 control-label">Award Given</label>
+                    <br />
+                    <ng-select [items]="award" [selectOnTab]="true" bindValue="value" placeholder="Select an option..."
+                      formControlName="award_id" [ngClass]="(appreciationForm.get('award_id').touched && appreciationForm.get('award_id').invalid)
+                                           ||(appreciationForm.get('award_id').untouched
+                                           && appreciationform.submitted)?'is-invalid':''"
+                      #awardOtp>
+
+                    </ng-select>
+                    <div class="invalid-feedback" *ngIf="(appreciationForm.get('award_id').invalid)|| (appreciationForm.get('award_id').untouched && appreciationform.submitted)">
+                      The Award is required
+                    </div>
+                  </div>
+                  <div class="col-md-6 form-group">
+                    <label class="f-700 control-label">Given To</label>
+                    <br />
+                    <ng-select [items]="employee" [selectOnTab]="true" bindValue="value" placeholder="Select an option..."
+                      formControlName="emp_id" #awardOtp1>
+
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    <label class="f-700 control-label">Given On</label>
+                    <input [owlDateTimeTrigger]="date" [owlDateTime]="date" formControlName="date" name="date" class="form-control input-sm fc-alt"
+                      placeholder="Date">
+                    <owl-date-time [pickerType]="'calendar'" #date></owl-date-time>
+                    <!--<div class="invalid-feedback"-->
+                    <!--*ngIf="invoiceForm.get('start_date').touched && invoiceForm.get('start_date').invalid">-->
+                    <!--The start date is required-->
+                    <!--</div>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header custom-red">
+                <h4 class="c-white">
+                  <i class="fa fa-gift"></i>Prizes</h4>
+              </div>
+              <div class="card-body form-padding">
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    <label class="f-700 control-label">Prizes Given</label>
+                    <input type="text" name="prize" formControlName="prize" class="form-control input-sm fc-alt"
+                      placeholder="Movie Tickets, Coffee Mug, etc.">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 form-group">
+          <div class="card">
+            <div class="card-header custom-green">
+              <h4 class="c-white">
+                <i class="fa fa-smile-o" aria-hidden="true"></i> Photo</h4>
+            </div>
+            <div class="card-body form-padding">
+
+              <div class="col-md-12">
+                <img *ngIf="appreciation.image" src="{{IMAGE_URL}}{{appreciation.image}}" style="width: 300px;height: 300px"
+                  alt="admin@bootstrapmaster.com" />
+              </div>
+              <div class="col-md-12" *ngIf="appreciation.image">
+                <a class="btn btn-danger" (click)="RemoveImages('image')">Remove</a>
+              </div>
+
+              <div class="row" [hidden]="appreciation.image">
+                <label for="image" class="custom-file-upload">
+                  Select file
+                </label>
+                <input id="image" type="file" (change)="uploadImage($event)" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-wrap">
+        <button class="btn btn-primary" type="submit">
+          <span>{{!!id?'Update':'Create'}}</span>
+        </button>&nbsp;
+        <button class="btn btn-primary" class="btn btn-default" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

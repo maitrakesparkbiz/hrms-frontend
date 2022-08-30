@@ -1,0 +1,22 @@
+<div class="animated fadeIn">
+  <form [formGroup]="chartForm" (ngSubmit)="onSubmit()">
+    <div class="">
+      <div class="col-md-12 year-selector">
+        <label>
+          Year :
+        </label>
+        <input formControlName="year" class="form-control expense-tab" [owlDateTimeTrigger]="year" [owlDateTime]="year">
+        <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" (yearSelected)="chosenYearHandler($event,year)"
+          (afterPickerClosed)="onChange()" #year="owlDateTime"></owl-date-time>
+      </div>
+    </div>
+  </form>
+
+
+  <div class=" card">
+    <div class="chart-wrapper">
+      <canvas baseChart class="chart" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+        [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+    </div>
+  </div>
+</div>

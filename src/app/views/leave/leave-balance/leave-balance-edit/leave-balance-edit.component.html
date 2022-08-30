@@ -1,0 +1,72 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row inner-header header-buttons">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-success" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="leaveBalanceForm" (ngSubmit)="SaveLeaveBalance()" #balanceForm="ngForm">
+
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-purple">
+              <h4 class="c-white">
+                <i class="fa fa-rupee"></i>Leave Balance</h4>
+            </div>
+            <div class="card-body form-padding">
+              <h4><label>{{leave_data.firstname}} {{leave_data.lastname}}</label></h4>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">CL</label>
+                  <input type="number" name="cl" formControlName="cl" class="form-control input-sm fc-alt" [ngClass]="leaveBalanceForm.get('cl').invalid && balanceForm.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="leaveBalanceForm.get('cl').invalid && balanceForm.submitted">
+                    cl field is required
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">PL</label>
+                  <input type="number" name="pl" formControlName="pl" class="form-control input-sm fc-alt" [ngClass]="leaveBalanceForm.get('pl').invalid && balanceForm.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="leaveBalanceForm.get('pl').invalid && balanceForm.submitted">
+                    pl field is required
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">SL</label>
+                  <input type="number" name="sl" formControlName="sl" class="form-control input-sm fc-alt" [ngClass]="leaveBalanceForm.get('sl').invalid && balanceForm.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="leaveBalanceForm.get('sl').invalid && balanceForm.submitted">
+                    sl field is required
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="button-wrap">
+          <button class="btn btn-primary custom-create" type="submit">
+            <span>{{!!id?'Update':'Create'}}</span>
+          </button>&nbsp;
+          <button type="button" class="btn btn-primary" class="btn btn-default custom-cancel" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</main>

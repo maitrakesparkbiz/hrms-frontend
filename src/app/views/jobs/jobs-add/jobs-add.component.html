@@ -1,0 +1,182 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row inner-header">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-success" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="openingForm" (ngSubmit)="SaveOpening()" #OpeningForm="ngForm" class="custom-form">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card comman-card-wrap">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Basic Details
+              </h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-3 form-group">
+                  <label class="f-700 control-label">Role</label>
+                  <br />
+                  <input type="text" name="role" formControlName="role" class="form-control"
+                    [ngClass]="openingForm.get('role').invalid && OpeningForm.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="openingForm.get('role').invalid && OpeningForm.submitted">
+                    The role is required
+                  </div>
+                </div>
+                <div class="col-md-3 form-group">
+                  <label class="f-700 control-label">Experience Required</label>
+                  <br />
+                  <input type="number" name="title" formControlName="exp_required" class="form-control">
+                </div>
+                <div class="col-md-3 form-group">
+                  <label class="f-700 control-label">CTC</label>
+                  <br />
+                  <input type="number" name="title" formControlName="ctc" class="form-control">
+                </div>
+                <div class="col-md-3 form-group">
+                  <label class="f-700 control-label">Vacancies</label>
+                  <br />
+                  <input type="number" name="title" formControlName="vacancies" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-red">
+              <h4 class="c-white">
+                <i class="fa fa-book" aria-hidden="true"></i>Job Description
+              </h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="f-700 control-label">Introduction</label>
+                  <div class="card-body custom-intro">
+                    <quill-editor formControlName="introduction"></quill-editor>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="f-700 control-label">Responsibilities</label>
+                  <div class="card-body custom-intro">
+                    <quill-editor formControlName="responsibilities"></quill-editor>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="f-700 control-label">Skill Set</label>
+                  <div class="card-body custom-intro">
+                    <quill-editor formControlName="skill_set"></quill-editor>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-green">
+              <h4 class="c-white">
+                <i class="fa fa-check"></i>Status
+              </h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-3 form-group">
+                  <label class="f-700 control-label">Last Date</label>
+                  <br />
+                  <!-- <input type="text" name="title" formControlName="last_date" class="form-control" [ngClass]="openingForm.get('last_date').invalid && OpeningForm.submitted?'is-invalid':''">
+                <div class="invalid-feedback" *ngIf="openingForm.get('last_date').invalid && OpeningForm.submitted">
+                  The last_date is required
+                </div> -->
+                  <input [owlDateTimeTrigger]="last_date" [owlDateTime]="last_date" formControlName="last_date"
+                    name="date" class="form-control input-sm fc-alt" placeholder="Last Date"
+                    [ngClass]="openingForm.get('last_date').invalid && OpeningForm.submitted?'is-invalid':''">
+                  <owl-date-time [startView]="'month'" [pickerType]="'calendar'" #last_date></owl-date-time>
+                  <div class="invalid-feedback"
+                    *ngIf="!openingForm.get('last_date').value && OpeningForm.submitted ;else checkError2">
+                    The Last Date is required
+                  </div>
+                  <ng-template #checkError2>
+                    <div class="invalid-feedback"
+                      *ngIf="openingForm.get('last_date').errors && openingForm.get('last_date').errors.checkDates && OpeningForm.submitted">
+                      The Last Date Must be greater than Posted Date
+                    </div>
+                  </ng-template>
+                </div>
+                <div class="col-md-3 form-group">
+                  <label class="f-700 control-label">Posted Date</label>
+                  <br />
+                  <!-- <input type="text" name="title" formControlName="posted_date" class="form-control" [ngClass]="openingForm.get('posted_date').invalid && OpeningForm.submitted?'is-invalid':''">
+                <div class="invalid-feedback" *ngIf="openingForm.get('posted_date').invalid && OpeningForm.submitted">
+                  The posted_date is required
+                </div> -->
+                  <input placeholder="Posted Date" [owlDateTimeTrigger]="posted_date" [owlDateTime]="posted_date"
+                    formControlName="posted_date" name="date" class="form-control input-sm fc-alt"
+                    [ngClass]="openingForm.get('posted_date').invalid && OpeningForm.submitted?'is-invalid':''">
+                  <owl-date-time [startView]="'month'" [pickerType]="'calendar'" #posted_date></owl-date-time>
+                  <div class="invalid-feedback" *ngIf="openingForm.get('posted_date').invalid && OpeningForm.submitted">
+                    The Posted Date is required
+                  </div>
+                </div>
+                <div class="col-md-3 form-group">
+                  <label class="f-700 control-label">Posted As</label>
+                  <br>
+                  <select class="form-control" formControlName="posted_as"
+                    [ngClass]="openingForm.get('posted_as').value=='' && OpeningForm.submitted?'is-invalid':''">
+                    <option value="Both">Both</option>
+                    <option value="Public">Public</option>
+                    <option value="Internal">Internal</option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="openingForm.get('posted_as').value=='' && OpeningForm.submitted">
+                    The posted_as is required
+                  </div>
+                </div>
+                <div class="col-md-3 form-group">
+                  <label class="f-700 control-label">Status</label>
+                  <br>
+                  <select class="form-control" formControlName="status"
+                    [ngClass]="openingForm.get('status').value=='' && OpeningForm.submitted?'is-invalid':''">
+                    <option value="Open">Open</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="openingForm.get('status').value=='' && OpeningForm.submitted">
+                    The status is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-button">
+          <button class="btn btn-primary custom-create" type="submit">
+            {{!!edit_id?'Update':'Create'}}
+          </button>&nbsp;
+          <button type="button" class="btn btn-primary" class="btn btn-default custom-cancel" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+</main>

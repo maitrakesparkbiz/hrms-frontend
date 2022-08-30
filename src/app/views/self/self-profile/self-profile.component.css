@@ -1,0 +1,370 @@
+.custom-self {
+  padding: 14px 24px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  border-radius: 0;
+  cursor: pointer; }
+
+.custom-self i {
+  padding-right: 5px; }
+
+.custom-manager {
+  padding: 14.5px 22.4px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  border-radius: 0;
+  cursor: pointer; }
+
+.custom-manager i {
+  padding-right: 5px; }
+
+.custom {
+  box-shadow: inset 0 -2px 0 0 #eee;
+  float: left;
+  width: 73.5%;
+  position: fixed;
+  top: 70px;
+  right: 0;
+  background: #fff;
+  z-index: 2; }
+
+.tab-active {
+  color: #ffc107;
+  border-radius: 0;
+  box-shadow: inset 0 -2px 0 0 #ffc107; }
+
+.custom-profile {
+  padding: 20px 29px 0;
+  background: #f5f5f5;
+  width: 281px;
+  max-width: none;
+  float: left;
+  height: 100%;
+  position: fixed;
+  left: 224px;
+  top: 70px; }
+
+.custom-edit {
+  font-size: 13px;
+  text-transform: capitalize;
+  color: #fff;
+  background: #4caf50;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 5.5px 0;
+  cursor: pointer; }
+
+.custom-edit:focus {
+  outline: none; }
+
+.custom-edit:hover {
+  opacity: .9; }
+
+.profile-contact h4 {
+  font-size: 16px;
+  padding: 30px 0 15px 0; }
+
+.profile-contact i {
+  font-size: 18px;
+  color: #5e5e5e;
+  padding-right: 16px;
+  min-width: 34px; }
+
+.custom-email {
+  color: #2196f3;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-block;
+  width: 100%; }
+
+span.custom-email1 {
+  display: inline-block;
+  font-size: 13px;
+  color: #5e5e5e;
+  padding: 10px 0; }
+
+span.span-number {
+  float: left;
+  width: 100%;
+  color: #5e5e5e;
+  font-size: 13px;
+  padding-left: 38px; }
+
+.custom-email:hover {
+  color: #0a6ebd; }
+
+.about-wrap {
+  float: left;
+  width: 50%; }
+
+.appreiciation-wrap {
+  float: left;
+  width: 50%; }
+
+.custom-info {
+  padding: 0;
+  width: calc(100% - 281px);
+  float: left;
+  max-width: none;
+  margin-left: 280px; }
+
+.custom-info .custom .tab-active {
+  color: inherit;
+  box-shadow: none;
+  border-bottom: 2px solid #2196f3; }
+
+a.custom-self {
+  color: #000;
+  text-align: center; }
+
+a.custom-manager {
+  color: #000;
+  text-align: center; }
+
+.custom-basic-info h4 {
+  font-size: 20px;
+  color: #000;
+  margin-bottom: 10px; }
+
+.custom-basic-info {
+  float: left;
+  width: 50%;
+  padding: 23px 40px;
+  margin-top: 52px; }
+
+.id-self {
+  padding: 7px 0 7px 43px; }
+
+.email-text {
+  color: #2196f3;
+  cursor: pointer; }
+
+.email-text:hover {
+  color: #0a6ebd; }
+
+.emp-active {
+  font-size: 12px;
+  color: #fff;
+  background: #4caf50;
+  border-radius: 2px;
+  width: auto;
+  min-width: 60px;
+  display: block;
+  float: left;
+  text-align: center;
+  padding: 0 4px;
+  height: 20px; }
+
+.probation {
+  font-size: 12px;
+  background: #9e9e9e;
+  color: #fff;
+  border-radius: 2px;
+  text-align: center;
+  max-width: 50%;
+  padding: 0 5px;
+  width: auto;
+  min-width: 30.39px;
+  display: block;
+  float: left; }
+
+.custom-company {
+  float: left;
+  width: 100%;
+  padding: 20px 0 0 0; }
+
+.is-manager {
+  background: #ffc107;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 2px;
+  text-align: center;
+  max-width: 50%;
+  width: auto;
+  min-width: 33.02px;
+  display: block;
+  float: left;
+  height: 20px;
+  padding: 0; }
+
+.company-image {
+  float: left;
+  width: 20%; }
+
+.emp-des {
+  float: left;
+  width: 80%; }
+
+.emp-des a {
+  color: #2196f3; }
+
+.emp-des a:hover {
+  color: #0a6ebd; }
+
+.emp-des a:hover {
+  text-decoration: none; }
+
+.emp-des h6 {
+  font-size: 13px;
+  margin: 0;
+  color: #9e9e9e; }
+
+.custom-contact {
+  float: left;
+  width: 100%;
+  padding: 20px 0 0; }
+
+.custom-appericiation {
+  float: left;
+  width: 100%; }
+
+.apperciation-details {
+  float: left;
+  width: 100%;
+  padding: 34px 0 0 30px;
+  border-top: 1px solid #eee;
+  margin-top: 52px; }
+
+.apper-img {
+  float: left;
+  width: 5%; }
+
+.apper-name {
+  float: left;
+  width: 95%;
+  padding-left: 10px;
+  padding-top: 8px;
+  text-transform: capitalize;
+  cursor: pointer; }
+
+.apper-name a {
+  color: #2196f3;
+  font-size: 14px; }
+
+.apper-name h6 {
+  color: #9e9e9e;
+  margin: 0;
+  font-weight: 400; }
+
+.apperciation-details h4 {
+  margin: 0;
+  text-align: left;
+  width: 100%;
+  float: left;
+  font-size: 17px;
+  font-weight: 500;
+  color: #000;
+  padding: 26px 0 26px 0; }
+
+.award-name {
+  color: #81c784;
+  text-transform: capitalize; }
+
+.main-image {
+  float: left;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 50px;
+  padding-left: 30px; }
+
+.main-image img {
+  height: 250px;
+  width: 250px;
+  float: left; }
+
+img.img-avatar {
+  object-fit: cover;
+  object-position: left; }
+
+.custom-appericiation-soon {
+  float: left;
+  width: 100%;
+  text-align: center;
+  padding-top: 48px;
+  margin-top: 52px; }
+
+.custom-appericiation-soon i {
+  font-size: 33px;
+  color: #9e9e9e; }
+
+.custom-appericiation-soon h6 {
+  font-size: 18px;
+  color: #9e9e9e;
+  margin: 0;
+  font-weight: 400;
+  padding-top: 12px; }
+
+.custom-info h4 i {
+  min-width: 25.7px; }
+
+h5.q-heading.make-uppercase {
+  text-transform: uppercase;
+  color: #2196F3;
+  margin: 0;
+  padding: 10px 0 10px 28px; }
+
+span.right-part a {
+  color: #2196F3; }
+
+h5.q-heading {
+  color: #2196F3;
+  margin: 0;
+  padding: 10px 0 10px 28px; }
+
+.custom-profile img {
+  height: 240px;
+  width: 100%;
+  object-fit: contain; }
+
+.custom.custom_about {
+  width: calc(100% - 503px); }
+
+@media (min-width: 1500px) {
+  body {
+    font-size: 14px; }
+
+  .custom-email {
+    font-size: 16px; }
+
+  span.custom-email1 {
+    font-size: 15px; }
+
+  span.span-number {
+    font-size: 15px; }
+
+  .custom-manager {
+    font-size: 14px; }
+
+  .custom-self {
+    font-size: 14px; } }
+@media (max-width: 1500px) {
+  .company-image {
+    width: 28%; }
+
+  .emp-des {
+    width: 70%; }
+
+ /* .custom {
+  width: 64.9%;
+}*/ }
+@media (max-width: 1400px) {
+  .company-image {
+    width: 32%; }
+
+  .emp-des {
+    width: 66%; }
+
+  .custom {
+    margin: 0 08px; }
+
+  .custom.custom_about {
+    width: calc(100% - 512px); } }
+
+/*# sourceMappingURL=self-profile.component.css.map */

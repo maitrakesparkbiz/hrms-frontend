@@ -1,0 +1,22 @@
+.button-wrap {
+  float: left;
+  width: 100%;
+  text-align: center; }
+
+.custom-create {
+  font-size: 13px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+  border: 0;
+  background: #2196f3;
+  border-radius: 2px;
+  padding: 5.5px 17px; }
+
+.custom-cancel {
+  background: #fff;
+  border-radius: 2px;
+  border: none;
+  padding: 5.5px 11.03px;
+  font-size: 13px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12); }
+
+/*# sourceMappingURL=leave-balance-edit.component.css.map */

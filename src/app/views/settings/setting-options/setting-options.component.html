@@ -1,0 +1,66 @@
+<nav class="settings-options">
+  <div class="custom-scroll animated fadeIn">
+    <ul class="nav">
+      <li class="nav-item" [appCheckPermission]="'GENERAL-ADMIN.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'company'">
+          <i class="fa fa-building"></i>General Admin</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'GENERAL-SETTINGS.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'company-setting'">
+          <i class="fa fa-gear"></i>General setting</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'COMPANY-POLICY.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'company-policy'">
+          <i class="fa fa-file"></i>Company Policy</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'DEPARTMENTS.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'department'">
+          <i class="fa fa-bank"></i>Departments </a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'DESIGNATIONS.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'designation'">
+          <i class="fa fa-users"></i>Designations</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'BATCHES.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'location'">
+          <i class="fa fa-map-marker"></i>Batches </a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'EXPENSE-CATEGORIES.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'expense-categories'">
+          <i class="fa fa-folder-open" aria-hidden="true"></i>Expense Categories</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'ROLES.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'role'">
+          <i class="fa fa-lock"></i>Roles</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'AWARDS.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'award'">
+          <i class="fa fa-star" aria-hidden="true"></i>Award</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'EMAIL-TEMPLATES.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'email-templates'">
+          <i class="fa fa-envelope"></i>Email Templates</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'EMAIL-SETTINGS.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'email-settings'">
+          <i class="fa fa-envelope"></i>Email Settings</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'HOLIDAYS.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'holiday'">
+          <i class="fa fa-calendar"></i>Holiday</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'ATTENDANCE-SETTING.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'attendence'">
+          <i class="fa fa-clock-o"></i>Attendance</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'LEAVETYPES.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'leave-types'">
+          <i class="fa fa-calendar-check-o"></i>Leave Types</a>
+      </li>
+      <li class="nav-item" [appCheckPermission]="'CHANGE-PASSWORD.VIEW'">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="'change-password'">
+          <i class="fa fa-lock"></i>Change Password</a>
+      </li>
+    </ul>
+  </div>
+</nav>

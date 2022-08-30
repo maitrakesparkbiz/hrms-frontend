@@ -1,0 +1,140 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="row">
+      <!-- <div class="col-md-12 header-buttons"> -->
+      <button type="button" class="btn btn-success" (click)="onBack()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Back
+      </button>
+      <!-- </div> -->
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="saveProject()" #projectform="ngForm">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Description</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Client Name</label>
+                  <br />
+                  <input type="text" name="client_name" formControlName="client_name" class="form-control" [ngClass]="projectForm.get('client_name').invalid && projectform.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="projectForm.get('client_name').invalid && projectform.submitted">
+                    Client Name is required
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Project Name</label>
+                  <br />
+                  <input type="text" name="project_name" formControlName="project_name" class="form-control" [ngClass]="projectForm.get('project_name').invalid && projectform.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="projectForm.get('project_name').invalid && projectform.submitted">
+                    Project Name is required
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Project Document</label>
+                  <div class="row" style="margin: 2px;">
+                    <div *ngFor="let doc of docArr;let i = index">
+                      <div class="doc-card">
+                        <div class="row col-md-12 document-image">
+                          <p>{{doc}}</p>
+                        </div>
+                        <div class="row col-md-8">
+                          <button type="button" (click)="removeDoc(doc)" class="btn btn-remove">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <label for="project_doc" class="custom-file-upload document-select-btn">
+                      Select
+                    </label>
+                    <input type="file" name="project_doc" id="project_doc" (change)="uploadDoc($event)" formControlName="project_doc"
+                      class="form-control input-sm fc-alt" multiple>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Assign To</label>
+                  <ng-container *ngIf="!id;else showOnly">
+                    <ng-select #empSelect [items]="ba_list" [selectOnTab]="true" bindValue="value" placeholder="Select Employee"
+                      formControlName="assigned_to" class="custom-input form-control" [ngClass]="projectForm.get('assigned_to').invalid && projectform.submitted ?'is-invalid':''">
+                    </ng-select>
+                    <div class="invalid-feedback" *ngIf="projectForm.get('assigned_to').invalid && projectform.submitted">
+                      The Employee Field is Required
+                    </div>
+                  </ng-container>
+                  <ng-template #showOnly>
+                    <h4>{{projectData.ba_fname}} {{projectData.ba_lname}}</h4>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Client Email</label>
+                  <br />
+                  <input type="text" name="client_email" formControlName="client_email" class="form-control">
+                  <!--[ngClass]="projectForm.get('client_email').invalid && projectform.submitted?'is-invalid':''"-->
+                  <!--<div class="invalid-feedback" *ngIf="projectForm.get('client_email').invalid && projectform.submitted">-->
+                  <!--Client Email is required-->
+                  <!--</div>-->
+                </div>
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Skype Contact</label>
+                  <br />
+                  <input type="text" name="skype_contact" formControlName="skype_contact" class="form-control">
+                  <!--[ngClass]="projectForm.get('skype_contact').invalid && projectform.submitted?'is-invalid':''"-->
+                  <!--<div class="invalid-feedback" *ngIf="projectForm.get('skype_contact').invalid && projectform.submitted">-->
+                  <!--Skype Contact is required-->
+                  <!--</div>-->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Description</label>
+                  <br>
+                  <textarea class="form-control" formControlName="project_description">
+                </textarea>
+                  <!--[ngClass]="projectForm.get('project_description').invalid && projectform.submitted?'is-invalid':''"-->
+                  <!--<div class="invalid-feedback" *ngIf="projectForm.get('project_description').invalid && projectform.submitted">-->
+                  <!--Project description is required-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="button-wrap">
+          <button class="btn btn-primary custom-create" type="submit">
+            <span>{{!!id?'Update':'Create'}}</span>
+          </button>&nbsp;
+          <button type="button" class="btn btn-default custom-cancel" (click)="onBack()">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <ng-template #updates>
+    <div class="center img-center">
+      <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+    </div>
+    <div class="modal-body modal-body-txt">
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really Re-Estimate this Project.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-delete-button" (click)="submitForm(true)">Yes</button>
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+    </div>
+  </ng-template>
+</main>

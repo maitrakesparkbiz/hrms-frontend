@@ -1,0 +1,672 @@
+<div class="main-section">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12 header-buttons">
+        <button type="button" class="new-button" [appCheckPermission]="'EMPLOYEES.ADD'"
+          [routerLink]="'create-employee'">
+          <i class="fa fa-plus"></i>
+          New
+        </button>
+        <button *ngIf="allcheck_id_count==1" type="button" class="edit-button" [appCheckPermission]="'EMPLOYEES.EDIT'"
+          (click)="EditEmployee()">
+          <i class="fa fa-pencil"></i>
+          Edit
+        </button>
+        <div class="search-section search">
+          <form [formGroup]="durationForm" class="custom-wrap">
+            <select (change)="rerender()" class="search-box ng-pristine ng-valid ng-touched custom-status custom-margin"
+              [formControlName]="'duration'">
+              <option value="all">All</option>
+              <option value="this_month">This Month</option>
+              <option value="last_30_days">Last 30 days</option>
+              <option value="last_3_months">Last 3 Months</option>
+              <option value="last_6_months">Last 6 Months</option>
+              <option value="last_year">Last Year</option>
+              <option value="last_2_year">Last 2 Years</option>
+              <option value="last_4_year">Last 4 Years</option>
+            </select>
+            <select (change)="rerender()" class="search-box ng-pristine ng-valid ng-touched custom-status"
+              [formControlName]="'status'">
+              <option value="all">All</option>
+              <option value=1>Active</option>
+              <option value=0>Inactive</option>
+            </select>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="table-wrap employee-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 40px">
+            </th>
+            <th style="width: 120px">Employee ID</th>
+            <th style="width: 200px">Name</th>
+            <th style="width: 150px">Department</th>
+            <th>Duration</th>
+            <th>Leaves</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="employee?.length != 0">
+          <tr *ngFor="let item of employee" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td><span class="table-txt">{{item.employee_id}}</span></td>
+            <td>
+              <span>
+                <img style="width: 38px; height: 38px" *ngIf="item.profile_image ;else other_content"
+                  [src]=IMAGE_URL+item.profile_image class="img-avatar" />
+                <ng-template #other_content>
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </ng-template>
+              </span>
+              <div class="emp-name">
+                <a (click)="openProfile(item.id)" class="table-txt blue-txt">{{item.firstname}} {{item.lastname}} </a>
+                <h6>{{item.location}}</h6>
+              </div>
+            </td>
+            <td><span class="table-txt">{{item.departmentname ? item.departmentname : '-'}}</span></td>
+            <td><span class="table-txt">{{item.duration ? item.duration: '-'}}</span></td>
+            <td>
+              <span class="table-txt">{{item.total_days}} / {{item.leaves}}</span>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="employee?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-scroll">
+        <div class="description-custom-class">
+          <div class="admin-image">
+            <div class="custom-image">
+              <img style="width: 38px; height: 38px" *ngIf="employeedetail.profile_image;else other_content"
+                [src]=IMAGE_URL+employeedetail.profile_image class="img-avatar" />
+              <ng-template #other_content>
+                <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+              </ng-template>
+            </div>
+            <div class="custom-admin">
+              <a class="profile-name" (click)="openProfile(employeedetail.id)">{{employeedetail.firstname}}
+                {{employeedetail.lastname}}</a>
+              <br>
+              <h6>{{employeedetail.designation}} {{employeedetail.location}}</h6>
+            </div>
+            <div class="emp-particular-details">
+              <div class="id-1 custom-emp-details">
+                <span class="left-part">Duration</span>
+                <span class="right-part">{{employeedetail.duration ? employeedetail.duration : '-'}}</span>
+              </div>
+              <div class="id-1  custom-emp-details">
+                <span class="left-part">Leaves Remaining</span>
+                <span class="right-part">{{employeedetail.remaining_leaves}}</span>
+              </div>
+
+              <div class="custom-leaves-remaining">
+                <ng-container *ngIf="employeedetail.remaining_leaves > 0; else initial">
+                  <span class="custom-leave-type">CL - <span
+                      class="leave-number">{{employeedetail.user_leaves[0]['cl']}}</span></span>
+                  <span class="custom-leave-type">PL - <span
+                      class="leave-number">{{employeedetail.user_leaves[0]['pl']}}</span></span>
+                  <span class="custom-leave-type">SL - <span
+                      class="leave-number">{{employeedetail.user_leaves[0]['sl']}}</span></span>
+                </ng-container>
+                <ng-template #initial>
+                  <span class="custom-leave-type">CL - <span class="leave-number">0</span></span>
+                  <span class="custom-leave-type">PL - <span class="leave-number">0</span></span>
+                  <span class="custom-leave-type">SL - <span class="leave-number">0</span></span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <accordion class="hello" #acc>
+            <accordion-group heading="Basic Info" [isOpen]="isFirstOpen">
+              <div class="row id-1">
+                <span class="left-part">FirstName</span>
+                <span class="right-part">{{employeedetail.firstname}}</span>
+              </div>
+              <div class="row id-1">
+                <span class="left-part">LastName</span>
+                <span class="right-part">{{employeedetail.lastname}}</span>
+              </div>
+              <div class="row id-1">
+                <span class="left-part">Employee ID</span>
+                <span class="right-part">{{employeedetail.employee_id}}</span>
+              </div>
+              <div class="row id-1">
+                <span class="left-part">Personal Email</span>
+                <span class="right-part email"> <a href="mailto:{{employeedetail.email}}">
+                    {{employeedetail.email}}</a></span>
+              </div>
+              <div class="row id-1">
+                <span class="left-part">Company Email</span>
+                <span class="right-part email"> <a href="{{employeedetail.company_email}}">
+                    {{employeedetail.company_email}}</a></span>
+              </div>
+              <div class="row id-1">
+                <span class="left-part">Allow Login</span>
+                <span class="right-part">{{employeedetail.allowed_login ? 'Yes' : 'No'}}</span>
+              </div>
+              <div class="row id-1">
+                <span class="left-part">Date of Birth</span>
+                <span class="right-part">{{employeedetail.date_of_birth ? (employeedetail.date_of_birth.date |
+                  dateFilter) :
+                  '-'}}</span>
+              </div>
+              <div class="row id-1">
+                <span class="left-part">Gender</span>
+                <span class="right-part">{{employeedetail.gender}}</span>
+              </div>
+              <div class="row id-1">
+                <span class="left-part">Marital Status</span>
+                <span class="right-part">{{employeedetail.marital_status ? 'Married' : 'Unmarried'}}</span>
+              </div>
+              <div class="row id-1" *ngIf="employeedetail.marital_status">
+                <span class="left-part">Marriage Anniversary</span>
+                <span class="right-part">{{employeedetail.marriage_anniversary_date!=='-' ?
+                  (employeedetail.marriage_anniversary_date.date | dateFilter) : '-'}}</span>
+              </div>
+            </accordion-group>
+            <accordion-group heading="Productivity Ratio" [isOpen]="productiveOpen" #info
+              (click)="onAccordianOpen(info)">
+              <ng-container *ngFor="let key of objectKeys(prod_arr)">
+                <div class="row id-1">
+                  <span class="left-part">{{key}}</span>
+                  <span class="right-part">{{prod_arr[key]!=='' ? prod_arr[key]+' %' : '-'}}</span>
+                </div>
+              </ng-container>
+            </accordion-group>
+            <accordion-group heading="Company Relations">
+              <div class="row">
+                <span class="left-part">Department</span>
+                <span class="right-part">{{employeedetail.department}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Designation</span>
+                <span class="right-part">{{employeedetail.designation}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Batch</span>
+                <span class="right-part">{{employeedetail.location}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Manager</span>
+                <span class="right-part">{{employeedetail.is_manager ? 'Yes' : 'No'}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Reports To</span>
+                <span class="right-part">{{(employeedetail.report_to && employeedetail.report_to.id)
+                  ? (employeedetail.report_to.firstname+' '+employeedetail.report_to.firstname)
+                  : '-' }}</span>
+              </div>
+
+              <div class="row">
+                <span class="left-part">Joining Date</span>
+                <!-- <span class="right-part">{{employeedetail.joining_date | date:'dd-MM-yyyy'}}</span> -->
+                <span class="right-part">{{employeedetail.joining_date ? (employeedetail.joining_date.date |
+                  dateFilter) : '-'}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Probation End Date</span>
+                <!-- <span class="right-part">{{employeedetail.probation_end_date | date:'dd-MM-yyyy'}}</span> -->
+                <span class="right-part">{{employeedetail.probation_end_date ?
+                  (employeedetail.probation_end_date.date | dateFilter) : '-'}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Exit Date</span>
+                <span class="right-part">{{employeedetail.exit_date ? (employeedetail.exit_date.date |
+                  dateFilter) : '-'}}</span>
+              </div>
+            </accordion-group>
+
+            <accordion-group heading="Contact Information">
+              <div class="row">
+                <span class="left-part">Current Address</span>
+                <span class="right-part">{{employeedetail.address}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Permenant Address</span>
+                <span class="right-part">{{employeedetail.per_address}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Contact Number</span>
+                <span class="right-part">{{employeedetail.contact_no}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Emergency Contact Number</span>
+                <span class="right-part">{{employeedetail.emergency_contact_no}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Emergency Contact Person</span>
+                <span class="right-part">{{employeedetail.emergency_contact_person}}</span>
+              </div>
+            </accordion-group>
+
+            <accordion-group heading="Documents">
+              <div class="red-text">Document Numbers</div>
+              <div class="row">
+                <span class="left-part">Driving License Number</span>
+                <span class="right-part">{{employeedetail.driving_license_number}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">PAN Number</span>
+                <span class="right-part">{{employeedetail.pan_number}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Aadhar Number/SSN</span>
+                <span class="right-part">{{employeedetail.aadhar_number}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Voter ID Number</span>
+                <span class="right-part">{{employeedetail.voter_id_number}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">UAN Number</span>
+                <span class="right-part">{{employeedetail.uan_number}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">PF Number</span>
+                <span class="right-part">{{employeedetail.pf_number}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">ESIC Number</span>
+                <span class="right-part">{{employeedetail.esic_number}}</span>
+              </div>
+              <div class="red-text">Document copies</div>
+              <div class="row">
+                <span class="left-part">Driving License</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.driving_license_image!== '-';else showBlank"
+                    [href]="DOWNLOAD_URL+employeedetail.driving_license_image" download target="_blank"
+                    class="view_image_remove">Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">PAN Card</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.pan_id_image!== '-';else showBlank"
+                    [href]="DOWNLOAD_URL+employeedetail.pan_id_image" download class="view_image_remove">Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Aadhar/SSN</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.aadhar_id_image!== '-';else showBlank"
+                    [href]="DOWNLOAD_URL+employeedetail.aadhar_id_image" download class="view_image_remove">Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Voter ID</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.voter_id_image!== '-';else showBlank"
+                    [href]="DOWNLOAD_URL+employeedetail.voter_id_image" download class="view_image_remove">Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">School Leaving Certi.</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.lc!== '-';else showBlank" [href]="DOWNLOAD_URL+employeedetail.lc" download
+                    class="view_image_remove">Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Marksheet</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.marksheet!== '-';else showBlank"
+                    [href]="DOWNLOAD_URL+employeedetail.marksheet" download class="view_image_remove">Download</a>
+                </span>
+              </div>
+              <div class="red-text">Company Documents</div>
+              <div class="row">
+                <span class="left-part">Offer Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.offer_later_file!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.offer_later_file}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Welcome Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.joining_letter_file!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.joining_letter_file}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Contract</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.contract_file!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.contract_file}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Resume</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.resume_file!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.resume_file}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Appointment Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.appointment_letter!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.appointment_letter}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Increment Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.increment_letter!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.increment_letter}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Promotion Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.promotion_letter!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.promotion_letter}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Relieving Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.relieving_letter!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.relieving_letter}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Experience Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.exp_letter!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.exp_letter}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Appreciation Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.appreciation_letter!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.appreciation_letter}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Doc. Return Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.document_returns_letter!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.document_returns_letter}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">No Due Certi.</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.no_due_certificate!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.no_due_certificate}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Acknowledge. Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.acknowledgement_letter!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.acknowledgement_letter}}" download>Download</a>
+                </span>
+              </div>
+              <div class="row">
+                <span class="left-part">Warning Letter</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.warning_letter!== '-';else showBlank"
+                    href="{{DOWNLOAD_URL}}{{employeedetail.warning_letter}}" download>Download</a>
+                </span>
+              </div>
+            </accordion-group>
+
+            <accordion-group heading="Bank Details">
+              <div class="row">
+                <span class="left-part">Primary BankAccount</span>
+                <span class="right-part">{{employeedetail.primary_account}}</span>
+              </div>
+              <div *ngFor="let account of user_account;let i=index">
+                <div class="row custom-account red-txt">Account{{i+1}}</div>
+                <div class="row custom-type">
+                  <span class="left-part">Account Type</span>
+                  <span class="right-part">{{account.account_type}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part"> Holder Name</span>
+                  <span class="right-part">{{account.account_holder_name ? account.account_holder_name :'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Account Number</span>
+                  <span class="right-part">{{account.account_number ?account.account_number: '-' }}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Bank Code</span>
+                  <span class="right-part">{{account.bank_code?account.bank_code:'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Bank Name</span>
+                  <span class="right-part">{{account.bank_name?account.bank_name:'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Bank Branch</span>
+                  <span class="right-part">{{account.bank_branch? account.bank_branch : '-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">CRN Number</span>
+                  <span class="right-part">{{account.crn_number ? account.crn_number: '-'}}</span>
+                </div>
+              </div>
+            </accordion-group>
+
+            <accordion-group heading="Qualification">
+              <div *ngFor="let que of u_qua; let i=index">
+                <!-- <div class="row red-text">{{!!i==0 ? 'SSC' :(i==1?'HSC':(i==2?'Graduation':(i==3?'Post
+                  Graduation':'Doctorate')))}}
+                </div> -->
+                <div class="red-text">
+                  {{que.education_type}}
+                </div>
+                <div class="row">
+                  <span class="left-part">Qualification Type</span>
+                  <span class="right-part">{{que.education_type}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">School/University</span>
+                  <span class="right-part">{{que.university_name?que.university_name:'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Degree</span>
+                  <span class="right-part">{{que.degree?que.degree:'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Start Date</span>
+                  <span class="right-part">{{que.start_date.date?(que.start_date.date | dateFilter):'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">End Date</span>
+                  <span class="right-part">{{que.end_date.date?(que.end_date.date | dateFilter):'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Document</span>
+                  <span class="right-part">
+                    <a *ngIf="que.doc_copy!== '' && que.doc_copy!== null;else showBlank"
+                      href="{{DOWNLOAD_URL}}{{que.doc_copy}}" download>Download</a>
+                  </span>
+                </div>
+                <!-- <div class="row">
+                  <span class="left-part">Details</span>
+                  <span class="right-part">{{que.details}}</span>
+                </div> -->
+              </div>
+              <div class="red-text">Certifications/Courses</div>
+              <div class="row">
+                <span class="left-part">Details</span>
+                <span class="right-part">{{employeedetail.certifications_courses}}</span>
+              </div>
+
+            </accordion-group>
+
+            <accordion-group heading="Work Experience">
+              <div *ngFor="let exp of user_experience;let i=index">
+                <div class="red-text">Work Experience {{i+1}}</div>
+                <div class="row">
+                  <span class="left-part">Company Name</span>
+                  <span class="right-part">{{exp.company_name ? exp.company_name :'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Designation</span>
+                  <span class="right-part">{{exp.designation ? exp.designation :'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">From</span>
+                  <span class="right-part">{{exp.from_date.date ? (exp.from_date.date | dateFilter) :'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">To</span>
+                  <span class="right-part">{{exp.to_date.date ? (exp.to_date.date | dateFilter) :'-'}}</span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Relieving Letter</span>
+                  <span class="right-part">
+                    <a *ngIf="exp.relieving_letter!== '' && exp.relieving_letter!== null;else showBlank"
+                      href="{{DOWNLOAD_URL}}{{exp.relieving_letter}}" download>Download</a>
+                  </span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Exp. Letter</span>
+                  <span class="right-part">
+                    <a *ngIf="exp.exp_letter!== '' && exp.exp_letter!== null;else showBlank"
+                      href="{{DOWNLOAD_URL}}{{exp.exp_letter}}" download>Download</a>
+                  </span>
+                </div>
+                <div class="row">
+                  <span class="left-part">Salary Slip</span>
+                  <span class="right-part">
+                    <a *ngIf="exp.salary_slip!== '' && exp.salary_slip!== null;else showBlank"
+                      href="{{DOWNLOAD_URL}}{{exp.salary_slip}}" download>Download</a>
+                  </span>
+                </div>
+              </div>
+              <div class="red-text">Other Work Experiences </div>
+              <div class="row">
+                <span class="left-part">Details</span>
+                <span class="right-part">{{employeedetail.other_work_experirnce}}</span>
+              </div>
+
+            </accordion-group>
+
+            <accordion-group heading="Immigration">
+              <div class="red-text">Passport</div>
+              <div class="row">
+                <span class="left-part">Number</span>
+                <span class="right-part">{{employeedetail.passport_number}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Issue Date</span>
+                <span class="right-part">{{employeedetail.passport_issue_date ?
+                  (employeedetail.passport_issue_date.date |
+                  dateFilter) : '-'}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Expiry Date</span>
+                <span class="right-part">{{employeedetail.passport_expiry_date ?
+                  (employeedetail.passport_expiry_date.date |
+                  dateFilter) : '-'}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Scan Copy</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.passport_image !== '-';else showBlank"
+                    href="{{DOWNLOAD_IMAGE_URL}}{{employeedetail.passport_image}}" download>Download</a>
+                  <ng-template #showBlank>
+                    <span> - </span>
+                  </ng-template>
+                </span>
+              </div>
+              <div class="red-text">Visa</div>
+              <div class="row">
+                <span class="left-part">Number</span>
+                <span class="right-part">{{employeedetail.visa_number}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Issue Date</span>
+                <span class="right-part">{{employeedetail.visa_issue_date ? (employeedetail.visa_issue_date.date
+                  |
+                  dateFilter) : '-'}}</span>
+              </div>
+
+              <div class="row">
+                <span class="left-part">Expiry Date</span>
+                <span class="right-part">{{employeedetail.visa_expiry_date ?
+                  (employeedetail.visa_expiry_date.date |
+                  dateFilter) : '-'}}</span>
+              </div>
+
+              <div class="row">
+                <span class="left-part">Scan Copy</span>
+                <span class="right-part">
+                  <a *ngIf="employeedetail.visa_image!== '-';else showBlank"
+                    href="{{DOWNLOAD_IMAGE_URL}}{{employeedetail.visa_image}}" download>Download</a>
+                </span>
+              </div>
+
+            </accordion-group>
+
+            <accordion-group heading="Social Network">
+              <div class="row">
+                <span class="left-part">Slack username</span>
+                <span class="right-part">{{employeedetail.slack_username}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Facebook username</span>
+                <span class="right-part">{{employeedetail.facebook_username}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">Twitter username</span>
+                <span class="right-part">{{employeedetail.twitter_username}}</span>
+              </div>
+              <div class="row">
+                <span class="left-part">LinkedIn username</span>
+                <span class="right-part">{{employeedetail.linkdin_username}}</span>
+              </div>
+            </accordion-group>
+
+          </accordion>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+  <ng-template #delete>
+    <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="center">
+            <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+          </div>
+          <h4 class="modal-title">Are you sure?</h4>
+        </div>
+        <div class="modal-body">
+          <p>Do you really want to delete these records? This process cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info cancel" (click)="closeModel()">Cancel</button>
+          <button type="button" class="btn btn-danger danger-btn" (click)="DeleteEmployee()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,171 @@
+<main class="message">
+  <div class="row animated fadeIn">
+    <div class="col-md-12 header-buttons">
+      <button type="button" class="button new-button" [routerLink]="'create'" [appCheckPermission]="'NEWS.ADD'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1" type="button" class="button edit-button" (click)="EditNews()"
+        [appCheckPermission]="'NEWS.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <button *ngIf="allcheck_id_count==1 && news_status=='Draft'" type="button" class="button del-button"
+        (click)="openModel(delete)" [appCheckPermission]="'NEWS.DELETE'">
+        <i class="fa fa-trash "></i>
+        Delete
+      </button>
+      <button *ngIf="allcheck_id_count==1  && news_status=='Draft'" type="button" class="publish-button"
+        (click)="openModel(publish)" [appCheckPermission]="'NEWS.EDIT'">
+        <i class="fa fa-check "></i>
+        Publish
+      </button>
+
+      <div class="search-section search">
+        <form [formGroup]="filterForm" class="custom-wrap">
+          <select (change)="rerender()" class="search-box ng-pristine ng-valid ng-touched custom-status"
+            [formControlName]="'status'">
+            <option value="all">Status:All</option>
+            <option value="Publish">Published</option>
+            <option value="Draft">Draft</option>
+          </select>
+        </form>
+      </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="table-wrap news-table">
+
+
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width:40px">
+            </th>
+            <th style="width:180px">Title</th>
+            <th style="width:100px">Status</th>
+            <th style="width:180px">Publish Date</th>
+          </tr>
+        </thead>
+        <tbody id="custom-tbody" *ngIf="news?.length != 0">
+          <tr *ngFor="let person of news" (click)="checkone(person.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{person.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="person.isSelected" (click)="checkone(person.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td><span class="table-txt">{{ person.title ? person.title : '-' }}</span></td>
+            <td>
+
+              <div *ngIf="person.status=='Publish'" class="status approve-tag">
+                <i class="fa fa-check"></i>&nbsp;Published
+              </div>
+              <div *ngIf="person.status=='Draft'" class="status reject-tag">
+                <i class="fa fa-ban"></i>&nbsp;{{person.status}}
+              </div>
+
+            </td>
+            <td><span class="table-txt">{{ person.publish_date? (person.publish_date.date | dateFilter) : '-' }}</span>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="news?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-scroll">
+        <div class="news-description-txt">
+          <div class="custom-title">{{newsdetail.title}}</div>
+          <div class="status approve-tag publish-date" *ngIf="newsdetail.publish_date;else draftStatus">
+            Publish Date : {{newsdetail.publish_date ? (newsdetail.publish_date.date | dateFilter) : '-'}}
+          </div>
+          <ng-template #draftStatus>
+            <span class="status reject-tag draft-tag">Draft</span>
+          </ng-template>
+          <div class="custom-description">Description</div>
+          <div [innerHTML]="str" class="news-descriptive-txt lower-case-txt"></div>
+
+          <div class="employees" *ngIf="employeelist?.length > 0">
+            <h5>Employees</h5>
+            <div class="employee-profile" *ngFor="let employee of employeelist">
+              <div class="emp-img">
+                <img style="width: 38px; height: 38px" *ngIf="employee.emp_id['profile_image'];else other_content"
+                  [src]=IMAGE_URL+employee.emp_id.profile_image class="img-avatar" />
+
+                <ng-template #other_content>
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </ng-template>
+              </div>
+              <div class="emp-details">
+                <a>{{employee.emp_id['firstname']}}
+                  {{employee.emp_id['lastname']}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+  <ng-template #delete>
+    <!-- <div class="modal-dialog modal-confirm"> -->
+    <!-- <div class="modal-content"> -->
+    <!-- <div class="modal-header"> -->
+    <!-- <div class="center"> -->
+    <!-- <i class="fa fa-times-circle-o" aria-hidden="true"></i> -->
+    <!-- </div> -->
+    <!-- <h4 class="modal-title">Are you sure?</h4> -->
+    <!-- <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button> -->
+    <!-- </div> -->
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="DeleteNews()">Delete</button>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+
+
+  <ng-template #publish>
+    <!-- <div class="modal-dialog modal-confirm"> -->
+    <!-- <div class="modal-content"> -->
+    <!-- <div class="modal-header"> -->
+    <!-- <div class="center"> -->
+    <!-- <i class="fa fa-times-circle-o" aria-hidden="true"></i> -->
+    <!-- </div> -->
+    <!-- <h4 class="modal-title">Are you sure?</h4> -->
+    <!-- <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button> -->
+    <!-- </div> -->
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/publish.png" class="img-avatar" style="width: 20%"
+          alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Publish</h4>
+      <p class="caption-txt">Are you sure want to publish this news?</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="PublishNews()">Publish</button>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+</main>

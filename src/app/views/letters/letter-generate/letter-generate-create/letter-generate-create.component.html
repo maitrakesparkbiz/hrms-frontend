@@ -1,0 +1,139 @@
+<main class="messaage main-div">
+  <div class="animated fadeIn">
+    <div class="row inner-header">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-success back" (click)="onBack()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+    </div>
+    <form [formGroup]="letterForm" (ngSubmit)="saveLetter()" class="custom-form" #letter="ngForm">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div class="card custom-card comman-card-wrap">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Details</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-6 input-employee">
+                  <label class="f-700 control-label">Employee</label>
+                  <br />
+                  <ng-select [items]="employee" bindValue="value" placeholder="Select an employee..."
+                    formControlName="emp_id"
+                    [ngClass]="letterForm.get('emp_id').invalid && letter.submitted?'invalid-input':''"
+                    (change)="onUserChange()">
+                  </ng-select>
+                  <div class="invalid-error" *ngIf="letterForm.get('emp_id').invalid && letter.submitted">
+                    Employee field is required
+                  </div>
+                </div>
+                <div class="col-md-6 input-employee">
+                  <label class="f-700 control-label">Letter Type</label>
+                  <br />
+                  <ng-select [items]="letterTypes" bindValue="value" placeholder="Select letter type..."
+                    formControlName="email_template_id" (change)="onSelectChange()"
+                    [ngClass]="letterForm.get('email_template_id').invalid && letter.submitted?'invalid-input':''">
+                  </ng-select>
+                  <div class="invalid-error" *ngIf="letterForm.get('email_template_id').invalid && letter.submitted">
+                    Letter field is required
+                  </div>
+                </div>
+              </div>
+              <h3 style="font-size: 20px;">Adjust space setting (in pixel)</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Top</label>
+                  <input type="number" class="form-control" formControlName="top" (keyup)="onCssChange()"
+                    [ngClass]="letterForm.get('top').invalid && letter.submitted?'invalid-input':''">
+                  <div class="invalid-error" *ngIf="letterForm.get('top').invalid && letter.submitted">
+                    Top is required
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Bottom</label>
+                  <input type="number" class="form-control" formControlName="bottom" (keyup)="onCssChange()"
+                    [ngClass]="letterForm.get('bottom').invalid && letter.submitted?'invalid-input':''">
+                  <div class="invalid-error" *ngIf="letterForm.get('bottom').invalid && letter.submitted">
+                    Bottom is required
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Left</label>
+                  <input type="number" class="form-control" formControlName="left" (keyup)="onCssChange()"
+                    [ngClass]="letterForm.get('left').invalid && letter.submitted?'invalid-input':''">
+                  <div class="invalid-error" *ngIf="letterForm.get('left').invalid && letter.submitted">
+                    Left is required
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Right</label>
+                  <input type="number" class="form-control" formControlName="right" (keyup)="onCssChange()"
+                    [ngClass]="letterForm.get('right').invalid && letter.submitted?'invalid-input':''">
+                  <div class="invalid-error" *ngIf="letterForm.get('right').invalid && letter.submitted">
+                    Right is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="row last-row">
+                <div class="col-md-12">
+                  <label class="f-700 control-label">Description</label>
+                  <quill-editor formControlName="description" (onContentChanged)="setVariablesToLetter()">
+                  </quill-editor>
+                  <div class="invalid-error" *ngIf="letterForm.get('description').invalid && letter.submitted">
+                    Description is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="available-vars">
+                <span>Available Variables :</span>
+                <p>{{variables}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="card custom-card comman-card-wrap">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Details</h4>
+
+              <button type="button" class="btn btn-primary" (click)="onPrint()">Print</button>
+              <button type="button" class="btn btn-success" (click)="onDownload()">Download</button>
+            </div>
+            <div class="card-body form-padding" *ngIf="finalLetter;else no_letter">
+              <div class="ql-editor preview" [innerHTML]="sanitizer.bypassSecurityTrustHtml(finalLetter)"
+                #letterPreview>
+              </div>
+            </div>
+            <ng-template #no_letter>
+             <div class="bottom">
+                <i class="fa fa-picture-o"></i>
+             <p> Please select Employee and Letter type for preview.</p>
+             </div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="button-wrap">
+          <button class="btn btn-primary update" type="submit">
+            <span>{{!!edit_id?'Update':'Create'}}</span>
+          </button>&nbsp;
+          <button class="btn btn-primary" class="btn btn-default cancel" (click)="onBack()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+<div id="print-div">
+  <div class="ql-editor preview" [innerHTML]="sanitizer.bypassSecurityTrustHtml(finalLetter)">
+  </div>
+</div>

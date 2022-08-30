@@ -1,0 +1,226 @@
+<main class="message">
+  <div class=" animated fadeIn">
+    <div class="col-md-12 header-buttons">
+
+      <button type="button" class="new-button" (click)="addRoute()" [appCheckPermission]="'JOBS.APPLICATIONS.ADD'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1" type="button" class="edit-button" (click)="editApplication()"
+        [appCheckPermission]="'JOBS.APPLICATIONS.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <!-- <div class="search-section">
+        <input class="search-box ng-pristine ng-valid ng-touched" placeholder="Search..." [(ngModel)]="search" type="text">
+      </div> -->
+    </div>
+
+    <div class="table-wrap schedule-table">
+
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 10%">
+            </th>
+            <th style="width: 17%">Name</th>
+            <th style="width: 17%">Role</th>
+            <th style="width: 17%">Current Stage</th>
+            <th style="width: 17%">Interview On</th>
+            <th style="width: 17%">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="allApplications?.length != 0">
+          <tr *ngFor="let item of allApplications" (click)="checkone(item[0].id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item[0].id}} class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item[0].id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td><span class="table-txt">{{item[0].applicant_name}}</span></td>
+            <td><span class="table-txt">{{item.role}}{{!!item.exp_required?' - ' +
+                item.exp_required + ' year': ''}}</span></td>
+            <td>
+              <span
+                [ngClass]="item.stage_name=='selected'?'status approve-tag':(item.stage_name=='rejected'?'status reject-tag':(item.stage_name=='closed'?'color-closed':'status pending-tag'))">
+                <i *ngIf="item.stage_name=='selected';else rejected" class="fa fa-check" aria-hidden="true"></i>
+                <ng-template #rejected>
+                  <i *ngIf="item.stage_name=='rejected';else closed" class="fa fa-ban" aria-hidden="true"></i>
+                </ng-template>
+                <ng-template #closed>
+                  <i *ngIf="item.stage_name=='closed';else common" class="fa fa-times" aria-hidden="true"></i>
+                </ng-template>
+                <ng-template #common>
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                </ng-template>
+                {{item.stage_name}}
+              </span>
+            </td>
+            <td><span class="table-txt">{{item.interview_date | dateFilter}}</span></td>
+            <td>
+              <button class="btn btn-schedule" (click)="openModel(reschedule,item[0].id)">Re-Schedule&nbsp;
+                {{item.re_count== 0 ? '':item.re_count}}</button>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="allApplications?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-scroll">
+        <div class="custom-schedule-wrapper">
+          <div class="description-title">
+            <span>
+              <h3>{{applicationDetail.role}}</h3>
+            </span>
+          </div>
+
+          <div class="description-detail">
+            <div class="right-part-content">
+              <span class="left-part">Job</span>
+              <span class="right-part">{{applicationDetail.role}}{{!!applicationDetail.exp_required?' - ' +
+                applicationDetail.exp_required + ' year': ''}}</span>
+            </div>
+            <div class="right-part-content">
+              <span class="left-part">Name</span>
+              <span class="right-part">{{applicationDetail.applicant_name}}</span>
+            </div>
+            <div class="right-part-content">
+              <span class="left-part">Phase</span>
+              <span class="right-part">{{applicationDetail.stage_name}}</span>
+            </div>
+            <div class="right-part-content">
+              <span class="left-part">Email</span>
+              <span class="right-part email"> <a
+                  href="mailto:{{applicationDetail.contact_email}}">{{applicationDetail.contact_email}}</a></span>
+            </div>
+            <div class="right-part-content">
+              <span class="left-part">Location</span>
+              <span class="right-part">{{applicationDetail.location ? applicationDetail.location : '-'}}</span>
+            </div>
+            <div class="right-part-content">
+              <span class="left-part">Phone 1</span>
+              <span
+                class="right-part">{{applicationDetail.phone_number1 ? applicationDetail.phone_number1 : '-'}}</span>
+            </div>
+            <div class="right-part-content">
+              <span class="left-part">Phone 2</span>
+              <span
+                class="right-part">{{applicationDetail.phone_number2 ? applicationDetail.phone_number2 : '-'}}</span>
+            </div>
+            <div class="right-part-content">
+              <span class="left-part">Resume</span>
+              <span class="right-part">
+                <a href={{file_download_url+applicationDetail.resume}}>download</a>
+              </span>
+            </div>
+            <div class="right-part-content">
+              <span class="left-part">Source</span>
+              <span class="right-part">{{applicationDetail.source ? applicationDetail.source : '-'}}</span>
+            </div>
+          </div>
+
+          <div class="interview-title">
+            <span class="custom-title-right-part">
+              <h3 class="custom-detail green-txt">Interview Schedule</h3>
+            </span>
+          </div>
+
+          <ng-container *ngIf="reschedule_data.length > 0; else no_data">
+            <div class="leave_wrap" *ngFor="let schedule of reschedule_data">
+              <div class="id-1">
+                <span class="left-part">Date</span>
+                <span class="right-part">{{schedule.interview_date ? (schedule.interview_date.date | dateFilter) :
+                  '-'}}</span>
+              </div>
+              <div class="id-1">
+                <span class="left-part">Time</span>
+                <span class="right-part">{{schedule.interview_time ? (schedule.interview_time.date | date:'hh:mm a') :
+                  '-'}}</span>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #no_data>
+            <div class="no-data">
+              <h6>No data found</h6>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+
+  <ng-template #reschedule>
+    <!-- <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header"> -->
+    <!-- <div class="center">
+            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+          </div>
+          <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button>
+        </div> -->
+    <div class="modal-body modal-body-txt">
+      <form [formGroup]="rescheduleForm" (ngSubmit)="saveReschedule()" #RescheduleForm="ngForm">
+        <div class="row">
+          <h2 class="custom-info">Reschedule Information</h2>
+          <div class="col-md-6">
+            <label class="f-700 control-label">Interview Date</label>
+            <br />
+            <input [owlDateTimeTrigger]="interview_date" [owlDateTime]="interview_date" formControlName="interview_date"
+              class="form-control input-sm fc-alt" name="interview_date"
+              [ngClass]="rescheduleForm.get('interview_date').invalid && RescheduleForm.submitted?'is-invalid':''">
+            <owl-date-time [pickerType]="'calendar'" #interview_date></owl-date-time>
+            <div class="invalid-feedback"
+              *ngIf="rescheduleForm.get('interview_date').invalid && RescheduleForm.submitted">
+              The interview date is required
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="f-700 control-label">Interview Time</label>
+            <br />
+            <input [owlDateTimeTrigger]="interview_time" [owlDateTime]="interview_time" formControlName="interview_time"
+              name="interview_time" class="form-control input-sm fc-alt"
+              [ngClass]="rescheduleForm.get('interview_time').invalid && RescheduleForm.submitted?'is-invalid':''">
+            <owl-date-time [pickerType]="'timer'" [hour12Timer]=true #interview_time></owl-date-time>
+            <div class="invalid-feedback"
+              *ngIf="rescheduleForm.get('interview_time').invalid && RescheduleForm.submitted">
+              The interview time is required
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label class="f-700 control-label">Subject</label>
+            <br />
+            <textarea formControlName="subject" name="subject" class="form-control input-sm fc-alt"
+              [ngClass]="rescheduleForm.get('subject').invalid && RescheduleForm.submitted?'is-invalid':''">
+                </textarea>
+            <!-- <input type="text" formControlName="subject" name="subject" class="form-control input-sm fc-alt"
+                  [ngClass]="rescheduleForm.get('subject').invalid && RescheduleForm.submitted?'is-invalid':''"> -->
+            <div class="invalid-feedback" *ngIf="rescheduleForm.get('subject').invalid && RescheduleForm.submitted">
+              The Subject is required
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer modal-footer-buttons">
+          <button type="submit" class="modal-delete-button">Save</button>
+          <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+</main>

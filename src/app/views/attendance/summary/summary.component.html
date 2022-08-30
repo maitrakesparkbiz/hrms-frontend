@@ -1,0 +1,140 @@
+<div class="animated fadeIn">
+  <div class="row custom-summary">
+    <div class="text-center-summary">
+      <form [formGroup]="selectForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-4 summary-emp" *ngIf="employee.length > 0">
+            <label>
+              Employee:
+            </label>
+            <ng-select [items]="employee" [selectOnTab]="true" formControlName="emp_id" bindValue="value"
+              placeholder="Select an option..." (change)="onChange()" #empOpt>
+            </ng-select>
+          </div>
+
+          <div class="col-md-4 summary-month">
+            <div class="custom-month-summary">
+              <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+            </div>
+          </div>
+
+          <div class="col-md-4 summary-year">
+            <label>
+              Year and Month:
+            </label>
+            <input formControlName="year_month" class="form-control" [owlDateTimeTrigger]="year_month"
+              (ngModelChange)="onChange()" [owlDateTime]="year_month">
+            <owl-date-time [pickerType]="'calendar'" [startView]="'year'" (yearSelected)="chosenYearHandler($event)"
+              (monthSelected)="chosenMonthHandler($event, year_month)" #year_month>
+            </owl-date-time>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-12 customer-calender">
+
+      <div [ngSwitch]="view" *ngIf="events.length > 0; else msg">
+        <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+          [cellTemplate]="customCellTemplate">
+        </mwl-calendar-month-view>
+      </div>
+      <ng-template #msg>
+        <img class="img-no-data" src="../../../assets/img/avatars/no-data-img.png">
+        <h6>No Data Found</h6>
+      </ng-template>
+
+      <ng-template #customCellTemplate let-day="day" let-locale="locale">
+
+        <div class="cal-cell-top">
+          <!-- <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span> -->
+          <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+        </div>
+
+        <!--<div class="cell-wrap" *ngIf="day.events?.length > 0" [class]="checkRedMark(day)">-->
+        <div class="cell-wrap" *ngIf="day.events?.length > 0">
+          <ng-container *ngFor="let days of day.events">
+            <div *ngIf="days.cssClass=='red_mark';else showOther" class="red_mark_div">
+                <div class="red_mark_class">
+                <!--<div *ngFor="let i of getNumberArray(days['id'])">-->
+                  <span *ngIf="days['id'] == 1" class="red_mark_class_one"></span>
+                  <span *ngIf="days['id'] >= 2" class="red_mark_class_two"></span>
+                <!--</div>-->
+                </div>
+            </div>
+            <ng-template #showOther>
+
+
+            <div class="true-comment">
+              <div class="custom-true">
+                <span *ngIf="days.allDay!==undefined?days.allDay:false"
+                  (click)="onCommentClick(days.id,commentsModal);$event.stopPropagation()">
+                  <i class="fa fa-comments" aria-hidden="true"></i>
+                </span>
+              </div>
+            </div>
+            <!-- <span [class]=days.cssClass *ngIf="days['cssClass']=='custom-holiday'" (click)="editOtherHoliday(days);$event.stopPropagation()">{{days['title']}}</span>-->
+            <div class="custom-labels"><span [class]=days.cssClass>{{days['title']}}</span></div>
+            </ng-template>
+          </ng-container>
+        </div>
+
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #commentsModal>
+  <!-- <div class="modal-dialog modal-confirm"> -->
+  <!-- <div class="modal-content"> -->
+  <!-- <div class="modal-header"> -->
+  <!-- <div class="center">
+          <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+        </div>
+        <h4 class="modal-title">Are you sure?</h4>
+        <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button>
+      </div> -->
+  <div class="modal-body">
+    <div class="row">
+      <!-- <div class="col-md-6 click-attendance">
+            <h4>Attendance</h4>
+            <span *ngFor="let row of selectedData.data" style="display: block" [ngClass]="row[0].type=='Checked In'?'check_in_label':(row[0].type=='Breaked In'?'break_in_label':(row[0].type=='Breaked Out'?'break_out_label':'check_out_label'))">
+              {{row[0].type}}
+              {{row[1].time}}
+            </span>
+          </div> -->
+      <div class="col-md-12 click-comments">
+        <h4>Comments</h4>
+        <ng-container *ngFor="let comment of selectedData.comments">
+          <div class="cmt">
+            <div class="custom-send">
+              <div class="cmt-send-img">
+                <img src="../../../../assets/img/avatars/profile_image.jpg">
+              </div>
+              <div class="border-wrap">
+                <div class="border-send"></div>
+              </div>
+              <span class="send">
+                {{comment.comment_text}}
+              </span>
+            </div>
+
+            <div class="custom-receive" *ngIf="comment.response_text">
+              <div class="cmt-receive-img">
+                <img src="../../../../assets/img/avatars/profile_image.jpg">
+              </div>
+              <div class="border-wrap">
+                <div class="border-send1"></div>
+              </div>
+              <span class="receive">
+                {{comment.response_text}}
+              </span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-template>

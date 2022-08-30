@@ -1,0 +1,68 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class=" border-class">
+      <div class="back-fix header-buttons">
+        <button type="button" class="btn btn-success backbtn" (click)="onBack()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="policyForm" (ngSubmit)="savePolicy()" #PolicyForm="ngForm" class="bg-color comman-card-wrap">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card comman-card-wrap">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-star"></i>Letter Details</h4>
+            </div>
+          <div class="card-body form-padding">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="f-700 control-label">Title</label>
+                <input type="text" name="title" formControlName="template_name" class="form-control input-sm fc-alt">
+                <div class="error-div" *ngIf="policyForm.get('template_name').invalid && PolicyForm.submitted">
+                  Title is Required
+                </div>
+              </div>
+            </div>
+
+            <div class="row short_description">
+              <div class="col-md-12 form-group">
+                <label class="f-700 control-label">Description</label>
+                <quill-editor formControlName="content"></quill-editor>
+                <!--<div class="error-div" *ngIf="policyForm.get('short_description').invalid && PolicyForm.submitted">-->
+                <!--Short Description is required-->
+                <!--</div>-->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <label class="f-700 control-label">Available Variables :</label>
+                <div>
+                  {{empVariables ? empVariables : ''}}
+                </div>
+                <!--<div class="error-div" *ngIf="policyForm.get('short_description').invalid && PolicyForm.submitted">-->
+                <!--Short Description is required-->
+                <!--</div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+            <div class="custom-button">
+              <button class="btn btn-primary custom-create" type="submit">
+                {{!!edit_id?'Update':'Create'}}
+              </button>&nbsp;
+              <button type="button" class="btn btn-primary" class="btn btn-default custom-cancel" (click)="onBack()">
+                Cancel
+              </button>
+            </div>
+      </div>
+      </div>
+    </form>
+  </div>
+</main>

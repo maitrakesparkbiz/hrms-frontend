@@ -1,0 +1,18 @@
+.sender {
+  width: 100%;
+  text-align: right;
+}
+
+.receiver {
+  width: 100%;
+  text-align: left;
+}
+
+.cmt-form {
+  display: block;
+  width: 100%
+}
+
+.cmt-box {
+  width: calc(100% - 50px);
+}

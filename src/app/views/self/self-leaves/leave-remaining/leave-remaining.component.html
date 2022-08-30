@@ -1,0 +1,39 @@
+<div class="animated fadeIn">
+  <div class="row leave-remaining-section">
+    <div class="col-md-3">
+      <input type="text" placeholder="Search..." [(ngModel)]="search" class="search-box">
+    </div>
+  </div>
+
+  <div class="email-app">
+    <div class="col-md-12 custom-table">
+      <div class="row table-row-wrap">
+        <table class="table table-striped" style="width: 100%" [mfData]="(leavetypes|filter:search) " #mf="mfDataTable"
+          [mfRowsOnPage]="3">
+          <thead>
+            <tr>
+              <th>
+                <mfDefaultSorter by="leavetype">Leave Type</mfDefaultSorter>
+              </th>
+              <th style="width: 60%">
+                <mfDefaultSorter by="count">Leaves Remaining</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="leavetypes" class="animated fadeIn">
+            <tr *ngFor="let item of mf.data">
+              <td>{{item.leavetype}}</td>
+              <td>{{item.count}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <ng-template #other>
+      <div class="ng-star-inserted col-md-12">
+        No Data Found
+      </div>
+    </ng-template> -->
+    </div>
+  </div>
+</div>

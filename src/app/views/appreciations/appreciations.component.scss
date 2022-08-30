@@ -1,0 +1,179 @@
+.table-wrap {
+  padding-left: 14px;
+  position: relative;
+}
+
+.table-wrap thead tr {
+  margin-left: 14px;
+}
+
+input#emp-check+label:before {
+  left: -2px;
+}
+
+input[type=checkbox] {
+  position: absolute;
+  left: 43px;
+  z-index: 2;
+  top: 18px;
+  opacity: 0;
+  height: 17px;
+  width: 17px;
+}
+
+.table-wrap tr th label {
+  position: relative;
+}
+
+.table-wrap tr th input[type=checkbox]+label:before {
+  content: '';
+  background: #fff;
+  height: 17px;
+  width: 17px;
+  border: 2px solid #7a7a7a;
+  position: absolute;
+  left: 18px;
+  top: -7px;
+  border-radius: 2px;
+}
+
+.table-wrap tr th input[type=checkbox]:checked+label:after {
+  content: '\f00c';
+  font-family: fontawesome;
+  background: #000;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  left: 17px;
+  top: -7px;
+  height: 18px;
+  width: 17px;
+  font-size: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+span.custom-image {
+  float: left;
+}
+
+.emp-name {
+  display: inline-block;
+  padding-left: 15px;
+  text-align: left;
+}
+
+.custom-test {
+  float: left;
+  font-size: 20px;
+  color: #2196f3;
+  padding-bottom: 15px;
+  text-transform: capitalize;
+}
+
+.row span.des-img {
+  font-size: 17px;
+  color: #2196f3;
+  font-weight: 500;
+}
+
+.emp-name a {
+  color: #2196f3;
+  font-size: 13px;
+  padding-top: 8px;
+  display: inline-block;
+  text-transform: capitalize;
+}
+
+.emp-name h6 {
+  font-size: 13px;
+  font-family: '', sans-serif;
+  font-weight: 400;
+  line-height: 19px;
+  color: #9e9e9e;
+}
+
+span.custom-award {
+  padding: 20px 0 10px;
+}
+
+.award-date {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 13px;
+  color: #5e5e5e;
+}
+
+span.custom-prize {
+  color: #4caf50 !important;
+  float: left;
+  width: 100%;
+  text-align: left;
+  padding: 15px 0 7px;
+}
+
+span.custom-prize {
+  color: #4caf50 !important;
+  float: left;
+  width: 100%;
+  text-align: left;
+  padding: 15px 0 7px;
+}
+
+.custom-text {
+  float: left;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #f4f4f4;
+  margin-bottom: 5px;
+  padding: 9px 10px;
+  max-width: 265px;
+  font-size: 13px;
+  color: #5e5e5e;
+}
+
+.app-img img {
+  height: 250px;
+  width: 290px;
+  object-fit: cover;
+}
+
+table.dataTable thead th {
+  position: relative;
+}
+
+.right-part-title {
+  float: left;
+  width: 100%;
+}
+
+.right-part-caption {
+  float: left;
+  width: 100%;
+  text-align: left;
+  padding: 15px 0;
+}
+
+
+.abc,
+.description-wrap {
+  width: 26.2%;
+}
+
+
+@media(max-width:1500px) {
+
+  .abc,
+  .description-wrap {
+    width: 25%;
+  }
+}
+
+@media(max-width:1400px) {
+
+  .abc,
+  .description-wrap {
+    width: 24.7%;
+  }
+}

@@ -1,0 +1,72 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <form [formGroup]="emailForm" (ngSubmit)="saveEmailSetting()" class="custom-form">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="c-white"><i class="fa fa-star" aria-hidden="true"></i>Email Settings</h4>
+            </div>
+            <div class="card-body form-padding custom-setting">
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <input type="hidden" formControlName="id">
+                  <label class="f-700 control-label">Admin Email</label>
+                  <tag-input [theme]="'bootstrap'" [editable]="true" formControlName="admin_emails" name="admin_emails"
+                    placeholder="+email" [disable]=!editAllowed>
+                  </tag-input>
+                  <!-- <input type="text" name="admin_emails" formControlName="admin_emails" class="form-control input-sm fc-alt"> -->
+                </div>
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">HR Email</label>
+                  <!-- <input type="text" name="hr_emails" formControlName="hr_emails" class="form-control input-sm fc-alt"> -->
+                  <tag-input [theme]="'bootstrap'" [editable]="true" formControlName="hr_emails" name="hr_emails"
+                    placeholder="+email" [disable]=!editAllowed>
+                  </tag-input>
+                </div>
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">CTO Email</label>
+                  <!-- <input type="text" name="cto_emails" formControlName="cto_emails" class="form-control input-sm fc-alt"> -->
+                  <tag-input [theme]="'bootstrap'" [editable]="true" formControlName="cto_emails" name="cto_emails"
+                    placeholder="+email" [disable]=!editAllowed>
+                  </tag-input>
+                </div>
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">HR Contact Numbers</label>
+                  <!-- <input type="text" name="hr_contact_number" formControlName="hr_contact_number" class="form-control input-sm fc-alt"> -->
+                  <tag-input [theme]="'bootstrap'" [editable]="true" formControlName="hr_contact_number" name="hr_contact_number"
+                    placeholder="+number" [disable]=!editAllowed>
+                  </tag-input>
+                </div>
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">HR Names</label>
+                  <!-- <input type="text" name="hr_name" formControlName="hr_name" class="form-control input-sm fc-alt"> -->
+                  <tag-input [theme]="'bootstrap'" [editable]="true" formControlName="hr_name" name="hr_name"
+                    placeholder="+name" [disable]=!editAllowed>
+                  </tag-input>
+                </div>
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Company Site</label>
+                  <input type="text" name="company_site" formControlName="company_site" class="form-control input-sm fc-alt">
+                </div>
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Company Address</label>
+                  <quill-editor formControlName="company_address" [readOnly]="!editAllowed"></quill-editor>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group pull-center">
+            <button class="btn btn-primary updatebtn" type="submit" *ngIf="editAllowed">
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

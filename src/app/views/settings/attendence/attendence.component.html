@@ -1,0 +1,169 @@
+<main class="message" *ngIf="locations.length > 0">
+  <div class="animated fadeIn">
+    <form [formGroup]="LocationForm" (ngSubmit)="SaveLocation()">
+      <div formArrayName="locationdetail">
+        <div *ngFor="let dept123 of LocationForm.get('locationdetail')['controls']; let i=index" [formGroupName]="i">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header" style="background-color:#3b5998;color: white">
+                  <h4 class="c-white">{{locations[i].name}}</h4><i *ngIf="locations[i]===1" class="fa fa-info-circle"
+                    aria-hidden="true"></i>
+                </div>
+                <div class="card-body form-padding">
+                  <div class="xyz">
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label class="start_time">Office Start Time</label>
+                        <input name="office_start_time_{{i}}" formControlName="office_start_time" class="form-control"
+                          [(ngModel)]="locations[i].office_start_time" [owlDateTimeTrigger]="office_start_time"
+                          [owlDateTime]="office_start_time">
+                        <owl-date-time [pickerType]="'timer'" [hour12Timer]=true #office_start_time></owl-date-time>
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label class="start_time">Office End Time</label>
+                        <input name="office_end_time_{{i}}" class="form-control"
+                          [(ngModel)]="locations[i].office_end_time" formControlName="office_end_time"
+                          [owlDateTimeTrigger]="office_end_time" [owlDateTime]="office_end_time">
+                        <owl-date-time [pickerType]="'timer'" [hour12Timer]=true #office_end_time></owl-date-time>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label>Working Days</label><br>
+                        <div class="custom-mon">
+
+                          <input type="checkbox" value="mon" formControlName="mon" class="tue">
+                          <label class="custom-tue">Mon</label>
+                        </div>
+                        <div class="custom-mon">
+
+                          <input type="checkbox" value="tue" formControlName="tue">
+                          <label>Tue</label>
+                        </div>
+                        <div class="custom-mon">
+                          <input type="checkbox" value="wed" formControlName="wed">
+                          <label>Wed</label>
+                        </div>
+                        <div class="custom-mon">
+                          <input type="checkbox" value="thu" formControlName="thu">
+                          <label>Thu</label>
+                        </div>
+
+                        <div class="custom-mon">
+                          <input type="checkbox" value="fri" formControlName="fri">
+                          <label>Fri</label>
+                        </div>
+
+                        <div class="custom-mon">
+                          <input type="checkbox" value="sat" formControlName="sat" (change)="handleSat($event,i)">
+                          <label>Sat</label>
+                        </div>
+
+                        <div class="custom-alternate">
+                          <input type="checkbox" value="1" formControlName="alt_sat" (change)="handleAltSat($event,i)">
+                          <label>Alternative Sat</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <div class="col-md-12 custom-half-day">
+                          <label>Half Day Allowed</label><br>
+                          <label class="switch switch-label switch-primary">
+                            <input type="checkbox" name="half_day_allowed_{{i}}"
+                              [(ngModel)]="locations[i].half_day_allowed" formControlName="half_day_allowed"
+                              class="switch-input " checked>
+                            <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                          </label>
+                        </div>
+                        <div class="col-md-12 custom-half-day" *ngIf="locations[i].half_day_allowed">
+                          <label class="start_time">Half Day Hours</label>
+                          <input name="half_day_hours_{{i}}" formControlName="half_day_hours" class="form-control"
+                            [(ngModel)]="locations[i].half_day_hours" [owlDateTimeTrigger]="half_day_hours"
+                            [owlDateTime]="half_day_hours">
+                          <owl-date-time [pickerType]="'timer'" #half_day_hours></owl-date-time>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="custom-clock">
+                    <h4>Clock In Settings</h4>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label>Employee self Clock-In/Clock-Out</label><br>
+                      <div class="btn-group btn-group-toggle" ngbRadioGroup name="employee_self_checking_{{i}}"
+                        formControlName="employee_self_checking" [(ngModel)]="locations[i].employee_self_checking"
+                        #switch>
+                        <label ngbButtonLabel class="btn-primary">
+                          <input ngbButton type="radio" [value]="1"> Allow
+                        </label>
+                        <label ngbButtonLabel class="btn-default"
+                          [ngClass]="!locations[i].employee_self_checking? 'btn-danger':''">
+                          <input ngbButton type="radio" [value]="0"> Don't Allow
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group" *ngIf="locations[i].employee_self_checking">
+                      <label>Late mark after (mins)</label>
+                      <input type="text" name="late_mark_after_minute_{{i}}" class="form-control"
+                        [(ngModel)]="locations[i].late_mark_after_minute" formControlName="late_mark_after_minute">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group" *ngIf="locations[i].employee_self_checking">
+                      <label>Clock In Reminder</label><br>
+                      <div class="btn-group btn-group-toggle" ngbRadioGroup name="employee_self_checking_{{i}}"
+                        formControlName="clock_reminder" [(ngModel)]="locations[i].clock_reminder">
+                        <label ngbButtonLabel class="btn-primary">
+                          <input ngbButton type="radio" [value]="1"> YES
+                        </label>
+                        <label ngbButtonLabel class="btn-default"
+                          [ngClass]="!locations[i].clock_reminder? 'btn-danger':''">
+                          <input ngbButton type="radio" [value]="0"> NO
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group"
+                      *ngIf="locations[i].clock_reminder && locations[i].employee_self_checking">
+                      <label class="f-700 control-label">Clock In Reminder Time </label>
+                      <input name="clock_reminder_time_{{i}}" class="form-control"
+                        [(ngModel)]="locations[i].clock_reminder_time" formControlName="clock_reminder_time"
+                        [owlDateTimeTrigger]="clock_reminder_time" [owlDateTime]="clock_reminder_time">
+                      <owl-date-time [pickerType]="'timer'" #clock_reminder_time></owl-date-time>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 form-group " *ngIf="locations[i].employee_self_checking">
+                      <label>Overtime Pay on Holiday</label><br>
+                      <label class="switch switch-label switch-primary">
+                        <input type="checkbox" name="overtime_pay_{{i}}" [(ngModel)]="locations[i].overtime_pay"
+                          formControlName="overtime_pay" class="switch-input " checked>
+                        <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                      </label>
+                    </div>
+                    <div class="col-md-6 form-group ip-width" *ngIf="locations[i].employee_self_checking">
+                      <label>Allowed IP Addresses</label>
+                      <tag-input [theme]="' bootstrap'" [disable]="!editAllowed" [editable]="true"
+                        formControlName="allowed_ip" name="allowed_ip" placeholder="+ip"
+                        secondaryPlaceholder="Enter ip address">
+                      </tag-input>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group pull-center">
+            <button class="btn btn-primary btn-save" type="submit" *ngIf="editAllowed">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

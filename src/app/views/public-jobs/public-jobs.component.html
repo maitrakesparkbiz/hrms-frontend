@@ -1,0 +1,292 @@
+<div class="main-section page1" *ngIf="length > 0;else notFound">
+  <div *ngIf="page1">
+    <div class="container">
+      <div class="top-section">
+        <div class="top-left">
+          <h3>{{openingData.role}}</h3>
+          <h5>eSparkBiz</h5>
+        </div>
+
+        <div class="top-right">
+          <div class="top-image">
+            <img *ngIf="logoPath!==''" [src]="logoPath">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-wrap">
+        <div class="form-detail">
+          <h1>{{openingData.role}}</h1>
+          <h5><a href="mailto:hr@esparkinfo.com">hr@esparkinfo.com</a></h5>
+        </div>
+
+        <div class="box-main">
+          <div class="box-section">
+            <div class="box-wrap">
+              <h5>Last Date</h5>
+              <h2>{{openingData.last_date ? (openingData.last_date['date'] | date:'MMM dd, yyyy') : '-'}}</h2>
+            </div>
+          </div>
+
+          <div class="box-section">
+            <div class="box-wrap">
+              <h5>Vacancies</h5>
+              <h2>{{openingData.vacancies ? openingData.vacancies : '-'}}</h2>
+            </div>
+          </div>
+
+          <div class="box-section">
+            <div class="box-wrap">
+              <h5>CTC</h5>
+              <h2>{{openingData.ctc ? openingData.ctc : ''}}</h2>
+            </div>
+          </div>
+
+          <div class="box-section">
+            <div class="box-wrap">
+              <h5>Experience Required</h5>
+              <h2>{{openingData.exp_required > 0 ? openingData.exp_required+' Yr.' : 'Fresher'}}</h2>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="last-section">
+          <div class="custom-intro">
+            <h4>Introduction</h4>
+            <p [innerHTML]="openingData.introduction"></p>
+          </div>
+          <div class="custom-intro">
+            <h4>Responsibilities</h4>
+            <p [innerHTML]="openingData.responsibilities"></p>
+          </div>
+          <div class="custom-intro">
+            <h4>Skill Set</h4>
+            <p [innerHTML]="openingData.skill_set"></p>
+          </div>
+        </div>
+
+        <div class="button-wrap">
+          <a class="close-btn btn-closed" *ngIf="openingData.status=='Closed';else applyBtn">Opening
+            Closed</a>
+          <ng-template #applyBtn>
+            <a class="apply-btn" (click)="onApply()">Apply Now</a>
+          </ng-template>
+        </div>
+        <hr>
+        <div class="footer">
+          <div class="footer-left">
+            <a href="mailto:hr@esparkinfo.com">
+              <p>hr@esparkinfo.com</p>
+            </a>
+          </div>
+
+          <div class="footer-right">
+            <a href="https://www.esparkinfo.com" target="blank">
+              <p>www.esparkinfo.com</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page2" *ngIf="page2">
+  <div class="main-section">
+    <div class="container">
+      <div class="top-section">
+        <div class="top-left">
+          <h3>{{openingData.role}}</h3>
+          <h5>eSparkBiz</h5>
+        </div>
+
+        <div class="top-right">
+          <div class="top-image">
+            <img *ngIf="logoPath!==''" [src]="logoPath">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-wrap">
+        <div class="form-detail">
+          <h1>{{openingData.role}}</h1>
+          <p>-</p>
+          <p>-</p>
+          <h5>hr@esparkinfo.com</h5>
+          <a (click)="onApply()">[ View job Details ]</a>
+        </div>
+        <form [formGroup]="ApplicationForm" (ngSubmit)="SaveApplicant()" #applicationForm="ngForm">
+          <div class="form-section">
+            <div class="input-form">
+              <label class="custom-label"
+                [ngClass]="ApplicationForm.get('applicant_name').invalid && applicationForm.submitted?'label-red':''">
+                Name
+              </label>
+              <div class="custom-input">
+                <input type="text" name="applicant_name" formControlName="applicant_name" placeholder="Your full name"
+                  [ngClass]="ApplicationForm.get('applicant_name').invalid && applicationForm.submitted?'is-invalid':''"
+                  class="form-control input-sm fc-alt">
+                <div class="invalid-feedback"
+                  *ngIf="ApplicationForm.get('applicant_name').invalid && applicationForm.submitted">
+                  The Name is required
+                </div>
+              </div>
+
+            </div>
+
+            <div class="input-form">
+              <label class="custom-label">
+                Email
+              </label>
+
+              <div class="custom-input">
+                <input type="text" class="form-control input-sm fc-alt" formControlName="contact_email"
+                  placeholder="Current working Email"
+                  [ngClass]="ApplicationForm.get('contact_email').invalid && applicationForm.submitted?'is-invalid':''">
+                <div class="invalid-feedback"
+                  *ngIf="ApplicationForm.get('contact_email').errors && ApplicationForm.get('contact_email').errors['required'] && applicationForm.submitted">
+                  The Email is required
+                </div>
+                <div class="invalid-feedback"
+                  *ngIf="ApplicationForm.get('contact_email').errors && ApplicationForm.get('contact_email').errors['email'] && applicationForm.submitted">
+                  Enter valid email address
+                </div>
+              </div>
+            </div>
+
+
+            <div class="input-form">
+              <label class="custom-label">
+                Phone
+              </label>
+
+              <div class="custom-input">
+                <input type="text" class="form-control input-sm fc-alt" formControlName="phone_number1"
+                  placeholder="Working contact number"
+                  [ngClass]="ApplicationForm.get('phone_number1').invalid && applicationForm.submitted?'is-invalid':''">
+                <div class="invalid-feedback"
+                  *ngIf="ApplicationForm.get('phone_number1').errors && ApplicationForm.get('phone_number1').errors['required'] && applicationForm.submitted">
+                  The Phone number is required
+                </div>
+                <div class="invalid-feedback"
+                  *ngIf="ApplicationForm.get('phone_number1').errors && !ApplicationForm.get('phone_number1').errors['required'] && applicationForm.submitted">
+                  Enter Valid phone number
+                </div>
+              </div>
+            </div>
+
+            <div class="input-form custom-resume">
+              <label class="custom-label">
+                Resume
+              </label>
+
+              <div class="row" style="margin: 2px;">
+                <div class="row col-md-12 document-image" *ngIf="resume_name">
+                  <p>{{resume_name}}</p>
+                  <!-- <img src="{{IMAGE_URL}}{{applicationEdit.resume}}" class="view_images" /> -->
+                </div>
+                <div class="row col-md-8 resume-btn" *ngIf="resume_name">
+                  <button type="button" (click)="removeImage()" class="btn btn-remove">
+                    Remove
+                  </button>
+                </div>
+                <label for="resume" class="custom-file-upload document-select-btn" [hidden]="resume_name">
+                  Select
+                </label>
+                <input type="file" name="resume" id="resume" (change)="uploadImage($event)" formControlName="resume"
+                  class="form-control input-sm fc-alt"
+                  [ngClass]="ApplicationForm.get('resume').invalid && applicationForm.submitted?'is-invalid':''">
+                <div class="invalid-feedback"
+                  *ngIf="ApplicationForm.get('resume').errors && ApplicationForm.get('resume').errors['required'] && applicationForm.submitted">
+                  The resume is required
+                </div>
+                <div class="invalid-feedback"
+                  *ngIf="ApplicationForm.get('resume').errors && ApplicationForm.get('resume').errors['invalid_file'] && applicationForm.submitted">
+                  Enter valid resume file
+                </div>
+              </div>
+
+              <!-- <div class="custom-input">
+                <a href="#" class="custom-select">Select file</a>
+              </div> -->
+
+            </div>
+          </div>
+
+          <div class="button-wrap">
+            <button type="submit" class="apply-btn btn-apply">Apply</button>
+            <a (click)="onApply()" class="cancel-btn">Cancel</a>
+          </div>
+        </form>
+        <hr>
+        <div class="footer">
+          <div class="footer-left">
+            <a href="mailto:hr@esparkinfo.com">
+              <p>hr@esparkinfo.com</p>
+            </a>
+          </div>
+
+          <div class="footer-right">
+            <a href="https://www.esparkinfo.com" target="blank">
+              <p>www.esparkinfo.com</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page3" *ngIf="page3">
+  <div class="main-section">
+    <div class="container">
+      <div class="top-section">
+        <div class="top-left">
+          <h3>{{openingData.role}}</h3>
+          <h5>eSparkBiz</h5>
+        </div>
+
+        <div class="top-right">
+          <div class="top-image">
+            <img *ngIf="logoPath!==''" [src]="logoPath">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-wrap">
+        <div class="form-detail">
+          <h1>{{openingData.role}}</h1>
+          <p>-</p>
+          <p>-</p>
+          <h5>hr@esparkinfo.com</h5>
+          <a (click)="onReturn()">[ View job Details ]</a>
+        </div>
+
+        <div class="custom-response">
+          <i class="fa fa-smile-o" aria-hidden="true"></i>
+          <h4>Your application has been submitted successfully.</h4>
+        </div>
+
+        <hr>
+        <div class="footer">
+          <div class="footer-left">
+            <a href="mailto:hr@esparkinfo.com">
+              <p>hr@esparkinfo.com</p>
+            </a>
+          </div>
+
+          <div class="footer-right">
+            <a href="https://www.esparkinfo.com" target="blank">
+              <p>www.esparkinfo.com</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #notFound>
+  data not found
+</ng-template>

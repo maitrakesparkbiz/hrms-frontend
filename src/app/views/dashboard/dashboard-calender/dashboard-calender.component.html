@@ -1,0 +1,67 @@
+<div class="calender-title">
+  <div class="col-md-12 cus-month">
+    <div class="button cal-left-btn" (click)="decrement()">
+      <i class="fa fa-angle-left"></i>
+    </div>
+    <div class="custom-month">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+    <div class="button cal-right-btn right" (click)="increment()">
+      <i class="fa fa-angle-right"></i>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="col-md-9 customer-calender"> -->
+<div [ngSwitch]="view" *ngIf="changeStatus">
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [cellTemplate]="customCellTemplate">
+    </mwl-calendar-month-view>
+  </div>
+  <ng-template #customCellTemplate let-day="day" let-locale="locale">
+    <div class="cal-cell-top">
+      <!-- <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span> -->
+      <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+    </div>
+    <div *ngIf="day.events?.length > 0">
+      <div *ngFor="let days of day.events">
+        <!-- <span [class]=days.cssClass *ngIf="days['cssClass']=='custom-holiday'" (click)="editOtherHoliday(days);$event.stopPropagation()">{{days['title']}}</span>-->
+        <div class="emp-button"><button type="button" triggers="focus" [popover]="detailTemplate" placement="right"
+            [class]=days.cssClass>{{days['title']}}</button></div>
+        <ng-template #detailTemplate>
+          <div class="custom-popover">
+            <h5 class="popup-title">Leave Details</h5>
+            <div class="popup-detail">
+              <span class="popup-left-part">Applied By : </span>
+              <span class="popup-right-part">{{days.actions.firstname}} {{days.actions.lastname}}</span>
+            </div>
+            <div class="popup-detail">
+              <span class="popup-left-part">Leave Type : </span>
+              <span class="popup-right-part">{{days.actions.leavetype}}</span>
+            </div>
+            <div class="popup-detail">
+              <span class="popup-left-part">Date : </span>
+              <span class="popup-right-part">{{days.actions[0].leave_date.date | dateFilter}}</span>
+            </div>
+            <div class="popup-detail">
+              <span class="popup-left-part">Days : </span>
+              <span class="popup-right-part">{{days.actions[0].leave_count}}</span>
+            </div>
+            <div class="popup-detail">
+              <span class="popup-left-part">Half Day : </span>
+              <span class="popup-right-part">{{days.actions[0].half_day ? 'Yes' :'No'}}</span>
+            </div>
+            <div class="popup-detail">
+              <span class="popup-left-part">Status : </span>
+              <span class="popup-right-part">{{days.actions[0].status}}</span>
+            </div>
+            <div class="popup-detail">
+              <span class="popup-left-part">Reason : </span>
+              <span class="popup-right-part">{{days.actions[0].reason}}</span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-template>
+</div>

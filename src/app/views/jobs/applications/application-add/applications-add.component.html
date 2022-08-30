@@ -1,0 +1,219 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row inner-header">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-success" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="applicationForm" (ngSubmit)="SaveApplication()" #ApplicationForm="ngForm">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card comman-card-wrap">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Basic Details
+              </h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">
+                    Job
+                  </label>
+                  <br />
+                  <select class="form-control" formControlName="job_id"
+                    [ngClass]="applicationForm.get('job_id').invalid && ApplicationForm.submitted?'is-invalid':''">
+                    <option value="">-- select --</option>
+                    <option *ngFor="let item of optionData" [value]=item.id>{{item.role}}{{!!item.exp_required?' - ' +
+                      item.exp_required + ' year': ''}}</option>
+                  </select>
+                  <div class="invalid-feedback"
+                    *ngIf="applicationForm.get('job_id').invalid && ApplicationForm.submitted">
+                    The job_id is required
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Applicant Name</label>
+                  <br />
+                  <input type="text" name="applicant_name" formControlName="applicant_name" class="form-control"
+                    [ngClass]="applicationForm.get('applicant_name').invalid && ApplicationForm.submitted?'is-invalid':''">
+                  <div class="invalid-feedback"
+                    *ngIf="applicationForm.get('applicant_name').invalid && ApplicationForm.submitted">
+                    The applicant_name is required
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Contact Email</label>
+                  <br />
+                  <input type="text" name="contact_email" formControlName="contact_email" class="form-control"
+                    [ngClass]="applicationForm.get('contact_email').invalid && ApplicationForm.submitted?'is-invalid':''">
+                  <div class="invalid-feedback"
+                    *ngIf="applicationForm.get('contact_email').invalid && ApplicationForm.submitted">
+                    The contact_email is required
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Location</label>
+                  <br />
+                  <input type="text" name="location" formControlName="location" class="form-control">
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Phone No. 1</label>
+                  <br />
+                  <input type="text" name="title" formControlName="phone_number1" class="form-control"
+                    [ngClass]="applicationForm.get('phone_number1').invalid && ApplicationForm.submitted?'is-invalid':''">
+                  <div class="invalid-feedback"
+                    *ngIf="applicationForm.get('phone_number1').invalid && ApplicationForm.submitted">
+                    The phone_number1 is required
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Phone No. 2</label>
+                  <br />
+                  <input type="text" name="title" formControlName="phone_number2" class="form-control">
+                </div>
+              </div>
+              <div class="row" [hidden]="!edit_id">
+                <div class="col-md-4">
+                  <label class="f-700 control-label">Stage</label>
+                  <br />
+                  <select name="stage" formControlName="stage" (change)="onSelect($event.target.value)"
+                    class="form-control" #selectStage>
+                    <option value="1">Initial</option>
+                    <option value="2">Interview</option>
+                    <option value="3">Selected</option>
+                    <option value="4">Rejected</option>
+                    <option value="5">Closed</option>
+                  </select>
+                </div>
+                <div class="col-md-4" [hidden]="int_select">
+                  <label class="f-700 control-label">Interview Date</label>
+                  <br />
+                  <input [owlDateTimeTrigger]="interview_date" [owlDateTime]="interview_date"
+                    formControlName="interview_date" class="form-control input-sm fc-alt" name="interview_date"
+                    [ngClass]="applicationForm.get('interview_date').invalid && ApplicationForm.submitted?'is-invalid':''">
+                  <owl-date-time [pickerType]="'calendar'" #interview_date></owl-date-time>
+                  <div class="invalid-feedback"
+                    *ngIf="applicationForm.get('interview_date').invalid && ApplicationForm.submitted">
+                    The interview date is required
+                  </div>
+                </div>
+                <div class="col-md-4" [hidden]="int_select">
+                  <label class="f-700 control-label">Interview Time</label>
+                  <br />
+                  <input [owlDateTimeTrigger]="interview_time" [owlDateTime]="interview_time"
+                    formControlName="interview_time" name="interview_time" class="form-control input-sm fc-alt"
+                    [ngClass]="applicationForm.get('interview_time').invalid && ApplicationForm.submitted?'is-invalid':''">
+                  <owl-date-time [pickerType]="'timer'" [hour12Timer]=true #interview_time></owl-date-time>
+                  <div class="invalid-feedback"
+                    *ngIf="applicationForm.get('interview_time').invalid && ApplicationForm.submitted">
+                    The interview time is required
+                  </div>
+                </div>
+                <div class="col-md-4" [hidden]="reject_reason">
+                  <label class="f-700 control-label">Reason</label>
+                  <br />
+                  <input type="text" name="reject_reason" formControlName="reject_reason" class="form-control"
+                         [ngClass]="applicationForm.get('reject_reason').invalid && ApplicationForm.submitted?'is-invalid':''">
+                  <div class="invalid-feedback"
+                       *ngIf="applicationForm.get('reject_reason').invalid && ApplicationForm.submitted">
+                    Reject reason is required
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-red">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Job Description
+              </h4>
+            </div>
+            <div class="card-body form-padding job-wrap">
+              <div class="row custom-description">
+                <div class="col-md-4">
+                  <label class="f-700 control-label">Source</label>
+                  <br />
+                  <input type="text" name="source" formControlName="source" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="f-700 control-label">current_company</label>
+                  <br />
+                  <input type="text" name="current_company" formControlName="current_company" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="f-700 control-label">current_ctc</label>
+                  <br />
+                  <input type="text" name="current_ctc" formControlName="current_ctc" class="form-control">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <label class="f-700 control-label">expected_ctc</label>
+                  <br />
+                  <input type="text" name="expected_ctc" formControlName="expected_ctc" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="f-700 control-label">degree</label>
+                  <br />
+                  <input type="text" name="degree" formControlName="degree" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="f-700 control-label">Resume</label>
+                  <div class="row col-md-12 document-image" *ngIf="applicationEdit.resume || resume_select">
+                    <p>{{applicationEdit.resume}}</p>
+                    <!-- <img src="{{IMAGE_URL}}{{applicationEdit.resume}}" class="view_images" /> -->
+                  </div>
+                  <div class="row col-md-8" *ngIf="applicationEdit.resume || resume_select">
+                    <a [href]="DOWNLOAD_IMAGE_URL+applicationEdit.resume" *ngIf='edit_id'>
+                      <button type="button" class="btn-download">
+                        Download
+                      </button>
+                    </a>
+                    <button type="button" (click)="removeImage('resume')" class="btn btn-remove">
+                      Remove
+                    </button>
+                  </div>
+                  <div class="row" style="margin: 2px;" [hidden]="applicationEdit.resume">
+                    <label for="resume" class="custom-file-upload document-select-btn">
+                      Select
+                    </label>
+                    <input type="file" name="resume" id="resume" (change)="uploadImage($event)" formControlName="resume"
+                      class="form-control input-sm fc-alt"
+                      [ngClass]="applicationForm.get('resume').invalid && ApplicationForm.submitted?'is-invalid':''">
+                    <div class="invalid-feedback"
+                      *ngIf="applicationForm.get('resume').invalid && ApplicationForm.submitted">
+                      The resume is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="button-wrap">
+          <button class="btn btn-primary" type="submit">
+            {{edit_id ? 'Update' : 'Create'}}
+          </button>&nbsp;
+          <button type="button" class="btn btn-primary" class="btn btn-default" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</main>

@@ -1,0 +1,99 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class=" border-class">
+      <div class="back-fix">
+        <button type="button" class="btn btn-success backbtn" (click)="onBack()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="policyForm" (ngSubmit)="savePolicy()" #PolicyForm="ngForm" class="bg-color">
+      <div class="full-width">
+        <div class="card holiday_wrap">
+          <div class="card-header">
+            <h4 class="c-white">
+              <i class="fa fa-file" aria-hidden="true"></i>Policy Details</h4>
+          </div>
+          <div class="card-body form-padding">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="f-700 control-label">Title</label>
+                <input type="text" name="title" formControlName="title" class="form-control input-sm fc-alt">
+                <div class="error-div" *ngIf="policyForm.get('title').invalid && PolicyForm.submitted">
+                  Policy Title is Required
+                </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <label class="f-700 control-label">Policy Document</label>
+                <div class="row col-md-12 document-image" *ngIf="policyDoc">
+                  <a target="blank">{{policyDoc}}</a>
+                </div>
+                <div class="row col-md-8" *ngIf="policyDoc">
+                  <button type="button" (click)="removeFile()" class="btn btn-danger remove-btn">
+                    Remove
+                  </button>
+                </div>
+
+                <div class="row custom-row" [hidden]="policyDoc">
+                  <label for="policy_doc" class="custom-file-upload document-select-btn">
+                    Select
+                  </label>
+                  <input type="file" name="policy_doc" id="policy_doc" (change)="uploadFile($event)"
+                    formControlName="policy_doc" class="form-control input-sm fc-alt">
+                </div>
+                <div class="error-div" *ngIf="policyForm.get('policy_doc').invalid && PolicyForm.submitted">
+                  Only PDFs are allowed
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label class="no-bottom-margin">Publish</label>
+                <br>
+                <label class="switch switch-label switch-primary">
+                  <input type="checkbox" name="is_published" formControlName="is_published" class="switch-input"
+                    checked>
+                  <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+                </label>
+              </div>
+            </div>
+            <div class="row short_description">
+              <div class="col-md-12 form-group">
+                <label class="f-700 control-label">Short Description</label>
+                <quill-editor formControlName="short_description"></quill-editor>
+                <div class="error-div" *ngIf="policyForm.get('short_description').invalid && PolicyForm.submitted">
+                  Short Description is required
+                </div>
+              </div>
+            </div>
+            <div class="row short_description">
+              <div class="col-md-12 form-group">
+                <label class="f-700 control-label">Long Description</label>
+                <quill-editor formControlName="long_description"></quill-editor>
+                <div class="error-div" *ngIf="policyForm.get('long_description').invalid && PolicyForm.submitted">
+                  Long Description is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group pull-center">
+              <button class="btn btn-primary btn-save" type="submit" appDisableButton>
+                Save
+              </button>
+              <button class="btn btn-cancel" type="button" (click)="onBack()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

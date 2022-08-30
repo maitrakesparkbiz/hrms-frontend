@@ -1,0 +1,163 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12" [ngClass]="allcheck_id_count==1 ? 'header-buttons  ':''">
+        <button *ngIf="allcheck_id_count==1" type="button" class="button edit-button" (click)="EditContact()"
+          [appCheckPermission]="'LEAVES.LEAVE-BALANCE.EDIT'">
+          <i class="fa fa-pencil"></i>
+          Edit
+        </button>
+        <!--<button *ngIf="allcheck_id_count" type="button" class="button del-button" (click)="openModel(delete)"-->
+        <!--[appCheckPermission]="'EXPENSE.VIEW-EXPENSE.DELETE'">-->
+        <!--<i class="fa fa-trash "></i>-->
+        <!--Delete-->
+        <!--</button>-->
+        <!-- <div class="search-section">
+        <input class="search-box ng-pristine ng-valid ng-touched" placeholder="Search..." type="text" [(ngModel)]="search">
+      </div> -->
+      </div>
+
+      <!-- <table class="table table-striped" style="wid  th: 100%" [mfData]="(expense_data|filter:search)" #mf="mfDataTable"
+      [mfRowsOnPage]="10">
+      <thead>
+        <tr>
+          <th style="width: 3%">
+            <input id="" type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+            <label for=""></label>
+          </th>
+          <th style="width: 20%">
+            <mfDefaultSorter by="title">Expense</mfDefaultSorter>
+          </th>
+          <th style="width: 22%">
+            <mfDefaultSorter by="category_name">Category</mfDefaultSorter>
+          </th>
+          <th style="width: 21%">
+            <mfDefaultSorter by="amount">Amount</mfDefaultSorter>
+          </th>
+          <th style="width: 22%">
+            <mfDefaultSorter by="bill_date">Bill Date</mfDefaultSorter>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mf.data">
+          <td>
+            <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+              [(ngModel)]="item.isSelected" (click)="checkone(item.id)" />
+            <label></label>
+
+          </td>
+          <td>{{item.title}}</td>
+          <td>{{item.category_name}}</td>
+          <td>{{item.amount}}</td>
+          <td>{{item.bill_date}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table> -->
+      <div class="table-wrap manger-expense-table">
+        <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+          class="row-border hover" style="width: 100%">
+          <thead>
+            <tr class="custom-th">
+              <th style="width: 40px">
+                <!--<input id="" type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />-->
+                <!--<label for=""></label>-->
+              </th>
+              <th>Employee</th>
+              <th>Leave Balance</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="leave_balance_data?.length != 0">
+            <tr *ngFor="let person of leave_balance_data" (click)="checkone(person.id);$event.stopPropagation()">
+              <td>
+                <input type="checkbox" name="checkselection" value={{person.id}} class="formcontrol" class="formcontrol"
+                  [(ngModel)]="person.isSelected" (click)="checkone(person.id);$event.stopPropagation()" />
+                <label></label>
+              </td>
+              <td>
+                <img style="width: 38px; height: 38px" *ngIf="person.profile_image ;else other_content" [src]=IMAGE_URL+person.profile_image
+                     class="img-avatar" />
+                <ng-template #other_content>
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </ng-template>
+                <span class="table-txt  emp-name blue-txt"> {{ person.firstname }} {{person.lastname}}</span>
+              </td>
+              <td><span class="table-txt">{{ person.balance }}</span></td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="leave_balance_data?.length == 0">
+            <tr>
+              <td colspan="6" class="no-data-available">No data!</td>
+            </tr>
+          <tbody>
+        </table>
+      </div>
+
+
+      <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+        <div class="custom-scroll">
+          <div class="admin-image">
+            <div class="right-part-content">
+              <div class="custom-title">
+                <img style="width: 38px; height: 38px" *ngIf="leave_balance_details.profile_image ;else other_content" [src]=IMAGE_URL+leave_balance_details.profile_image
+                     class="img-avatar" />
+                <ng-template #other_content>
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </ng-template>
+                <span class="table-txt blue-txt"> {{ leave_balance_details.firstname }} {{leave_balance_details.lastname}}</span>
+
+              </div>
+              <!--<div class="custom-txt">{{}}</div>-->
+            </div>
+            <div class="custom-details">Details</div>
+            <div class="emp-particular-details">
+              <div class="right-part-content">
+                <span class="left-part">CL</span>
+                <span class="right-part">{{leave_balance_details.cl}}</span>
+              </div>
+              <div class="right-part-content">
+                <span class="left-part">PL</span>
+                <span class="right-part">{{leave_balance_details.pl}}</span>
+              </div>
+              <div class="right-part-content">
+                <span class="left-part">SL</span>
+                <span class="right-part">{{leave_balance_details.sl}}</span>
+              </div>
+
+            <div class="right-part-content">
+              <span class="left-part">UPL</span>
+              <span class="right-part">{{leave_balance_details.used_upl}}</span>
+            </div>
+            </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+  <ng-template #delete>
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteExpense()">Delete</button>
+    </div>
+  </ng-template>
+
+</main>

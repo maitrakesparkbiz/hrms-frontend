@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,mBAAmB;EAAK,UAAU,EAAE,IAAI",
+"sources": ["ba-tl-own-projects.component.scss"],
+"names": [],
+"file": "ba-tl-own-projects.component.css"
+}

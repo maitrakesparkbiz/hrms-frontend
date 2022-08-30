@@ -1,0 +1,123 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 header-buttons">
+      <div class="col-md-4 pull-left select-year">
+        <select class="form-control custom-select" (change)="onYearSelect($event.target.value)">
+          <option *ngFor=" let year of year_opt ">{{year}}</option>
+        </select>
+      </div>
+      <div class="col-md-8 pull-left">
+        <button type="button" class="new-button" (click)="addHoliday()" [appCheckPermission]="'HOLIDAYS.ADD'">
+          <i class="fa fa-plus "></i>
+          Add
+        </button>
+        <button *ngIf="allcheck_id_count==1" type="button " class="edit-button" (click)="editHoliday()"
+          [appCheckPermission]="'HOLIDAYS.EDIT'">
+          <i class="fa fa-pencil "></i>
+          Edit
+        </button>
+        <button *ngIf="allcheck_id_count" type="button " class="del-button" (click)="openModel(delete)"
+          [appCheckPermission]="'HOLIDAYS.DELETE'">
+          <i class="fa fa-trash "></i>
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <div class="table-wrap setting-table holiday-table">
+
+
+
+      <!-- <table class="table table-striped" style="width: 100%" [mfData]="(holiday_data|filter:search)" #mf="mfDataTable"
+        [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th style="width: 2%">
+              <input id="emp-check" type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+              <label for="emp-check"></label>
+            </th>
+            <th style="width:10%">
+              <mfDefaultSorter by="name">Event Name</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="name">Date</mfDefaultSorter>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id)" />
+              <label></label>
+            </td>
+            <td>{{item.event_name}}</td>
+            <td>{{item.start_date}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table> -->
+
+
+
+
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 40px">
+              <input id="emp-check" type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+              <label for="emp-check"></label>
+            </th>
+            <th style="width: 180px">Event Name</th>
+            <th style="width: 100px">Date</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="holiday_data?.length != 0">
+          <tr *ngFor="let item of holiday_data" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" /><label></label>
+            </td>
+            <td><span class="table-txt">{{item.event_name}}</span></td>
+            <td><span class="table-txt">{{item.start_date.date | dateFilter}}</span></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="holiday_data?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+
+
+  <ng-template #delete>
+    <!-- <div class="modal-dialog modal-confirm"> -->
+    <!-- <div class="modal-content"> -->
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteHolidays()">Delete</button>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+</main>

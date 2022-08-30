@@ -1,0 +1,246 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12 header-buttons">
+        <!--<button  type="button" class="btn btn-success" (click)="openModel(quickadd)">-->
+        <!--<i class="fa fa-plus "></i>-->
+        <!--Quick Add-->
+        <!--</button>-->
+        <button type="button" class="new-button" [routerLink]="'create-claim'"
+          [appCheckPermission]="'EXPENSE.CLAIMS.ADD'">
+          <i class="fa fa-plus"></i>
+          New
+        </button>
+        <button *ngIf="allcheck_id_count==1" type="button" class="edit-button" (click)="EditContact()"
+          [appCheckPermission]="'EXPENSE.CLAIMS.EDIT'">
+          <i class="fa fa-pencil"></i>
+          Edit
+        </button>
+        <button *ngIf="allcheck_id_count" type="button" class="del-button" (click)="openModel(delete)"
+          [appCheckPermission]="'EXPENSE.CLAIMS.DELETE'">
+          <i class="fa fa-trash "></i>
+          Delete
+        </button>
+        <ng-container *ngIf="selfUrl==''">
+          <button *ngIf="allcheck_id_count==1 && (expense_status=='pending' || expense_status=='reject' )"
+            (click)="approveclaim()" type="button" class="select-btn accept-button"
+            [appCheckPermission]="'EXPENSE.CLAIMS.EDIT'">
+            <i class="fa fa-check "></i>
+            Paid
+          </button>
+          <button *ngIf="allcheck_id_count==1 && (expense_status=='pending' || expense_status=='approve' )"
+            (click)="rejectclaim()" type="button" class="select-btn reject-button"
+            [appCheckPermission]="'EXPENSE.CLAIMS.EDIT'">
+            <i class="fa fa-close "></i>
+            Reject
+          </button>
+        </ng-container>
+        <!-- <div class="search-section">
+        <input class="search-box ng-pristine ng-valid ng-touched" placeholder="Search..." type="text">
+      </div> -->
+        <div class="search-section search">
+          <form [formGroup]="filterForm" class="custom-wrap">
+            <select (change)="getSelectedData()" class="search-box ng-pristine ng-valid ng-touched custom-status"
+              [formControlName]="'status'">
+              <option value="all">Status:All</option>
+              <option value="approve">Paid</option>
+              <option value="reject">Rejected</option>
+              <option value="pending">Unpaid</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+      <div class="table-wrap expense-table">
+        <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+          class="row-border hover" style="width: 100%">
+          <thead>
+            <tr class="custom-th">
+              <th style="width: 40px">
+                <input id="" type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+                <label for=""></label>
+              </th>
+              <th style="width: 180px">Submitted By</th>
+              <th style="width: 100px">Title</th>
+              <th style="width: 180px">Category Name</th>
+              <th style="width: 100px">Amount</th>
+              <th style="width: 100px">Status</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="expense_data?.length != 0">
+            <tr *ngFor="let person of expense_data" (click)="checkone(person.id);$event.stopPropagation()">
+              <td>
+                <input type="checkbox" name="checkselection" value={{person.id}} class="formcontrol" class="formcontrol"
+                  [(ngModel)]="person.isSelected" (click)="checkone(person.id);$event.stopPropagation()" />
+                <label></label>
+              </td>
+              <td>
+                <span class="custom-emp-img">
+                  <img style="width: 38px; height: 38px" *ngIf="person.emp_id.profile_image ;else other_content"
+                    [src]=IMAGE_URL+person.emp_id.profile_image class="img-avatar" />
+                  <ng-template #other_content>
+                    <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                  </ng-template>
+                </span><span class="table-txt blue-txt txt-center">{{ person.firstname }}</span>
+              </td>
+              <td><span class="table-txt">{{ person.title }}</span></td>
+              <td><span class="table-txt">{{ person.name }}</span></td>
+              <td><span class="table-txt">{{ person.amount }}</span></td>
+              <td>
+                <a
+                  [class]="person.status == 'approve' ? 'status approve-tag':person.status == 'reject'? 'status reject-tag':'status pending-tag'">
+                  <i class="fa fa-check"
+                    [class]="person.status == 'approve' ? 'fa fa-check':person.status == 'reject'?'fa fa-times':'fa fa-dot-circle-o'"
+                    aria-hidden="true"></i>
+                  {{person.status=='approve' ? 'Paid' : (person.status=='reject' ? 'Rejected' : 'Unpaid')}}
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="expense_data?.length == 0">
+            <tr>
+              <td colspan="3" class="no-data-available">No data!</td>
+            </tr>
+          <tbody>
+        </table>
+        <!--
+      <ng-container *ngIf="expense_data.length == 0">
+        <span class="no-data-found">No Data Found</span>
+      </ng-container> -->
+      </div>
+
+
+
+      <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+        <div class="custom-title red-txt">{{expensedetail.title}}</div>
+        <div class="custom-expense">
+          <a
+            [class]="expensedetail.status == 'approve' ? 'status approve-tag':expensedetail.status == 'reject'? 'status reject-tag':'status pending-tag'">
+            <i class="fa fa-check"
+              [class]="expensedetail.status == 'approve' ? 'fa fa-check':expensedetail.status == 'reject'?'fa fa-times':'fa fa-dot-circle-o'"
+              aria-hidden="true"></i>
+            <!--{{expensedetail.status}}-->
+            {{expensedetail.status=='approve' ? 'Paid' : (expensedetail.status=='reject' ? 'Rejected' : 'Unpaid')}}
+          </a>
+        </div>
+        <div class="custom-desc">{{expensedetail.description}}</div>
+        <div class="custom-detail green-txt">Details</div>
+
+        <div class="description-detail">
+          <div class="right-part-content">
+            <span class="left-part">Category</span>
+            <span class="right-part">{{expensedetail.name}}</span>
+          </div>
+          <div class="right-part-content">
+            <span class="left-part">Amount</span>
+            <span class="right-part">{{expensedetail.amount}}</span>
+          </div>
+          <div class="right-part-content">
+            <span class="left-part">Bill Date</span>
+            <span class="right-part">{{expensedetail.bill_date ? (expensedetail.bill_date.date | dateFilter) :
+              '-'}}</span>
+          </div>
+          <div class="right-part-content">
+            <span class="left-part">Receipt</span>
+            <span class="right-part">
+              <a *ngIf="expensedetail.receipt_image; else nullData" target="blank"
+                href="{{FILE_URL}}{{expensedetail.receipt_image}}">
+                {{expensedetail.receipt_image}}
+              </a>
+              <ng-template #nullData>
+                -
+              </ng-template>
+            </span>
+            <!-- <span class="right-part">{{expensedetail.receipt_image ? expensedetail.receipt_image :'-'}}</span> -->
+          </div>
+          <div class="right-part-content">
+            <span class="left-part">Payment Method</span>
+            <span class="right-part">{{expensedetail.payment_method}}</span>
+          </div>
+          <div class="right-part-content">
+            <span class="left-part">Merchant</span>
+            <span class="right-part">{{expensedetail.merchant}}</span>
+          </div>
+        </div>
+
+        <div class="expense-right-part">
+          <div class="custom-detail green-txt">Submitted By</div>
+          <div class="custom-emp-detail">
+            <div class="emp-img">
+              <img style="width: 38px; height: 38px" *ngIf="expensedetail.emp_id['profile_image'];else other_content"
+                [src]=IMAGE_URL+expensedetail.emp_id.profile_image class="img-avatar" />
+
+              <ng-template #other_content>
+                <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+              </ng-template>
+            </div>
+            <div class="emp-details">
+              <a>{{expensedetail.emp_id['firstname']}}
+                {{expensedetail.emp_id['lastname']}}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="expensedetail.actioned_by">
+          <div class="custom-detail  green-txt">Actioned By</div>
+          <div class="custom-emp-detail">
+            <div class="emp-img">
+              <img style="width: 38px; height: 38px"
+                *ngIf="expensedetail.actioned_by['profile_image'];else other_content"
+                [src]=IMAGE_URL+expensedetail.actioned_by.profile_image class="img-avatar" />
+
+              <ng-template #other_content>
+                <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+              </ng-template>
+            </div>
+            <div class="emp-details">
+              <!-- <a (click)="openProfile(expensedetail.actioned_by['id'])">{{expensedetail.actioned_by['firstname']}}
+                {{expensedetail.actioned_by['lastname']}}
+              </a> -->
+              <a>{{expensedetail.actioned_by['firstname']}}
+                {{expensedetail.actioned_by['lastname']}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+
+
+
+  <ng-template #delete>
+    <!-- <div class="modal-dialog modal-confirm">
+      <div class="modal-content  ">
+        <div class="modal-header"> -->
+    <!-- <div class="center"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
+    <h4 class="modal-title">Are you sure?</h4>
+    <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button> -->
+    <!-- </div>-->
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <!-- <div class="modal-footer"> -->
+
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteExpense()">Delete</button>
+
+    </div>
+    <!-- </div>
+      </div>
+    </div> -->
+  </ng-template>
+
+</main>

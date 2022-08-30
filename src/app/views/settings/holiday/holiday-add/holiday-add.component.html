@@ -1,0 +1,72 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class=" border-class">
+      <div class="back-fix">
+        <button type="button" class="btn btn-success backbtn" (click)="onBack()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="yearForm" (ngSubmit)="saveHoliday()" #YearForm="ngForm" class="bg-color">
+      <div class="">
+
+        <div class="full-width">
+          <div class="card holiday_wrap">
+            <div class="card-header">
+              <h4 class="c-white">
+                <i class="fa fa-star" aria-hidden="true"></i>Holiday Details</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Event Name</label>
+                  <input type="text" name="event_name" formControlName="event_name" class="form-control input-sm fc-alt"
+                    [ngClass]="(yearForm.get('event_name').invalid && YearForm.submitted)?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="yearForm.get('event_name').invalid && YearForm.submitted">
+                    The event name is required
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Date</label>
+                  <input [owlDateTimeTrigger]="start_date" [owlDateTime]="start_date" formControlName="start_date"
+                    [ngClass]="(yearForm.get('start_date').invalid && YearForm.submitted)?'is-invalid':''"
+                    name="date_of_birth" class="form-control input-sm fc-alt">
+                  <owl-date-time [pickerType]="'calendar'" #start_date></owl-date-time>
+                  <div class="invalid-feedback" *ngIf="yearForm.get('start_date').invalid && YearForm.submitted">
+                    The start date is required
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">Description</label>
+                  <textarea name="description" formControlName="description" class="form-control input-sm fc-alt"
+                    [ngClass]="(yearForm.get('description').invalid && YearForm.submitted)?'is-invalid':''"></textarea>
+                  <div class="invalid-feedback" *ngIf="yearForm.get('description').invalid && YearForm.submitted">
+                    The description is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group pull-center">
+                <button class="btn btn-primary btn-save" type="submit">
+                  Save
+                </button>
+                <button class="btn btn-cancel" type="button" (click)="cancle()">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

@@ -1,0 +1,111 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 team-header inner-header">
+      <button type="button" class="button new-button" [routerLink]="'create'"
+        [appCheckPermission]="'LETTERS.GENERATE.VIEW'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1" type="button" class="button edit-button"
+        [appCheckPermission]="'LETTERS.GENERATE.EDIT'" [routerLink]="['update',selectedLetter.id]">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <button *ngIf="allcheck_id_count" type="button" class="button del-button" (click)="openModel(delete)"
+        [appCheckPermission]="'LETTERS.GENERATE.DELETE'">
+        <i class="fa fa-trash "></i>
+        Delete
+      </button>
+    </div>
+    <div class="table-wrap team-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width:100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 7%">
+            </th>
+            <th>Employee</th>
+            <th>Template</th>
+            <th>Created On</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="allLetters?.length != 0">
+          <tr *ngFor="let item of allLetters" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td>
+              <span class="custom-emp-img">
+                <img style="width: 38px; height: 38px" *ngIf="item.profile_image ;else other_content_emp"
+                  [src]=IMAGE_URL+item.profile_image class="img-avatar" />
+                <ng-template #other_content_emp>
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </ng-template>
+              </span><span class="table-txt blue-txt txt-center">{{ item.firstname }} {{ item.lastname }}</span>
+            </td>
+            <td><span class="table-txt">{{item.template_name}}</span></td>
+            <td><span class="table-txt">{{item.created_at.date | dateFilter}}</span></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="allLetters?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+
+
+    <div *ngIf="allcheck_id_count==1" class="description-wrap">
+      <div class="custom-title red-txt">{{selectedLetter.template_name}}</div>
+      <div class="custom-emp-detail">
+        <div class="emp-img">
+          <img style="width: 38px; height: 38px" *ngIf="selectedLetter['profile_image'];else other_content1"
+            [src]="IMAGE_URL+selectedLetter['profile_image']" class=" img-avatar" />
+
+          <ng-template #other_content1>
+            <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+          </ng-template>
+        </div>
+        <div class="emp-details">
+          <a>{{selectedLetter['firstname']}} {{selectedLetter['lastname']}}
+          </a>
+        </div>
+      </div>
+
+      <div class="custom-detail  green-txt">Created On</div>
+      <span>{{selectedLetter.created_at.date | dateFilter}}</span>
+
+      <div class="custom-detail  green-txt">Creator</div>
+      <div class="custom-emp-detail">
+        <div class="emp-img">
+          <img style="width: 38px; height: 38px" *ngIf="selectedLetter['creator_profile_image'];else other_content"
+            [src]="IMAGE_URL+selectedLetter['creator_profile_image']" class=" img-avatar" />
+
+          <ng-template #other_content>
+            <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+          </ng-template>
+        </div>
+        <div class="emp-details">
+          <a>{{selectedLetter['creator_fname']}} {{selectedLetter['creator_lname']}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #delete>
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteExpense()">Delete</button>
+    </div>
+  </ng-template>
+</main>

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,mBAAmB;EAAC,UAAU,EAAC,IAAI",
+"sources": ["ba-projects.component.scss"],
+"names": [],
+"file": "ba-projects.component.css"
+}

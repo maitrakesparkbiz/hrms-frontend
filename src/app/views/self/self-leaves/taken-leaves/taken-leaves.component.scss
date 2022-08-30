@@ -1,0 +1,94 @@
+.header-buttons {
+  float: left;
+  margin: 0;
+  padding: 15px 30px 15px 45px;
+}
+
+.remaining {
+  float: left;
+  width: 70%;
+}
+
+.search-section.search {
+  float: right;
+  width: 30%;
+  padding: 0px !important;
+}
+
+span.custom-remain {
+  color: #757575;
+  font-weight: 700;
+
+}
+
+span.leave-number {
+  display: inline-block;
+  width: auto;
+  font-size: 12px;
+  color: #fff;
+  background: #4dbd74;
+  border-radius: 2px;
+  padding: 0 10px;
+  margin: 0 10px;
+}
+
+span.custom-leave-type {
+  font-weight: 500;
+  color: #757575;
+
+}
+
+.leave-wrap-title {
+  float: left;
+  width: 20%;
+}
+
+.leave-wrap {
+  float: left;
+  width: 70%;
+}
+
+h4.leave-heading {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 20px;
+  color: #2196f3;
+}
+
+.description-content {
+  float: left;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.custom-duration {
+  margin-right: 15px;
+}
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+  .leave-wrap-title {
+    width: 36%;
+  }
+
+  .leave-wrap {
+    width: 40%;
+  }
+
+}
+
+@media(max-width:1500px) {
+  .leave-wrap-title {
+    width: auto
+  }
+}
+
+
+@media(max-width:1400px) {
+
+  .abc,
+  .description-wrap {
+    width: 25.1%;
+  }
+}

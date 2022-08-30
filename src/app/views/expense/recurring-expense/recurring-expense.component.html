@@ -1,0 +1,142 @@
+<main class="message">
+  <div class="">
+    <div class="col-md-12 header-title">
+      <!--<button  type="button" class="btn btn-success" (click)="openModel(quickadd)">-->
+      <!--<i class="fa fa-plus "></i>-->
+      <!--Quick Add-->
+      <!--</button>-->
+      &nbsp;
+      <button type="button" class="btn btn-success" [routerLink]="'add'">
+        <i class="fa fa-plus"></i>
+        New
+      </button> &nbsp;&nbsp;
+      <button *ngIf="allcheck_id_count==1" type="button" class="btn btn-primary" (click)="EditContact()">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button> &nbsp;&nbsp;
+      <button *ngIf="allcheck_id_count" type="button" class="btn btn-danger" (click)="openModel(delete)">
+        <i class="fa fa-trash "></i>
+        Delete
+      </button>
+      <div class="search-section">
+        <input type="text" placeholder="Search..." [(ngModel)]="search" class="search-box">
+      </div>
+    </div>
+
+    <div class="table-row-wrap">
+      <table class="table table-striped" style="width: 100%" [mfData]="(re_expense_data|filter:search)" #mf="mfDataTable"
+        [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th style="width: 9%"><input type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" /><label></label></th>
+            <th style="width: 15%">
+              <mfDefaultSorter by="title">Expense</mfDefaultSorter>
+            </th>
+            <th style="width: 17%">
+              <mfDefaultSorter by="category_name">Category</mfDefaultSorter>
+            </th>
+            <th style="width: 16%">
+              <mfDefaultSorter by="amount">Amount</mfDefaultSorter>
+            </th>
+            <th style="width: 18%">
+              <mfDefaultSorter by="rotation">Rotation</mfDefaultSorter>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id)" /><label></label>
+            </td>
+            <td>{{item.title}}</td>
+            <td>{{item.category_name}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.rotation.value_text}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="row">
+        <div class="custom-red">{{re_expensedetail.title}}</div>
+        <div class="custom-green">
+          <h6>{{re_expensedetail.rotation.value_text}}</h6>
+        </div>
+        <div class="custom-text">{{re_expensedetail.description}}</div>
+      </div>
+      <div class="custom-detail">Details</div>
+      <div class="row"><span class="left-part">Category</span>
+        <span class="right-part">{{re_expensedetail.category_name}}</span>
+      </div>
+      <div class="row"><span class="left-part">Amount</span>
+        <span class="right-part">{{re_expensedetail.amount}}</span>
+      </div>
+      <div class="row"><span class="left-part">Payment Method</span>
+        <span class="right-part">{{re_expensedetail.payment_method}}</span>
+      </div>
+      <div class="row"><span class="left-part">Merchant</span>
+        <span class="right-part">{{re_expensedetail.merchant}}</span>
+      </div>
+      <div class="custom-detail">Submitted By</div>
+      <div class="emp-img">
+        <img style="width: 38px; height: 38px" *ngIf="re_expensedetail.emp_id['profile_image'];else other_content"
+          [src]=IMAGE_URL+re_expensedetail.emp_id.profile_image class="img-avatar" />
+
+        <ng-template #other_content>
+          <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+        </ng-template>
+      </div>
+      <div class="emp-details">
+        {{re_expensedetail.emp_id['firstname']}} {{re_expensedetail.emp_id['lastname']}}
+      </div>
+      <div *ngIf="re_expensedetail.actioned_by">
+        <div class="custom-detail">Actioned By</div>
+        <div class="emp-img">
+          <img style="width: 38px; height: 38px" *ngIf="re_expensedetail.actioned_by['profile_image'];else other_content"
+            [src]=IMAGE_URL+re_expensedetail.actioned_by.profile_image class="img-avatar" />
+
+          <ng-template #other_content>
+            <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+          </ng-template>
+        </div>
+        <div class="emp-details">
+          {{re_expensedetail.actioned_by['firstname']}} {{re_expensedetail.actioned_by['lastname']}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+  <ng-template #delete>
+    <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="center"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
+          <h4 class="modal-title">Are you sure?</h4>
+          <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="center"><img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" /></div>
+          <h4 class="modal-title">Delete?</h4>
+          <p>Do you really want to delete these records? This process cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-info cancle" type="button" (click)="closeModel()">Cancel</button>
+          <button class="btn btn-danger delete" type="button" (click)="deleteExpense()">Delete</button></div>
+      </div>
+    </div>
+  </ng-template>
+</main>

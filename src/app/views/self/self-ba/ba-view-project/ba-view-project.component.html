@@ -1,0 +1,228 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="row header-buttons">
+      <button type="button" class="btn btn-success" (click)="onBack()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Back
+      </button>
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="saveProject()" #projectform="ngForm" class=" main-form">
+      <div class="row">
+        <div class="col-md-12 form-group  comman-card-wrap">
+          <div class="card">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Description</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-4 form-group ">
+                  <label class="f-700 control-label">Client Name</label>
+                  <br />
+                  <p>{{projectData.client_name}}</p>
+                </div>
+                <div class="col-md-4 form-group ">
+                  <label class="f-700 control-label">Project Name</label>
+                  <br />
+                  <p>{{projectData.project_name}}</p>
+                </div>
+                <div class="col-md-4">
+                  <label class="f-700 control-label">Project Hours</label>
+                  <p>{{projectData.est_time ? projectData.est_time : '-'}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="f-700 control-label">Description</label>
+                  <br>
+                  <p>{{projectData.project_description ? projectData.project_description : '-'}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <label>Project Document</label>
+                  <ng-container *ngIf="projectData.project_doc && projectData.project_doc.length > 0; else nullData">
+                    <a *ngFor="let doc of projectData.project_doc" target="blank" href="{{FILE_URL}}{{doc}}">
+                      {{doc}}
+                    </a>
+                  </ng-container>
+                  <ng-template #nullData>
+                    -
+                  </ng-template>
+                </div>
+                <ng-container *ngIf="project_id && projectForm.get('est_time').value > 0">
+                  <div class="col-md-4">
+                    <label class="f-700 control-label">Extra Hours</label>
+                    <p>{{projectData.extra_hours ? projectData.extra_hours : '-'}}</p>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="f-700 control-label">Extra Hours Comment</label>
+                    <p>{{projectData.extra_hours_comment ? projectData.extra_hours_comment : '-'}}</p>
+                  </div>
+                </ng-container>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class=" row">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Time Limits</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-4">
+                  <label class="f-700 control-label">Deadline</label>
+                  <p>{{projectData.deadline ? ( projectData.deadline.date | dateFilter ) : '-'}}</p>
+                </div>
+                <div class="col-md-4">
+                  <label class="f-700 control-label">Threshold Limit 1</label>
+                  <p>{{projectData.threshold_limit1 ?  projectData.threshold_limit1 : '-'}}</p>
+                </div>
+                <div class="col-md-4">
+                  <label class="f-700 control-label">Threshold Limit 2</label>
+                  <p>{{projectData.threshold_limit2 ?  projectData.threshold_limit2 : '-'}}</p>
+                </div>
+              </div>
+              <!--<div class="row" *ngIf="project_id">-->
+                <!--<div class="col-md-4">-->
+                  <!--<label class="switch switch-label switch-primary">-->
+                    <!--On Hold-->
+                    <!--<input type="checkbox" name="on_hold" formControlName="on_hold" class="switch-input"-->
+                      <!--(change)="on_Hold($event.target.checked)">-->
+                    <!--<span class="switch-slider toggle-switch" data-unchecked="No" data-checked="Yes"></span>-->
+                  <!--</label>-->
+                <!--</div>-->
+                <!--<div class="col-md-4" *ngIf="hold_comment">-->
+                  <!--Comment-->
+                  <!--<input type="text" name="hold_comment" formControlName="hold_comment" class="form-control"-->
+                    <!--[ngClass]="projectForm.get('hold_comment').invalid && projectform.submitted ?'is-invalid':''">-->
+                  <!--<div class="invalid-feedback"-->
+                    <!--*ngIf="projectForm.get('hold_comment').invalid && projectform.submitted">-->
+                    <!--field is required-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="project_id">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Record Timing</h4>
+            </div>
+            <div *ngIf="empTimingRecord.length > 0">
+
+              <table class="table" style="width: 100%" [mfData]="empTimingRecord | search:searchTxt" #mf="mfDataTable"
+                [mfRowsOnPage]="5">
+                <thead>
+                  <tr>
+                    <th style="width: 10%">
+                      <mfDefaultSorter by="name">Created By</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                      <mfDefaultSorter by="name">Employee</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                      <mfDefaultSorter by="name">Hours</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                      <mfDefaultSorter by="status">Date</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                      <mfDefaultSorter by="status">Comment</mfDefaultSorter>
+                    </th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of mf.data" style="cursor: pointer;"
+                    [ngClass]="item.redmark_comment!='' ? 'redmark_tag' : ''">
+                    <td>
+                      {{item.created_by.firstname}} {{item.created_by.lastname}}
+                    </td>
+                    <td>
+                      {{item.emp_id.firstname}} {{item.emp_id.lastname}}
+                    </td>
+                    <td>{{item.record_hours}}</td>
+                    <td>{{item.record_date.date | dateFilter}}</td>
+                    <td>
+                      {{item.redmark_comment ? item.redmark_comment : '-'}}
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="5">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[2,4,6]"></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+              <div class="total_wrap">
+              <label>Total Hours:{{empTimingRecordTime.total ? empTimingRecordTime.total : ''}}</label>
+              <br>
+              <label>Total Days:{{empTimingRecordTime.diff_date === 0 ? 1 : empTimingRecordTime.diff_date}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--<div class="row">-->
+        <!--<div class="button-wrap">-->
+          <!--&lt;!&ndash;<button class="btn btn-primary custom-create" type="submit">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span>{{!!project_id?'Update':'Create'}}</span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&nbsp;&ndash;&gt;-->
+          <!--<button type="button" class="btn btn-default custom-cancel" (click)="onBack()">-->
+            <!--Cancel-->
+          <!--</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    </form>
+
+    <div class="row comments_in">
+      <div class="col-md-12 form-group  comman-card-wrap">
+        <div class="card">
+          <div class="card-header custom-blue">
+            <h4 class="c-white">
+              <i class="fa fa-info-circle"></i>Comments BA</h4>
+          </div>
+          <ng-container *ngIf="projectData.convs &&  projectData.convs.length > 0">
+            <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="comments-msg">
+              <div class="card-body form-padding row" formArrayName="comments">
+                <div class="col-md-6 custom-comment-box"
+                  *ngFor="let ctrl of commentForm.get('comments')['controls']; let i=index" [formGroupName]="i">
+                  <h4>{{projectData.convs[i]['second_user']}}</h4>
+                  <ng-container *ngFor="let cmt of projectData.convs[i].comments">
+                    <div class="msg" [ngClass]="cmt.emp_id == userId ? 'sender' : 'receiver'">
+                      {{cmt.msg_text}}
+                    </div>
+                  </ng-container>
+                  <div class="cmt-form">
+                    <input type="text" class="cmt-box" formControlName="msg_text" placeholder="type comment ... "
+                      (keyup.enter)="doComment(ctrl,i)">
+                    <button type="button" (click)="doComment(ctrl,i)" class="btn btn-primary"
+                      [disabled]="!ctrl.get('msg_text').valid" appDisableButton><i
+                        class="fa fa-paper-plane"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</main>

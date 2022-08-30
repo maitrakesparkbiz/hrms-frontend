@@ -1,0 +1,188 @@
+h2.custom-info {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-weight: 400;
+  color: #039be5;
+  font-size: 25px;
+  padding-left: 13px;
+}
+
+label {
+  float: left;
+  font-weight: 600;
+  color: #333;
+  font-size: 13px;
+  padding-top: 10px;
+}
+
+table.dataTable tbody td {
+  padding: 16px 10px 16px 20px;
+}
+
+span.color-closed {
+  background: #9e9e9e;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 12px;
+  padding: 0.5px 6.9px;
+  text-transform: capitalize;
+  float: left;
+  display: block;
+  min-width: 78.78px;
+  text-align: center
+}
+
+button.btn.btn-schedule {
+
+  padding: 0px 10px;
+  font-size: 12px;
+  border: none;
+  background: #66bb6a;
+  border-radius: 2px;
+  color: #fff;
+  display: block;
+  float: left;
+  min-width: 100px;
+  font-weight: 500;
+}
+
+.status {
+  min-width: 78px;
+  padding: 1px 2px;
+}
+
+.description-title {
+  text-transform: capitalize;
+  font-size: 17px;
+  font-weight: 500;
+  color: #2196f3;
+  float: left;
+  width: 100%;
+  text-align: left;
+}
+
+table.dataTable.row-border tbody td {
+  border-top: 1px solid #eee;
+}
+
+table.dataTable thead th {
+  border-bottom: none;
+}
+
+table#claim_table tr td input[type="checkbox"]+label:before,
+table#claim_table tr td input[type="checkbox"]:checked+label:after {
+  left: 25px;
+}
+
+table#claim_table tr td input[type="checkbox"] {
+  left: 44px;
+  top: 40%
+}
+
+.modal-footer-buttons {
+  padding-top: 20px;
+}
+
+textarea.form-control:focus,
+textarea.form-control:hover,
+input.form-control:focus,
+input.form-control:hover {
+  box-shadow: none;
+}
+
+h2.custom-info.title-center {
+  float: left;
+  width: 100%;
+  padding: 10px 0 15px;
+}
+
+textarea.form-control {
+  height: 100px;
+  resize: none;
+}
+
+button.modal-delete-button {
+  padding: 5.5px 17px;
+}
+
+button.modal-cancel-button {
+  padding: 5.5px 11.03px;
+}
+
+span.right-part.email {
+  text-transform: lowercase;
+  color: #20a8d8;
+}
+
+.custom-detail {
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 17px;
+  text-transform: capitalize;
+}
+
+.green-txt {
+  color: #4caf50;
+}
+
+span.custom-title-right-part {
+  float: left;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.leave_wrap {
+  float: left;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #eee;
+  margin-bottom: 10px;
+}
+
+span.right-part.email a {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: left;
+  width: 100%;
+}
+
+
+.abc,
+.description-wrap {
+  width: 26.2%
+}
+
+.custom-employee-deatils {
+  float: left;
+  width: 100%;
+  max-width: 350px;
+}
+
+@media(max-width:1500px) {
+
+  .abc,
+  .description-wrap {
+    width: 25%;
+  }
+
+  //.custom-scroll {
+  //  max-height: 610px;
+  //}
+
+
+  .custom-employee-deatils {
+    max-width: 250px;
+  }
+}
+
+@media(max-width:1400px) {
+
+  .abc,
+  .description-wrap {
+    width: 24.7%;
+  }
+
+}

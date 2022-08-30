@@ -1,0 +1,84 @@
+<main class="messaage">
+  <div class="animated fadeIn">
+    <div class="row space inner-header">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-success back-btn" (click)="cancel()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          Back
+        </button> &nbsp;&nbsp;
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+
+    <form [formGroup]="contactForm" (ngSubmit)="SaveContact()" #contactform="ngForm" class="detail-wrap">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card comman-card-wrap">
+            <div class="card-header">
+              <h4 class="c-white"><i class="fa fa-info-circle"></i>Basic info</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <input type="hidden" formControlName="id">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Contact Name</label>
+                  <input type="text" name="name" formControlName="name" [ngClass]="contactForm.get('name').invalid && contactform.submitted?'is-invalid':''"
+                    class="form-control input-sm fc-alt txt-box">
+                  <div class="invalid-feedback" *ngIf="contactForm.get('name').invalid && contactform.submitted">
+                    The name is required
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Contact Number</label>
+                  <input type="text" name="number" formControlName="number" [ngClass]="contactForm.get('number').invalid && contactform.submitted?'is-invalid':''"
+                    class="form-control input-sm fc-alt">
+                  <div class="invalid-feedback" *ngIf="contactForm.get('number').invalid && contactform.submitted">
+                    The contact number is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Email</label>
+                  <input type="text" name="email" formControlName="email" [ngClass]="contactForm.get('email').invalid && contactform.submitted?'is-invalid':''"
+                    class="form-control input-sm fc-alt">
+                  <div class="invalid-feedback" *ngIf="contactForm.get('email').invalid && contactform.submitted">
+                    The Valid Email is required
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Service</label>
+                  <input type="text" name="service" formControlName="service" [ngClass]="contactForm.get('service').invalid&& contactform.submitted?'is-invalid':''"
+                    class="form-control input-sm fc-alt">
+                  <div class="invalid-feedback" *ngIf="contactForm.get('service').invalid && contactform.submitted">
+                    The Service is required
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="f-700 control-label">description</label>
+                  <textarea name="description" formControlName="description" class="form-control input-sm fc-alt"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group pull-center txt-center">
+            <button class="btn btn-primary txt-btn blue-btn" type="submit">
+              {{id ? 'Update' : 'Add'}}
+            </button>
+            <button class="btn txt-btn white-btn" type="button" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

@@ -1,0 +1,86 @@
+/*
+Error: File to import not found or unreadable: node_modules/bootstrap/scss/functions.
+        on line 8 of ../../node_modules/@coreui/coreui-pro/scss/_variables.scss
+        from line 9 of ../../node_modules/@coreui/coreui-pro/scss/coreui.scss
+        from line 5 of style.scss
+
+3: // Import styles with default layout.
+4: // If you are going to use dark layout please comment next line
+5: @import "./../../node_modules/@coreui/coreui-pro/scss/coreui";
+6: // Import styles with dark layout
+7: // If you want to use dark layout uncomment next line
+8: // @import "node_modules/@coreui/coreui-pro/scss/themes/dark/coreui-dark";
+9: // If you want to add something do it here
+10: @import "custom";
+11: //@import "./../../node_modules/ng-pick-datetime/assets/style/picker.min.css";
+12: 
+13: @import "~@ng-select/ng-select/themes/default.theme.css";
+
+Backtrace:
+../../node_modules/@coreui/coreui-pro/scss/_variables.scss:8
+../../node_modules/@coreui/coreui-pro/scss/coreui.scss:9
+style.scss:5
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/import_node.rb:67:in `rescue in import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/import_node.rb:44:in `import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/import_node.rb:28:in `imported_file'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/import_node.rb:37:in `css_import?'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:313:in `visit_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:328:in `block (2 levels) in visit_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:328:in `map'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:328:in `block in visit_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:88:in `block in with_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:88:in `with_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:325:in `visit_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:328:in `block (2 levels) in visit_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:328:in `map'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:328:in `block in visit_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:88:in `block in with_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:88:in `with_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:325:in `visit_import'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:52:in `map'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:169:in `block in visit_children'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:168:in `visit_children'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:188:in `visit_root'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:159:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:8:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/root_node.rb:36:in `css_tree'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/engine.rb:381:in `_render_with_sourcemap'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/engine.rb:298:in `render_with_sourcemap'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/exec/sass_scss.rb:391:in `run'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/exec/sass_scss.rb:63:in `process_result'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/exec/base.rb:52:in `parse'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/lib/sass/exec/base.rb:19:in `parse!'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.23/bin/sass:13:in `<top (required)>'
+C:/Ruby24-x64/bin/sass:23:in `load'
+C:/Ruby24-x64/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: node_modules/bootstrap/scss/functions.\A         on line 8 of ../../node_modules/@coreui/coreui-pro/scss/_variables.scss\A         from line 9 of ../../node_modules/@coreui/coreui-pro/scss/coreui.scss\A         from line 5 of style.scss\A \A 3: // Import styles with default layout.\A 4: // If you are going to use dark layout please comment next line\A 5: @import \"./../../node_modules/@coreui/coreui-pro/scss/coreui\";\A 6: // Import styles with dark layout\A 7: // If you want to use dark layout uncomment next line\A 8: // @import \"node_modules/@coreui/coreui-pro/scss/themes/dark/coreui-dark\";\A 9: // If you want to add something do it here\A 10: @import \"custom\";\A 11: //@import \"./../../node_modules/ng-pick-datetime/assets/style/picker.min.css\";\A 12: \A 13: @import \"~@ng-select/ng-select/themes/default.theme.css\";"; }

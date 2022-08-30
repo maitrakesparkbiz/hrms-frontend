@@ -1,0 +1,218 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="row col-md-12  header-buttons">
+        <div class="col-md-3 new-edit-buttns">
+
+
+          <button *ngIf="allcheck_id_count==1 && this.attnDetail.attn_data; else addAttndance" type="button"
+            class='button edit-button' (click)="updateAttn()" [appCheckPermission]="'ATTENDANCE.MANAGE.EDIT'">
+            <i class="fa fa-pencil"></i>
+            Edit
+          </button>
+
+          <ng-template #addAttndance>
+            <button *ngIf="allcheck_id_count==1" type="button" class='button new-button' (click)="addAttn()"
+              [appCheckPermission]="'ATTENDANCE.MANAGE.ADD'">
+              <i class="fa fa-pencil"></i>
+              New
+            </button>
+          </ng-template>
+
+        </div>
+        <div class="col-md-4 calender-wrap">
+          <form [formGroup]="selectForm" (ngSubmit)="onSubmit()">
+            <label class="custom-date">Date : </label>
+            <input formControlName="attn_date" class="form-control custom-calender" [owlDateTimeTrigger]="attn_date"
+              [owlDateTime]="attn_date">
+            <owl-date-time [pickerType]="'calendar'" (afterPickerClosed)="rerender()" #attn_date="owlDateTime">
+            </owl-date-time>
+          </form>
+        </div>
+        <!-- <div class="col-md-2 search-section">
+        <input class="search-box ng-untouched ng-pristine ng-valid" placeholder="Search..." type="text" [(ngModel)]="search">
+      </div> -->
+
+
+      </div>
+
+      <!--<div class="updated-labels">-->
+        <!--<div class="updated-labels-wrap">-->
+          <!--<div class="col-md-3 present-class single-label">-->
+            <!--<span class="card-heading">Present</span>-->
+            <!--<h4>{{other_data.present_ratio}}% ({{other_data.present_count}})</h4>-->
+          <!--</div>-->
+          <!--<div class="col-md-3 absent-class single-label">-->
+            <!--<span class="card-heading">Absent</span>-->
+            <!--<h4>{{other_data.absent_ratio}}% ({{other_data.absent_count}})</h4>-->
+          <!--</div>-->
+          <!--<div class="col-md-3 late-class single-label">-->
+            <!--<span class="card-heading">Late</span>-->
+            <!--<h4>{{other_data.late_ratio}}% ({{other_data.late_count}})</h4>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <div class="updated-labels">
+      <div class="updated-labels-wrap">
+        <div class="single-label">
+        <div class="  class_wrap">
+          <span class="card-heading">Present</span>
+            <h4 class=""> - {{other_data.present_ratio}}% ({{other_data.present_count}})</h4>
+        </div>
+        <div class=" class_wrap">
+          <span class="card-heading">Absent</span>
+          <h4 class=""> - {{other_data.absent_ratio}}% ({{other_data.absent_count}})</h4>
+        </div>
+        <div class=" class_wrap">
+          <span class="card-heading">Late</span>
+          <h4 class=""> - {{other_data.late_ratio}}% ({{other_data.late_count}})</h4>
+        </div>
+        </div>
+
+
+    </div>
+    </div>
+
+      <div class="table-wrap attendance-manage-table">
+        <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+          class="row-border hover" style="width: 100%">
+          <thead>
+            <tr class="custom-th">
+              <th style="width:40px">
+              </th>
+              <th style="width:200px">User</th>
+              <th style="width:150px">Entry time</th>
+              <th style="width:150px">Exit time</th>
+              <th style="width:150px">Break time</th>
+              <th style="width:150px">Working Hours</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="allAttn?.length != 0">
+            <tr *ngFor="let item of allAttn" [class]="item.commented ? 'comment-row' : (!item.entry_time ?
+                    'absent-row' :
+                    (item.break_pending ?
+                    'break-pending' :
+                    (item.exit_time ?
+                    'completed-row' :
+                    'present-row')))" (click)="checkone(item.id);$event.stopPropagation()">
+              <td>
+                <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                  [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" />
+                <label></label>
+              </td>
+              <td><span class="table-txt">{{ item.name }}</span></td>
+              <td><span class="table-txt">{{ item.entry_time }}</span></td>
+              <td><span class="table-txt">{{ item.exit_time }}</span></td>
+              <td><span class="table-txt">{{ item.break_time }}</span></td>
+              <td><span class="table-txt">{{ item.working_time }}</span></td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="allAttn?.length == 0">
+            <tr>
+              <td colspan="6" class="no-data-available">No data!</td>
+            </tr>
+          <tbody>
+        </table>
+
+      </div>
+      <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap attendance_section_wrap">
+        <div class="custom-scroll">
+          <div class="custom-image">
+            <img style="width: 38px; height: 38px" *ngIf="attnDetail.profile_image;else other_content"
+              [src]=IMAGE_URL+attnDetail.profile_image class="img-avatar" />
+            <ng-template #other_content>
+              <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+            </ng-template>
+          </div>
+          <div class="custom-admin">
+            <a class="profile-name" (click)="openProfile(attnDetail.id)">{{attnDetail.name}}</a>
+          </div>
+          <div class="description-detail">
+            <div class="id-1">
+              <span class="left-part">Date</span>
+              <span class="right-part">{{selectForm.get('attn_date').value | dateFilter}}</span>
+            </div>
+            <div class="custom-heading">
+              <h5>Attendance Record</h5>
+            </div>
+            <div class="all_data" *ngIf="attnDetail.attn_data;else no_activity">
+              <div class="id-1">
+                <span class="left-part">Check In</span>
+                <span class="right-part">{{attnDetail.entry_time ? attnDetail.entry_time : '-'}}</span>
+              </div>
+              <div class="id-1">
+                <span class="left-part">Check In IP</span>
+                <span
+                  class="right-part"><b>{{attnDetail.attn_data.check_in_ip ? attnDetail.attn_data.check_in_ip : '-'}}</b></span>
+              </div>
+              <!-- <div class="id-1">
+            <span class="left-part">check out</span>
+            <span class="right-part">{{attnDetail.exit_time ? attnDetail.exit_time : '-'}}</span>
+          </div> -->
+              <ng-container *ngIf="attnDetail.attn_data.breaks">
+                <div *ngFor="let break of attnDetail.attn_data.breaks">
+                  <div class="id-1">
+                    <span class="left-part">Break In</span>
+                    <span
+                      class="right-part">{{break.break_in_time ? (break.break_in_time.date | date:'hh:mm a') : '-'}}</span>
+                  </div>
+                  <div class="id-1">
+                    <span class="left-part">Break Out</span>
+                    <span class="right-part">{{break.break_out_time ? (break.break_out_time.date | date:'hh:mm a') :
+                    '-'}}</span>
+                  </div>
+                </div>
+                <div class="id-1">
+                  <span class="left-part">Check Out</span>
+                  <span class="right-part">{{attnDetail.exit_time ? attnDetail.exit_time : '-'}}</span>
+                </div>
+                <div class="id-1">
+                  <span class="left-part">Check Out IP</span>
+                  <span class="right-part"><b>{{attnDetail.attn_data.check_out_ip ? attnDetail.attn_data.check_out_ip :
+                    '-'}}</b></span>
+                </div>
+                <div class="id-1">
+                  <span class="left-part">Break Time</span>
+                  <span class="right-part">{{attnDetail.break_time ? attnDetail.break_time : '-'}}</span>
+                </div>
+                <div class="id-1">
+                  <span class="left-part">Working Hours</span>
+                  <span class="right-part">{{attnDetail.working_time ? attnDetail.working_time : '-'}}</span>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="attnDetail.attn_data.comments!=''">
+                <div class="manage-comments">
+                  <h5>Comments</h5>
+                </div>
+                <div *ngFor="let cmt of attnDetail.attn_data.comments">
+                  <div class="cmt lower-case-txt">
+                    <div class="custom-send">
+                      <span class="send">
+                        {{cmt.comment_text}}
+                      </span>
+                    </div>
+                    <div class="custom-receive" *ngIf="cmt.response_text">
+                      <span class="receive">
+                        {{cmt.response_text}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <ng-template #no_activity>
+              <div class="no-data">
+                <h6>No data found</h6>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+</main>

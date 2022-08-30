@@ -1,0 +1,166 @@
+<main class="messaage">
+    <div class="animated fadeIn">
+        <div class="row inner-header">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-success" (click)="cancel()">
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    Back
+                </button>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+
+        <form [formGroup]="applicationForm" (ngSubmit)="SaveApplication()" #ApplicationForm="ngForm">
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <div class="card comman-card-wrap">
+                        <div class="card-header custom-blue">
+                            <h4 class="c-white">
+                                <i class="fa fa-info-circle"></i>Basic Details
+                            </h4>
+                        </div>
+                        <div class="card-body form-padding">
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label class="f-700 control-label">Candidate Name</label>
+                                    <br />
+                                    <input type="text" name="candidate_name" formControlName="candidate_name" class="form-control"
+                                           [ngClass]="applicationForm.get('candidate_name').invalid && ApplicationForm.submitted?'is-invalid':''">
+                                    <div class="invalid-feedback"
+                                         *ngIf="applicationForm.get('candidate_name').invalid && ApplicationForm.submitted">
+                                        The candidate name is required
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="f-700 control-label">Email</label>
+                                    <br />
+                                    <input type="text" name="contact_email" formControlName="contact_email" class="form-control"
+                                           [ngClass]="applicationForm.get('contact_email').invalid && ApplicationForm.submitted?'is-invalid':''">
+                                    <div class="invalid-feedback"
+                                         *ngIf="applicationForm.get('contact_email').invalid && ApplicationForm.submitted">
+                                        The email is required
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="f-700 control-label">Contact No</label>
+                                    <br />
+                                    <input type="text" name="title" formControlName="phone_number" class="form-control">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="f-700 control-label">
+                                        Categories
+                                    </label>
+                                    <br />
+                                    <select class="form-control" formControlName="category"
+                                            [ngClass]="applicationForm.get('category').invalid && ApplicationForm.submitted?'is-invalid':''">
+                                        <option value="">-- select --</option>
+                                        <option *ngFor="let item of optionData" [value]=item.id>{{item.role}}{{!!item.exp_required?' - ' +
+                                            item.exp_required + ' year': ''}}</option>
+                                    </select>
+                                    <!--<div class="invalid-feedback"-->
+                                         <!--*ngIf="applicationForm.get('category').invalid && ApplicationForm.submitted">-->
+                                        <!--The job_id is required-->
+                                    <!--</div>-->
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <div class="card">
+                        <div class="card-header custom-red">
+                            <h4 class="c-white">
+                                <i class="fa fa-info-circle"></i>Job Description
+                            </h4>
+                        </div>
+                        <div class="card-body form-padding job-wrap">
+                            <div class="row custom-description">
+                                <div class="col-md-4 form-group">
+                                    <label class="f-700 control-label">
+                                        Experiance
+                                    </label>
+                                    <br />
+                                    <select class="form-control" formControlName="experiance"
+                                            [ngClass]="applicationForm.get('experiance').invalid && ApplicationForm.submitted?'is-invalid':''">
+                                        <option value="">-- select --</option>
+                                        <option value="0">0</option>
+                                        <option value="1">1 Yr.</option>
+                                        <option value="2">2 Yr.</option>
+                                        <option value="3">3 Yr.</option>
+                                        <option value="4">4 Yr.</option>
+                                        <option value="5">5+ Yr.</option>
+                                    </select>
+                                    <!--<div class="invalid-feedback"-->
+                                         <!--*ngIf="applicationForm.get('experiance').invalid && ApplicationForm.submitted">-->
+                                        <!--The job_id is required-->
+                                    <!--</div>-->
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="f-700 control-label">current_ctc</label>
+                                    <br />
+                                    <input type="text" name="current_ctc" formControlName="current_ctc" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="f-700 control-label">expected_ctc</label>
+                                    <br />
+                                    <input type="text" name="expected_ctc" formControlName="expected_ctc" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="f-700 control-label">current_company</label>
+                                    <br />
+                                    <input type="text" name="current_company" formControlName="current_company" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="f-700 control-label">Resume</label>
+                                    <div class="row col-md-12 document-image" *ngIf="applicationEdit.resume || resume_select">
+                                        <p>{{applicationEdit.resume}}</p>
+                                        <!-- <img src="{{IMAGE_URL}}{{applicationEdit.resume}}" class="view_images" /> -->
+                                    </div>
+                                    <div class="row col-md-8" *ngIf="applicationEdit.resume || resume_select">
+                                        <a [href]="DOWNLOAD_IMAGE_URL+applicationEdit.resume" *ngIf='edit_id'>
+                                            <button type="button" class="btn-download">
+                                                Download
+                                            </button>
+                                        </a>
+                                        <button type="button" (click)="removeImage('resume')" class="btn btn-remove">
+                                            Remove
+                                        </button>
+                                    </div>
+                                    <div class="row" style="margin: 2px;" [hidden]="applicationEdit.resume">
+                                        <label for="resume" class="custom-file-upload document-select-btn">
+                                            Select
+                                        </label>
+                                        <input type="file" name="resume" id="resume" (change)="uploadImage($event)" formControlName="resume"
+                                               class="form-control input-sm fc-alt"
+                                               [ngClass]="applicationForm.get('resume').invalid && ApplicationForm.submitted?'is-invalid':''">
+                                        <!--<div class="invalid-feedback"-->
+                                             <!--*ngIf="applicationForm.get('resume').invalid && ApplicationForm.submitted">-->
+                                            <!--The resume is required-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-wrap">
+                    <button class="btn btn-primary" type="submit">
+                        {{edit_id ? 'Update' : 'Create'}}
+                    </button>&nbsp;
+                    <button type="button" class="btn btn-primary" class="btn btn-default" (click)="cancel()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</main>

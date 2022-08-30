@@ -1,0 +1,313 @@
+.main-class {
+  float: left;
+  width: 100%;
+  padding: 30px 33px;
+  background: #f5f5f5;
+  height: 100%;
+}
+
+.custom-blue {
+  background: #0277bd;
+  color: #fff;
+}
+
+h4.c-white {
+  font-size: 17px;
+  font-weight: 400;
+}
+
+h4.c-white i {
+  font-size: 14px
+}
+
+.active-tabs {
+  display: inline-block;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+.active-emps {
+  float: left;
+  width: 30%;
+  background: #81c784;
+  padding: 8px 20px;
+  color: #fff;
+  max-width: 381px;
+  height: 84px;
+  margin: 0 15px;
+}
+
+.active-emps:first-child {
+  margin-left: 0
+}
+
+.jobs-info {
+  float: left;
+  width: 24%;
+  background: #13b4ff;
+  padding: 8px 20px;
+  color: #fff;
+  max-width: 381px;
+  height: 84px;
+  margin: 0 15px;
+}
+
+span.active-employee {
+  font-size: 13px;
+  line-height: 23px;
+  color: #fff;
+}
+
+h4.att-count {
+  font-size: 23px;
+  line-height: 33px;
+  color: #fff;
+}
+
+.pending-approvals-tab {
+  float: left;
+  width: 100%;
+  height: 500px;
+}
+
+.todays-attendance-tab {
+  float: left;
+  width: 100%;
+  height: 500px;
+}
+
+.calender-tab {
+  float: left;
+  width: 100%;
+}
+
+.calender-content {
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+
+.upcoming-bday-tab {
+  float: left;
+  width: 100%;
+  max-height: 210px;
+}
+
+.upcoming-bday-content {
+  float: left;
+  width: 100%;
+  padding: 0;
+  height: 149px;
+  overflow-y: auto;
+}
+
+.increments-tab {
+  float: left;
+  width: 100%;
+  min-height: 123px;
+  max-height: 250px;
+}
+
+.increments-content {
+  float: left;
+  width: 100%;
+  overflow-y: auto;
+  height: 100%;
+  min-height: 170px;
+}
+
+.on-probation-tab {
+  float: left;
+  width: 100%;
+  height: 200px;
+}
+
+.on-probation-content {
+  float: left;
+  width: 100%;
+  overflow-y: auto;
+  height: 145px;
+}
+
+.upcoming-bday-content .recent-leaves-list,
+.increments-content .recent-leaves-list,
+.on-probation-content .recent-leaves-list {
+  padding-left: 25px !important;
+}
+
+// 21-01-2019
+
+tab.active.tab-pane {
+  float: left;
+  width: 100%;
+}
+
+.myclass {
+  float: left;
+  width: 100%;
+}
+
+li.recent-leaves-inner:hover {
+  background-color: #f5f5f5
+}
+
+.upcoming-bday-content ul.recent-leaves-list li.custom-li-list,
+.increments-content ul.recent-leaves-list li.custom-li-list,
+.on-probation-content ul.recent-leaves-list li.custom-li-list {
+  padding: 15px 0
+}
+
+.tab-wrap ul.recent-leaves-list {
+  height: 405px;
+}
+
+.approved-tag {
+  float: right;
+}
+
+
+span.dash-emp-img {
+  width:60px
+}
+
+
+.upcoming-bday-content span.dash-emp-img,
+.increments-content span.dash-emp-img,
+.on-probation-content span.dash-emp-img {
+  width: 12%
+}
+
+.jobs-caption {
+  float: left;
+  width: 100%;
+}
+
+span.interview-txt {
+  float: left;
+  padding-right: 8px;
+  color: #fff;
+  font-size: 13px;
+  line-height: 22px;
+}
+
+span.interview-count {
+  font-size: 13px;
+  line-height: 23px;
+  color: #fff;
+  float: left;
+  width: auto;
+}
+
+span.dash-emp-content {
+  float: left;
+  color: #898989;
+  text-transform: capitalize;
+  white-space: nowrap;
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.today-bday {
+  color: red;
+}
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+  span.dash-emp-img {
+    width: 10%;
+  }
+
+  .upcoming-bday-content span.dash-emp-img,
+  .increments-content span.dash-emp-img,
+  .on-probation-content span.dash-emp-img {
+    width: 15%;
+  }
+
+}
+
+
+@media(min-width:1500px) {
+  span.active-employee {
+    font-size: 14px;
+  }
+
+  span.interview-txt {
+    font-size: 14px
+  }
+
+  span.interview-count {
+    font-size: 14px
+  }
+}
+
+
+@media(max-width:1500px) {
+
+  /*.dash-emp-details {
+    width: 67%;
+  }*/
+
+  /*span.dash-emp-img {
+    width: 11% !important;
+  }*/
+
+  .upcoming-bday-content span.dash-emp-img,
+  .increments-content span.dash-emp-img,
+  .on-probation-content span.dash-emp-img {
+    width: 16% !important;
+  }
+
+}
+
+
+
+@media(max-width:1400px) {
+
+  /*span.dash-emp-img {
+    width: 20%;
+  }*/
+
+  /*span.pending-leaves-img {
+    width: 12%
+  }*/
+
+  .final-leave-label {
+    font-size: 10px
+  }
+
+  ul.recent-leaves-list.pending-expense {
+    padding: 0 15px;
+  }
+
+  /*.dash-emp-details {
+    width: 67%;
+  }*/
+
+  .active-emps {
+    max-width: 242px;
+  }
+
+  li.recent-leaves-inner {
+    padding: 15px 25px 10px
+  }
+
+  li.custom-li-list {
+    padding: 12px 0 15px;
+  }
+
+  .upcoming-bday-content .recent-leaves-list,
+  .increments-content .recent-leaves-list,
+  .on-probation-content .recent-leaves-list {
+    padding-left: 25px !important;
+  }
+
+
+  .upcoming-bday-content span.dash-emp-img,
+  .increments-content span.dash-emp-img,
+  .on-probation-content span.dash-emp-img {
+    width: 20%
+  }
+
+}

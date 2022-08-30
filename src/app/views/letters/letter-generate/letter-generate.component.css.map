@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,gCAAgC;EAAC,MAAM,EAAC,MAAM;;AAE9C,uCAAwC;EACpC,MAAM,EAAE,mBAAkB;;AAG9B,qDAAsD;EAAC,OAAO,EAAE,CAAC;;AAGjE,+BAAgC;EAC5B,QAAQ,EAAE,iBAAiB",
+"sources": ["letter-generate.component.scss"],
+"names": [],
+"file": "letter-generate.component.css"
+}

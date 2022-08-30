@@ -1,0 +1,63 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 team-header header-buttons">
+      <button type="button" class="button new-button" [routerLink]="'create'"
+              [appCheckPermission]="'LETTERS.TEMPLATE.VIEW'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1" type="button" class="button edit-button" (click)="EditTemplate()"
+              [appCheckPermission]="'LETTERS.TEMPLATE.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <button *ngIf="allcheck_id_count" type="button" class="button del-button" (click)="openModel(delete)"
+              [appCheckPermission]="'LETTERS.TEMPLATE.DELETE'">
+        <i class="fa fa-trash "></i>
+        Delete
+      </button>
+    </div>
+    <div class="table-wrap team-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+             class="row-border hover" style="width:100%">
+        <thead>
+        <tr class="custom-th">
+          <th style="width: 40px">
+            <!--<input type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />-->
+            <label></label>
+          </th>
+          <th>Title</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="allTeams?.length != 0">
+        <tr *ngFor="let item of allTeams" (click)="checkone(item.id);$event.stopPropagation()">
+          <td>
+            <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol"
+                   [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" />
+            <label></label>
+          </td>
+          <td><span class="table-txt">{{item.template_name}}</span></td>
+        </tr>
+        </tbody>
+        <tbody *ngIf="allTeams?.length == 0">
+        <tr>
+          <td colspan="1" class="no-data-available">No data!</td>
+        </tr>
+        <tbody>
+      </table>
+    </div>
+  </div>
+  <ng-template #delete>
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteExpense()">Delete</button>
+    </div>
+  </ng-template>
+</main>

@@ -1,0 +1,173 @@
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: deepskyblue;
+  color: white;
+  font-weight: bold;
+}
+
+.card {
+  margin-right: 40px;
+}
+
+.card-header {
+  padding: 13px 13px 13px 18px;
+  background-color: #039be5 !important;
+  border-radius: 0;
+}
+
+.card-header h4 {
+  margin-bottom: 0;
+  font-size: 16px;
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 700
+}
+
+.card-body h5 {
+  color: #4caf50;
+  font-size: 17px;
+  font-weight: 500;
+
+  padding-bottom: 9px;
+  margin: 0;
+  font-weight: 700;
+}
+
+label.f-700.control-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5e5e5e;
+
+}
+
+input.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched,
+input.form-control.input-sm.fc-alt.ng-untouched.ng-pristine.ng-valid,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-untouched,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-untouched,
+select.form-control.input-sm.fc-alt.ng-valid.ng-touched.ng-dirty,
+select.form-control.input-sm.fc-alt.ng-valid.ng-untouched.ng-dirty {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+input.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-untouched.ng-pristine.ng-valid:focus,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-untouched:focus,
+select.form-control.input-sm.fc-alt.ng-valid.ng-touched.ng-dirty:focus,
+select.form-control.input-sm.fc-alt.ng-valid.ng-untouched.ng-dirty:focus {
+  border-color: #2f88d2 !important;
+  box-shadow: none;
+}
+
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched {
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 2px !important;
+  padding: 5px 10px !important;
+  box-shadow: none;
+}
+
+select.form-control.input-sm.fc-alt.ng-untouched.ng-pristine.ng-valid:focus {
+  border-color: #2f88d2 !important;
+  box-shadow: none;
+}
+
+.card-body.form-padding.top-bottom-padding {
+  padding-top: 0;
+  padding-bottom: 9px;
+}
+
+.form-group.button-wrap {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.form-group.button-wrap .btn {
+  padding: 3.5px 11px;
+}
+
+.form-group.button-wrap .btn-primary {
+  background-color: #2196f3
+}
+
+.form-group.button-wrap button.btn.btn-primary:focus {
+  box-shadow: none;
+}
+
+// 19-11-2018
+
+.email-app main {
+  padding: 0 !important;
+}
+
+main.message {
+  padding: 0 !important
+}
+
+.card {
+  margin: 0px;
+}
+
+.form-group.button-wrap {
+  padding-top: 30px
+}
+
+.custom-main {
+  padding: 30px !important;
+  background: #f5f5f5;
+  float: left;
+  width: 100%;
+  min-height: 87vh;
+}
+
+input {
+  font-size: 12px;
+  color: #000 !important;
+
+}
+
+select {
+  font-size: 13px !important;
+  color: #333333 !important;
+
+}
+
+.btn-save {
+  font-size: 13px;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #2196f3;
+  padding: 5.5px 12.02px !important;
+
+}
+
+.btn-save:hover {
+  opacity: .9;
+}
+
+.btn-save:focus {
+  box-shadow: none;
+  opacity: .9;
+}
+
+.btn-save:active:focus {
+  box-shadow: none !important;
+  opacity: .9;
+}
+
+button.btn.btn-primary.btn-save:disabled {
+  opacity: 1;
+}

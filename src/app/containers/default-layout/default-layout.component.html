@@ -1,0 +1,95 @@
+<app-header [fixed]="true"
+  [navbarBrandFull]="{src: sanitizer.bypassSecurityTrustResourceUrl(logo), alt: 'EsparkBiz Logo'}"
+  [navbarBrandMinimized]="{src: sanitizer.bypassSecurityTrustResourceUrl(logo), width: 30, height: 30, alt: 'EsparkBiz Logo'}"
+  [asideMenuToggler]="false" [sidebarToggler]="false">
+  <div class="custom-header" #customHeader>
+    <span class="headername">{{getHeaderName()}}</span>
+    <ol class="breadcrumb">
+      <app-breadcrumb>
+      </app-breadcrumb>
+    </ol>
+  </div>
+
+  <ul class="nav navbar-nav d-md-down-none ml-auto top_header_navbar">
+    <li class="nav-item dropdown d-md-down-none" dropdown placement="bottom right"
+      [appCheckPermission]="'ACTIVITY-BOX.VIEW'">
+      <app-activity-box></app-activity-box>
+    </li>
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+        dropdownToggle (click)="false">
+        <img [src]="profileImage" class="img-avatar" alt="admin@bootstrapmaster.com" />
+        <span>{{getUserName()}}</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center">
+          <h6>{{getUserName()}}</h6>
+        </div>
+        <a class="dropdown-item" routerLinkActive="active" (click)="goToProfile()">
+          <i class=" icon-user"></i>Profile</a>
+
+        <div class="divider"></div>
+        <a class="dropdown-item" (click)="doLockApp()">
+          <i class="icon-lock"></i>Lock account</a>
+        <a class="dropdown-item" (click)="onLogout()">
+          <i class="icon-logout"></i>Logout</a>
+      </div>
+    </li>
+  </ul>
+</app-header>
+
+<div class="app-body">
+  <!-- <app-sidebar [fixed]="true" [display]="'lg'">
+    <div class="custom" style="display: inline-block" [hidden]="userRole=='Employee'">
+      <a class="custom-self" (click)="onTabClick('self')" [ngClass]="tabStatus?'tab-active':''"><i class="fa fa-user-o"
+          aria-hidden="true"></i>self</a>
+      <a class="custom-manager" (click)="onTabClick('manager')" [ngClass]="!tabStatus?'tab-active':''"><i class="fa fa-sitemap"
+          aria-hidden="true"></i>Manager</a>
+    </div>
+    <div class="self-nav" [hidden]="!tabStatus">
+      <app-sidebar-nav [navItems]="navItemsSelf" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    </div>
+    <div class="manager-nav" [hidden]="tabStatus">
+      <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    </div>
+  </app-sidebar> -->
+
+  <app-sidebar [fixed]="true" [display]="'lg'">
+    <div [appCheckPermission]="'DASHBOARD.VIEW'">
+      <div [appCheckPermission]="'SELF-DASHBOARD.VIEW'">
+        <!-- <div class="custom" style="display: inline-block" [hidden]="userRole=='Employee'"> -->
+        <div class="custom" style="display: inline-block">
+          <a class="custom-self" (click)="onTabClick('self')" [ngClass]="tabStatus?'tab-active':''"><i
+              class="fa fa-user-o" aria-hidden="true"></i>self</a>
+          <a class="custom-manager" (click)="onTabClick('manager')" [ngClass]="!tabStatus?'tab-active':''"><i
+              class="fa fa-sitemap" aria-hidden="true"></i>Manager</a>
+        </div>
+      </div>
+    </div>
+    <div class="self-nav" [hidden]="!tabStatus" #mainNav>
+      <app-sidebar-nav [navItems]="navItemsSelf" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    </div>
+    <div class="manager-nav" [hidden]="tabStatus">
+      <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    </div>
+  </app-sidebar>
+
+
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+
+    <!--  <div class="container-fluid"> -->
+    <router-outlet></router-outlet>
+    <!-- </div> -->
+    <!-- /.container-fluid -->
+  </main>
+  <app-aside [fixed]="true" [display]="false">
+
+  </app-aside>
+</div>
+<!-- <app-footer>
+  <span class="ml-auto">Powered by
+    <a href="https://www.esparkinfo.com/" target="blank">eSparkBiz Technologies</a>
+  </span>
+</app-footer> -->

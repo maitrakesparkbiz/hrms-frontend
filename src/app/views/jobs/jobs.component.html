@@ -1,0 +1,207 @@
+<main class="message">
+  <div class=" animated fadeIn">
+    <div class="col-md-12 header-buttons">
+
+      <button type="button" class="button new-button" [routerLink]="'create'" [appCheckPermission]="'JOBS.OPENINGS.ADD'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1" type="button" class="button edit-button" (click)="editOpening()"
+        [appCheckPermission]="'JOBS.OPENINGS.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <!-- <button *ngIf="allcheck_id_count" type="button" class="btn btn-danger" (click)="openModel(delete)">
+        <i class="fa fa-trash "></i>
+        Delete
+      </button> -->
+      <!-- <div class="search-section search">
+        <input class="search-box ng-pristine ng-valid ng-touched" placeholder="Search..." [(ngModel)]="search" type="text">
+      </div> -->
+      <div class="search-section search">
+        <form [formGroup]="filterForm" class="custom-wrap">
+          <select (change)="rerender()" class="search-box ng-pristine ng-valid ng-touched custom-status"
+            [formControlName]="'status'">
+            <option value="all">Status:All</option>
+            <option value="Open">Open</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </form>
+      </div>
+    </div>
+
+    <div class="table-wrap job-opening-table">
+      <!-- <table class="table table-striped" style="width: 100%" [mfData]="(allOpenings|filter:search)" #mf="mfDataTable"
+        [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th style="width: 7%"></th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="role">Role</mfDefaultSorter>
+            </th>
+            <th style="width: 18%">
+              <mfDefaultSorter by="posted_as">Posted as</mfDefaultSorter>
+            </th>
+            <th style="width: 18%">
+              <mfDefaultSorter by="posted_date">Posted date</mfDefaultSorter>
+            </th>
+            <th style="width: 18%">
+              <mfDefaultSorter by="last_date">Last date</mfDefaultSorter>
+            </th>
+            <th style="width: 24%">
+              <mfDefaultSorter by="status">Status</mfDefaultSorter>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id)" />
+              <label></label>
+            </td>
+            <td>{{item.role}}</td>
+            <td>{{item.posted_as}}</td>
+            <td>{{item.posted_date}}</td>
+            <td>{{item.last_date}}</td>
+            <td *ngIf="item.status=='Open'">
+              <div class="custom-open">
+                <span class="open"><i class="fa fa-check"></i> {{item.status}}
+                </span>
+              </div>
+            </td>
+            <td *ngIf="item.status=='Closed'">
+              <div class="custom-close">
+                <span class="closed"><i class="fa fa-ban"></i> {{item.status}}</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table> -->
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 40px">
+            </th>
+            <th style="width: 180px">Role</th>
+            <th style="width: 100px">Posted as</th>
+            <th style="width: 180px">Posted date</th>
+            <th style="width: 100px">Last date</th>
+            <th style="width: 100px">Status</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="allOpenings?.length != 0">
+          <tr *ngFor="let item of allOpenings" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" [(ngModel)]="item.isSelected"
+                (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td><span class="table-txt">{{item.role}}</span></td>
+            <td><span class="table-txt">{{item.posted_as}}</span></td>
+            <td><span class="table-txt">{{item.posted_date.date | dateFilter}}</span></td>
+            <td><span class="table-txt">{{item.last_date.date | dateFilter}}</span></td>
+            <td *ngIf="item.status=='Open'">
+              <div class="status approve-tag">
+                <span><i class="fa fa-check"></i> {{item.status}}
+                </span>
+              </div>
+            </td>
+            <td *ngIf="item.status=='Closed'">
+              <div class="status reject-tag">
+                <span><i class="fa fa-ban"></i> {{item.status}}</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="allOpenings?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-scroll">
+        <div class="right-part-title">
+          <div class="custom-name">{{openingDetail.role}}</div>
+          <div *ngIf="openingDetail.posted_as=='Both' || openingDetail.posted_as=='Public'" class="custom-link">
+            <input class="form-control input-link" type="text" [value]="openingDetail.url" [readonly]="true">
+            <span class="ext-link">
+              <a [href]="openingDetail.url" target="_blank"><i class="fa fa-external-link"></i></a>
+            </span>
+          </div>
+        </div>
+
+        <div class="description-detail">
+          <div class="right-part-content"><span class="left-part">Experience
+              <br> Required</span>
+            <span class="right-part">{{openingDetail.exp_required ? openingDetail.exp_required : '-'}}</span>
+          </div>
+          <div class="right-part-content"><span class="left-part">CTC</span>
+            <span class="right-part">{{openingDetail.ctc ? openingDetail.ctc : '-'}}</span>
+          </div>
+          <div class="right-part-content"><span class="left-part">Vacancies</span>
+            <span class="right-part">{{openingDetail.vacancies}}</span>
+          </div>
+          <div class="right-part-content"><span class="left-part">Last Date</span>
+            <span class="right-part">{{openingDetail.last_date.date | dateFilter}}</span>
+          </div>
+          <div class="right-part-content"><span class="left-part">Post Date</span>
+            <span class="right-part">{{openingDetail.posted_date.date | dateFilter}}</span>
+          </div>
+          <div class="right-part-contentl"><span class="left-part">Post As</span>
+            <span class="right-part">{{openingDetail.posted_as}}</span>
+          </div>
+        </div>
+        <div class="custom-intro">
+          <h3>Introduction</h3>
+          <span [innerHTML]="openingDetail.introduction"></span>
+        </div>
+        <div class="custom-responsible">
+          <h3>Responsibilities</h3>
+          <span [innerHTML]="openingDetail.responsibilities"></span>
+        </div>
+
+        <div class="custom-skill">
+        <h3>Skill Set</h3>
+        <span [innerHTML]="openingDetail.skill_set"></span>
+      </div>
+      </div>
+    </div>
+  </div>
+  <ng-template class="test_content" #other_content>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+  <ng-template #delete>
+    <!-- <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="center"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
+          <h4 class="modal-title">Are you sure?</h4>
+          <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button>
+        </div> -->
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center"><img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" /></div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p>Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteOpening()">Delete</button>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+
+</main>

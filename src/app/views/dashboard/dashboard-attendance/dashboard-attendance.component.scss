@@ -1,0 +1,31 @@
+span.dash-emp-img {
+  width: 8%
+}
+
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+  span.dash-emp-img {
+    width: 10%;
+  }
+
+}
+
+@media(max-width:1500px) {
+  .dash-emp-details {
+    width: 67%;
+  }
+
+  span.dash-emp-img {
+    width: 11% !important;
+  }
+
+}
+
+
+@media(max-width:1400px) {
+  span.dash-emp-img {
+    width: 13%
+  }
+
+}

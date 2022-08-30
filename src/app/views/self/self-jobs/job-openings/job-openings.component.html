@@ -1,0 +1,176 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 header-buttons self-job-header">
+      <button type="button" *ngIf="allcheck_id_count==1" class="new-button" (click)="openModal(applicantModal)"
+        [appCheckPermission]="'SELF-JOBS.APPLICATIONS.ADD'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <!-- <div class="search-section">
+        <input type="text" placeholder="Search..." [(ngModel)]="search" class="search-box">
+      </div> -->
+    </div>
+
+    <div class="table-wrap self-job-opening">
+
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 40px">
+            </th>
+            <th style="width: 100px">Role</th>
+            <th style="width: 180px">Experience Required</th>
+            <!-- <th style="width: 180px">CTC</th> -->
+            <th style="width: 100px">Last date</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="openings?.length != 0">
+          <tr *ngFor="let item of openings" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td><span class="table-txt">{{item.role}}</span></td>
+            <td><span class="table-txt">{{+item.exp_required> 0 ? item.exp_required + ' Yr.' : 'Fresher'}}</span>
+            </td>
+            <!-- <td><span class="table-txt">{{item.ctc ? item.ctc : '-'}}</span></td> -->
+            <td><span class="table-txt">{{item.last_date.date | dateFilter}}</span></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="openings?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-scroll">
+        <div class="right-part-content">
+          <div class="custom-name">{{selectedOpening.role}}</div>
+          <div *ngIf="selectedOpening.posted_as=='Both' || selectedOpening.posted_as=='Public'" class="custom-link">
+            <div class="link-wrap">
+              <input class="form-control input-link" type="text" [value]="selectedOpening.url" [readonly]="true">
+              <span class="ext-link">
+                <a [href]="selectedOpening.url" target="_blank"><i class="fa fa-external-link"></i></a>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="description-detail">
+          <div class="right-part-content"><span class="left-part">Experience Required</span>
+            <span
+              class="right-part">{{+selectedOpening.exp_required > 0 ? selectedOpening.exp_required + ' Yr.' : 'Fresher'}}</span>
+          </div>
+          <!-- <div class="right-part-content"><span class="left-part">CTC</span>
+            <span class="right-part">{{selectedOpening.ctc}}</span>
+          </div> -->
+          <div class="right-part-content"><span class="left-part">Vacancies</span>
+            <span class="right-part">{{selectedOpening.vacancies}}</span>
+          </div>
+          <div class="right-part-content"><span class="left-part">Last Date</span>
+            <span class="right-part">{{selectedOpening.last_date.date | dateFilter}}</span>
+          </div>
+          <div class="right-part-content"><span class="left-part">Post Date</span>
+            <span class="right-part">{{selectedOpening.posted_date.date | dateFilter}}</span>
+          </div>
+        </div>
+        <div class="custom-intro">
+          <h3>Introduction</h3>
+          <span [innerHTML]="selectedOpening.introduction"></span>
+        </div>
+        <div class="custom-responsible">
+          <h3>Responsibilities</h3>
+          <span [innerHTML]="selectedOpening.responsibilities"></span>
+        </div>
+
+        <div class="custom-skill">
+          <h3>Skill Set</h3>
+          <span [innerHTML]="selectedOpening.skill_set"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<ng-template class="test_content" #other_content>
+  <div class="abc">
+    <h3> Select a row to view it's Detail</h3>
+  </div>
+</ng-template>
+
+
+<ng-template #applicantModal>
+
+  <h4 class="modal-title pop-up-title">{{selectedOpening.role}}</h4>
+  <button type="button" class="close pop-up-close" (click)="closeModel()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+  <div class="pop-up-body">
+    <form [formGroup]="ApplicationForm" (ngSubmit)="SaveApplicant()" #applicationForm="ngForm">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label class="f-700 control-label">Name</label>
+          <input type="text" name="applicant_name" formControlName="applicant_name" class="form-control input-sm fc-alt"
+            [ngClass]="(ApplicationForm.get('applicant_name').invalid && applicationForm.submitted)?'is-invalid':''">
+          <div class="invalid-feedback"
+            *ngIf="ApplicationForm.get('applicant_name').invalid && applicationForm.submitted">
+            The Name is required
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label class="f-700 control-label">Email</label>
+          <input type="text" name="contact_email" formControlName="contact_email" class="form-control input-sm fc-alt"
+            [ngClass]="(ApplicationForm.get('contact_email').invalid && applicationForm.submitted)?'is-invalid':''">
+          <div class="invalid-feedback"
+            *ngIf="ApplicationForm.get('contact_email').invalid && applicationForm.submitted">
+            The Email is required
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label class="f-700 control-label">Phone</label>
+          <input type="text" name="phone_number1" formControlName="phone_number1" class="form-control input-sm fc-alt"
+            [ngClass]="(ApplicationForm.get('phone_number1').invalid && applicationForm.submitted)?'is-invalid':''">
+          <div class="invalid-feedback"
+            *ngIf="ApplicationForm.get('phone_number1').invalid && applicationForm.submitted">
+            The Phone number is required
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label class="f-700 control-label">Resume</label>
+          <div class="row" style="margin: 2px;">
+            <div class="row col-md-12 document-image" *ngIf="resume_name">
+              <p>{{resume_name}}</p>
+
+            </div>
+            <div class="row col-md-8" *ngIf="resume_name">
+              <button type="button" (click)="removeImage()" class="btn btn-remove">
+                Remove
+              </button>
+            </div>
+            <label for="resume" class="custom-file-upload document-select-btn" [hidden]="resume_name">
+              Select
+            </label>
+            <input type="file" name="resume" id="resume" (change)="uploadImage($event)" formControlName="resume"
+              class="form-control input-sm fc-alt"
+              [ngClass]="ApplicationForm.get('resume').invalid && applicationForm.submitted?'is-invalid':''">
+            <div class="invalid-feedback" *ngIf="ApplicationForm.get('resume').invalid && applicationForm.submitted">
+              The resume is required
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary cancel-btn">Create</button>
+      <button type="button" class="btn btn-secondary create-btn" (click)="closeModel()">Cancel </button>
+
+    </form>
+  </div>
+
+</ng-template>

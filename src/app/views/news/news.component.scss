@@ -1,0 +1,187 @@
+.table thead th {
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.table th,
+.table td {
+  border-top: 1px solid #f5f5f5;
+  padding: 14px 0 14px 26px;
+  text-transform: capitalize
+}
+
+table td {
+  position: relative;
+  color: #5e5e5e;
+  font-size: 13px;
+}
+
+.custom-title {
+
+  font-size: 20px;
+  color: #2196f3;
+  padding-bottom: 10px;
+  text-align: left;
+  font-weight: 500;
+  padding: 0px 0 10px 0;
+  line-height: 24px;
+}
+
+.custom-description {
+  float: left;
+  width: 100%;
+  font-size: 17px;
+  text-align: left;
+  color: #4caf50;
+  padding-bottom: 5px;
+  border: none !important;
+  padding-top: 10px;
+}
+
+.description-txt {
+  float: left;
+  width: 100%;
+  text-align: left;
+  color: #23282c;
+
+  font-size: 13px;
+}
+
+.employees {
+  float: left;
+  width: 100%;
+}
+
+.employees h5 {
+  font-size: 17px;
+  color: #4caf50;
+  text-align: left;
+}
+
+.row.status.approve-tag.publish-date {
+  margin-left: 0;
+  margin-bottom: 15px;
+}
+
+.employee-profile {
+  float: left;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.emp-img {
+  float: left;
+  width: 14%;
+}
+
+.emp-details {
+  float: left;
+  width: 80%;
+  text-align: left;
+  color: #2196f3;
+  font-size: 13px;
+  padding-top: 8px;
+  text-transform: capitalize;
+}
+
+
+.news-descriptive-txt {
+  float: left;
+  width: 100%;
+  text-align: justify;
+}
+
+.custom-scroll {
+  float: left;
+  width: 100%;
+  max-height: 901px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.news-description-txt {
+  float: left;
+  width: 100%;
+  max-width: 390px;
+}
+
+
+.custom-status {
+  height: 29px;
+  width: 118.45px;
+  border-radius: 0;
+  background: #4f585d;
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  padding-left: 5px;
+  border-radius: 3px;
+}
+
+table.dataTable thead th {
+  position: relative;
+}
+
+
+table#claim_table tr td input[type="checkbox"]+label:before,
+table#claim_table tr td input[type="checkbox"]:checked+label:after {
+  left: 27px;
+}
+
+table#claim_table tr td input[type="checkbox"] {
+  left: 45px
+}
+
+.table-wrap table#claim_table thead tr.custom-th th input[type="checkbox"]+label:before,
+.table-wrap table#claim_table thead tr.custom-th th input[type="checkbox"]:checked+label:after {
+  left: 27px;
+}
+
+.table-wrap table#claim_table thead tr.custom-th th input[type="checkbox"] {
+  left: 45px;
+}
+
+.status {
+  min-width: 91px;
+}
+
+.search-section {
+  margin-right: 15px;
+}
+
+.abc,
+.description-wrap {
+  width: 26.2%;
+}
+
+table.dataTable tbody tr {
+  cursor: pointer;
+}
+
+
+@media(max-width:1500px) {
+  .emp-img {
+    width: 17%;
+  }
+
+  .abc,
+  .description-wrap {
+    width: 24.9%;
+  }
+
+
+
+}
+
+
+
+@media(max-width:1400px) {
+  .news-description-txt {
+    max-width: 230px;
+  }
+
+  .emp-details {
+    padding-left: 8px;
+  }
+}

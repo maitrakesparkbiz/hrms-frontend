@@ -1,0 +1,60 @@
+<main class="message">
+    <div class="animated fadeIn">
+        <div class="row header-buttons">
+            <button type="button" class="btn btn-success" (click)="onBack()">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                Back
+            </button>
+        </div>
+
+        <form [formGroup]="projectForm" #projectform="ngForm" class=" main-form">
+            <div class="row">
+                <div class="col-md-12 form-group  comman-card-wrap">
+                    <div class="card">
+                        <div class="card-header custom-blue">
+                            <h4 class="c-white">
+                                <i class="fa fa-info-circle"></i> Policy Details</h4>
+                        </div>
+                        <div class="card-body form-padding">
+                            <div class="row custom-policy_wrap">
+                                <label class="f-700 control-label">Title : </label>
+                                <div class=" form-group ">
+                                    <p>{{projectData.title}}</p>
+                                </div>
+                            </div>
+                            <div class="row custom-policy_wrap">
+                                <label class="f-700 control-label">Short Description : </label>
+                                <div class="form-group" innerHtml="{{projectData.short_description}}">
+                                    <p>{{projectData.short_description}}</p>
+                                </div>
+                            </div>
+                            <div class="row custom-policy_wrap">
+                                <label class="f-700 control-label">Long Description : </label>
+                                <div class="form-group" innerHtml="{{projectData.long_description}}">
+                                    <p>{{projectData.long_description ? projectData.long_description : '-'}}</p>
+                                </div>
+                            </div>
+
+
+                            <div class="row custom-policy_wrap">
+                                <label class="f-700 control-label">Policy Document : </label>
+                                <div class="form-group">
+                                    <ng-container *ngIf="projectData.policy_doc && projectData.policy_doc.length > 0; else nullData">
+                                        <p><a target="blank" href="{{FILE_URL}}{{projectData.policy_doc}}">
+                                            {{projectData.policy_doc}}
+                                        </a></p>
+                                    </ng-container>
+                                    <ng-template #nullData>
+                                        -
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+        </form>
+            </div>
+
+
+</main>

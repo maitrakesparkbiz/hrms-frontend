@@ -1,0 +1,78 @@
+.active {
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  padding: 12px 20px;
+  color: #23282c;
+}
+
+nav {
+  padding: 10px 0px 10px 13px !important;
+  border-right: 0;
+
+}
+
+.email-app.row ul.nav li.nav-item a.nav-link {
+  font-size: 13px;
+  font-weight: 400;
+  color: #5e5e5e;
+  line-height: 19px;
+}
+
+li.nav-item:hover {
+  background: #f5f5f5;
+}
+
+.nav-link {
+  border-bottom: none !important;
+}
+
+a.nav-link.active {
+  background: #f5f5f5;
+}
+
+li.nav-item {
+  min-width: 230px;
+  font-size: 13px;
+  color: #5e5e5e;
+
+  font-weight: 400;
+}
+
+nav .nav-link i {
+  margin: 0 0.5rem 0 0;
+  font-size: 0.875rem;
+}
+
+.email-app nav {
+  border: none;
+  position: relative;
+}
+
+
+.custom-scroll {
+  max-height: 610px;
+}
+
+.email-app {
+  min-height: 867px;
+}
+
+// 08-02-2019
+
+nav.settings-options {
+  position: fixed;
+  background: #fff;
+  height: 100%;
+  left: 211px;
+}
+
+@media(max-width:1400px) {
+  .custom-scroll {
+    max-height: 563px;
+  }
+
+}
+  

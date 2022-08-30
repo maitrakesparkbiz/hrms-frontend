@@ -1,0 +1,13 @@
+.team-header.inner-header button {
+  margin: 15px 0; }
+
+.team-header.inner-header button.button {
+  margin: 15px 2px !important; }
+
+main.messaage.main-div form .row.input-employee input {
+  padding: 0; }
+
+.ng-select .ng-select-container {
+  position: static !important; }
+
+/*# sourceMappingURL=letter-generate.component.css.map */

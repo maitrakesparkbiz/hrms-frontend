@@ -1,0 +1,179 @@
+<main class="message">
+    <div class=" animated fadeIn">
+        <div class="col-md-12 header-buttons">
+
+            <button type="button" class="new-button" [routerLink]="'add'"
+                    [appCheckPermission]="'JOBS.CANDIDATES-INFO.ADD'">
+                <i class="fa fa-plus"></i>
+                New
+            </button>
+            <button *ngIf="allcheck_id_count==1" type="button" class="edit-button" (click)="editApplication()"
+                    [appCheckPermission]="'JOBS.CANDIDATES-INFO.EDIT'">
+                <i class="fa fa-pencil"></i>
+                Edit
+            </button>
+            <button *ngIf="allcheck_id_count" type="button" class="button del-button" (click)="openModel(sendMail)"
+                    [appCheckPermission]="'JOBS.CANDIDATES-INFO.EDIT'">
+                <i class="fa fa-paper-plane "></i>
+                Send
+            </button>
+            <div class="search-section search">
+                <form [formGroup]="filterForm" class="custom-wrap">
+                    <select (change)="rerender()" class="form-control" [formControlName]="'cat_filter'">
+                        <option value="0">select category</option>
+                        <option *ngFor="let item of optionData"
+                                [value]=item.id>{{item.role}}{{!!item.exp_required ? ' - ' +
+                            item.exp_required + ' year' : ''}}</option>
+                    </select>
+                    <select (change)="rerender()" class="form-control"
+                            [formControlName]="'sal_filter'">
+                        <option value="0">select salary</option>
+                        <option value="0-10000">0-10000</option>
+                        <option value="10000-20000">10000-20000</option>
+                        <option value="20000-30000">20000-30000</option>
+                        <option value="30000-0">30000 +</option>
+                    </select>
+                    <select (change)="rerender()" class="search-box ng-pristine ng-valid ng-touched custom-status"
+                            [formControlName]="'exp'">
+                        <option value="">select experiance</option>
+                        <option value="0">0 Yr.</option>
+                        <option value="1">1 Yr.</option>
+                        <option value="2">2 Yr.</option>
+                        <option value="3">3 Yr.</option>
+                        <option value="4">4Yr.</option>
+                        <option value="5">5+ Yr.</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-wrap job-app-table">
+            <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions"
+                   [dtTrigger]="dtTrigger"
+                   class="row-border hover" style="width:100%">
+                <thead>
+                <tr class="custom-th">
+                    <th style="width: 40px;padding: 10px 27px;">
+                        <input id="" type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)"/>
+                        <label for=""></label>
+                    </th>
+                    <th style="width: 100px;">Name</th>
+                    <th style="width: 100px">Category</th>
+                    <th style="width: 100px">Experiance</th>
+                    <th style="width: 100px">Expected Salary</th>
+                    <th style="width: 100px">Created On</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="allApplications?.length != 0">
+                <tr *ngFor="let item of allApplications" (click)="checkone(item.id);$event.stopPropagation()">
+                    <td>
+                        <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol"
+                               class="formcontrol"
+                               [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()"/>
+                        <label></label>
+                    </td>
+                    <td><span class="table-txt">{{item.candidate_name}}</span></td>
+                    <td><span class="table-txt">{{item.category ? item.category.role : '-'}}</span></td>
+                    <td><span class="table-txt">{{item.experiance ? item.experiance +' Yr.': '-'}}</span></td>
+                    <td><span class="table-txt">{{item.expected_ctc ? item.expected_ctc : '-'}}</span></td>
+                    <td><span class="table-txt">{{item.created_at.date | dateFilter}}</span></td>
+                </tr>
+                </tbody>
+                <tbody *ngIf="allApplications?.length == 0">
+                <tr>
+                    <td colspan="6" class="no-data-available">No data!</td>
+                </tr>
+                <tbody>
+            </table>
+        </div>
+        <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+            <div class="custom-scroll">
+                <div class="description-detail">
+                    <div class="right-part-content"><span class="left-part">Name</span>
+                        <span class="right-part">{{applicationDetail.candidate_name}}</span>
+                    </div>
+                    <div class="right-part-content"><span class="left-part">Email</span>
+                        <span class="right-part email"><a href="mailto:{{applicationDetail.contact_email}}">
+              {{applicationDetail.contact_email}}</a></span>
+                    </div>
+
+                    <div class="right-part-content"><span class="left-part">Phone</span>
+                        <span class="right-part">{{applicationDetail.phone_number ? applicationDetail.phone_number : '-'}}</span>
+                    </div>
+                    <div class="right-part-content"><span class="left-part">Category</span>
+                        <span class="right-part">{{applicationDetail.category ? applicationDetail.category.role : '-'}}</span>
+                    </div>
+                    <div class="right-part-content"><span class="left-part">Experiance</span>
+                        <span class="right-part">{{applicationDetail.experiance? applicationDetail.experiance+' Yr.': '-'}}</span>
+                    </div>
+                    <div class="right-part-content" *ngIf="applicationDetail.resume;else no_resume">
+                        <span class="left-part">Resume</span>
+                        <span class="right-part"><a target="blank"
+                                                    href="{{FILE_URL}}{{applicationDetail.resume}}">{{applicationDetail.resume}}</a></span>
+                    </div>
+                    <ng-template class="test_content" #no_resume>
+                        <span class="left-part">Resume</span>
+                        <span class="right-part">-</span>
+                    </ng-template>
+
+                    <div class="right-part-content"><span class="left-part">Current Company</span>
+                        <span class="right-part">{{applicationDetail.current_company ? applicationDetail.current_company : '-'}}</span>
+                    </div>
+                    <div class="right-part-content"><span class="left-part">Current CTC</span>
+                        <span class="right-part">{{applicationDetail.current_ctc ? applicationDetail.current_ctc : '-'}}</span>
+                    </div>
+                    <div class="right-part-content"><span class="left-part">Expected CTC</span>
+                        <span class="right-part">{{applicationDetail.expected_ctc ? applicationDetail.expected_ctc : '-'}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template class="test_content" #other_content>
+        <div class="abc">
+            <h3> Select a row to view it's Detail</h3>
+        </div>
+    </ng-template>
+    <ng-template #sendMail>
+        <div class="modal-content">
+            <div class=" modal-header holiday-modal-header">
+                <h4 class="modal-title holiday-title">Mail</h4>
+                <button type="button" class="close" (click)="closeModel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body holiday-modal-body">
+                <form [formGroup]="mailForm" (ngSubmit)="sendMails()" #MailForm="ngForm">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="f-700 control-label modal-label">Title</label>
+                            <input type="text" name="title" formControlName="title" class="form-control input-sm fc-alt"
+                                   [ngClass]="(mailForm.get('title').invalid && MailForm.submitted)?'is-invalid':''">
+                            <div class="invalid-feedback" *ngIf="mailForm.get('title').invalid && MailForm.submitted">
+                                The Title is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label class="f-700 control-label modal-label">Description</label>
+                            <div class="card-body custom-intro">
+                                <quill-editor formControlName="description"></quill-editor>
+                                <div class="error-div"
+                                     *ngIf="mailForm.get('description').invalid && MailForm.submitted">
+                                    Description is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary cancel-btn">Send</button>
+                        <button type="button" class="btn btn-secondary create-btn" (click)="closeModel()">Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+</main>

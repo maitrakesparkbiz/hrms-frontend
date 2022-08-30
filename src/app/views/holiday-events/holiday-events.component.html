@@ -1,0 +1,272 @@
+<div class="animated fadeIn holiday-event-wrap">
+  <div class="col-md-12 text-center-holiday">
+    <div class=" holiday-events">
+      <div class="">
+        <div class="color-1-1 event-list">
+          <span class="custom-event-span1"></span>
+          <p class="custom-event-paragraph1">Event</p>
+        </div>
+        <div class="color-1-1 year-list">
+          <span class="custom-year-span1"></span>
+          <p class="custom-year-paragraph1">Year Holiday</p>
+        </div>
+        <div class="color-1-1 holiday-list">
+          <span class="custom-holiday-span1"></span>
+          <p class="custom-holiday-paragraph1">Weekend Holiday</p>
+        </div>
+      </div>
+    </div>
+    <div class=" calender">
+      <div class="btn btn-outline-secondary" (click)="decrement()" [hidden]="(viewDate | date:'M') == 1">
+        <i class="fa fa-angle-left"></i>
+      </div>
+      <div class="custom-month-holiday">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      </div>
+      <div class="btn btn-outline-secondary right" (click)="increment()" [hidden]="(viewDate | date:'M') == 12">
+        <i class="fa fa-angle-right"></i>
+      </div>
+    </div>
+
+    <div class=" listing-view">
+      <div class="switch-views">
+        <button class="button calender-btn" (click)="toggleView()" [ngClass]="!listingView ? 'is-active'  :''"><i class="fa fa-calendar"
+            aria-hidden="true"></i>
+        </button>
+        <button class="button list-btn" (click)="toggleView(true)" [ngClass]="listingView ? 'is-active'  :''"><i class="fa fa-th-list"
+            aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <div class=" custom-color">
+      <label class="f-700 control-label custom-batch">Batch : </label>
+      <select class="form-control custom-office" (change)="onSelectBatch($event.target.value)" #batch>
+        <option *ngFor="let opt of batch_opt" value={{opt.id}}>{{opt.name}}</option>
+      </select>
+    </div>
+    <div class=" year-custom">
+      <label class="f-700 control-label custom-year">Year : </label>
+      <select class="form-control select" (change)="onYearSelect($event.target.value)">
+        <option *ngFor="let opt of year_opt" value={{opt}}>{{opt}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <ng-container *ngIf="!listingView;else listings">
+      <div class="col-md-9 customer-calender">
+        <div [ngSwitch]="view" *ngIf="afterChangeStatus && events.length > 0">
+          <ng-container *ngIf="eventAddAllowed;else viewEvents">
+            <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [cellTemplate]="customCellTemplate"
+              (dayClicked)="dayClicked($event.day,eventModal)">
+            </mwl-calendar-month-view>
+          </ng-container>
+          <ng-template #viewEvents>
+            <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [cellTemplate]="customCellTemplate">
+            </mwl-calendar-month-view>
+          </ng-template>
+        </div>
+        <ng-template #customCellTemplate let-day="day" let-locale="locale">
+          <div class="cal-cell-top">
+            <!-- <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span> -->
+            <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+          </div>
+          <div *ngIf="day.events?.length > 0">
+            <div *ngFor="let days of day.events">
+              <!-- <span [class]=days.cssClass *ngIf="days['cssClass']=='custom-holiday'" (click)="editOtherHoliday(days);$event.stopPropagation()">{{days['title']}}</span>-->
+              <span [class]=days.cssClass *ngIf="days['cssClass']=='custom-holiday'" (click)="editOtherHoliday(days);$event.stopPropagation()">{{days['title']}}</span>
+              <span [class]=days.cssClass *ngIf="days['cssClass']!=='custom-holiday'" (click)="editYearEvent(days['id']);$event.stopPropagation()">{{days['title']}}</span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+
+    <ng-template #listings>
+      <div class="col-md-9 customer-calender">
+        <table class="table table-striped" id="claim_table">
+          <thead>
+            <th></th>
+            <th>Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Details</th>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let holiday of listingData">
+              <tr *ngIf="(holiday.start_date.date | date:'MMM,y') === (viewDate | date: 'MMM,y')" (click)="checkone(holiday.id);$event.stopPropagation()">
+                <td>
+                  <input type="checkbox" name="checkselection" value={{holiday.id}} class="formcontrol" [(ngModel)]="holiday.isSelected"
+                    (click)="checkone(holiday.id);$event.stopPropagation()" />
+                  <label></label>
+                </td>
+                <td>{{holiday.event_name}}</td>
+                <td>{{holiday.start_date.date | dateFilter}}</td>
+                <td>{{holiday.end_date.date | dateFilter}}</td>
+                <td [innerHTML]=holiday.description></td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+
+    <div class="col-md-3 custom-description">
+      <div *ngIf="editStatus;else otherPart" class="description">
+        <div class="custom-scroll">
+          <h4>{{editEventArray.event_name}}</h4>
+          <div class="action-btn" *ngIf="editEventArray.is_company_event">
+            <button class="btn btn-success edit-btn capitalize-class" (click)="editModal(eventModal)">
+              <i class="fa fa-pencil" aria-hidden="true" [appCheckPermission]="'HOLIDAY-EVENTS.EDIT'"></i>edit</button>
+            <button class="btn btn-danger dlt-btn capitalize-class" (click)="editModal(deleteEvent,true)"
+              [appCheckPermission]="'HOLIDAY-EVENTS.DELETE'">
+              <i class="fa fa-times" aria-hidden="true"></i>delete</button>
+          </div>
+          <h5>Start</h5>
+          <span class="lower-case-txt">{{editEventArray.start_date.date ?
+            (editEventArray.start_date.date | dateFilter) :
+            (editEventArray.start_date| dateFilter )}}</span>
+          <h5>End</h5>
+          <span>{{editEventArray.end_date.date ?
+            (editEventArray.end_date.date | dateFilter) :
+            (editEventArray.end_date | dateFilter)}}</span>
+          <div *ngIf="editEventArray.description!== undefined">
+            <h5>Details</h5>
+            <span [innerHTML]="editEventArray.description"></span>
+          </div>
+          <div class="employees" *ngIf="editEventArray.assoc_emp?.length > 0">
+            <h5>Employees</h5>
+            <div class="employee-profile" *ngFor="let item of editEventArray.assoc_emp">
+              <div class="emp-img">
+                <img style="width: 38px; height: 38px" *ngIf="item.profile_image;else other_content" [src]=IMAGE_URL+item.profile_image
+                  class="img-avatar" />
+              </div>
+              <ng-template #other_content>
+                <div class="emp-img">
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </div>
+              </ng-template>
+              <div class="emp-details">
+                <a>{{item.firstname}} {{item.lastname}} </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #otherPart>
+        <div class="custom-text">Select an event to view it's details here</div>
+      </ng-template>
+    </div>
+  </div>
+  <ng-template #eventModal>
+    <div class="modal-content">
+      <div class=" modal-header holiday-modal-header">
+        <h4 class="modal-title holiday-title">Create Holidays & Events</h4>
+        <button type="button" class="close" (click)="closeModel()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body holiday-modal-body">
+        <form [formGroup]="EventForm" (ngSubmit)="SaveEvent()" #eventForm="ngForm">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label class="f-700 control-label modal-label">Name</label>
+              <input type="text" name="event_name" formControlName="event_name" class="form-control input-sm fc-alt"
+                [ngClass]="(EventForm.get('event_name').invalid && eventForm.submitted)?'is-invalid':''">
+              <div class="invalid-feedback" *ngIf="EventForm.get('event_name').invalid && eventForm.submitted">
+                The Name is required
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <label class="f-700 control-label modal-label">Employees</label>
+              <ng-multiselect-dropdown formControlName="emp_id" [data]="dropdownList" [(ngModel)]="selectedItems"
+                [settings]="dropdownSettings" [ngClass]="(EventForm.get('emp_id').invalid && eventForm.submitted)?'is-invalid':''">
+              </ng-multiselect-dropdown>
+              <div class="invalid-feedback" *ngIf="EventForm.get('emp_id').invalid && YearForm.submitted">
+                Select atleast one employee
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-group">
+              <label class="f-700 control-label modal-label">Description</label>
+              <div class="card-body custom-intro">
+                <quill-editor formControlName="description"></quill-editor>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label class="f-700 control-label modal-label">Start Date </label>
+              <input [owlDateTimeTrigger]="start_date" [owlDateTime]="start_date" formControlName="start_date"
+                [ngClass]="(EventForm.get('start_date').invalid && eventForm.submitted)?'is-invalid':''" name="date_of_birth"
+                class="form-control input-sm fc-alt">
+              <owl-date-time [pickerType]="'calendar'" #start_date></owl-date-time>
+              <div class="invalid-feedback" *ngIf="EventForm.get('start_date').invalid && eventForm.submitted">
+                The start date is required
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <label class="f-700 control-label modal-label">End Date</label>
+              <input [owlDateTimeTrigger]="end_date" [owlDateTime]="end_date" formControlName="end_date" [ngClass]="(EventForm.get('end_date').invalid && eventForm.submitted)?'is-invalid':''"
+                name="end_date" class="form-control input-sm fc-alt">
+              <owl-date-time [pickerType]="'calendar'" #end_date></owl-date-time>
+              <div class="invalid-feedback" *ngIf="EventForm.get('end_date').invalid && eventForm.submitted">
+                The end date is required
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary cancel-btn">{{edit_id ? 'Update' : 'Create'}}</button>
+            <button type="button" class="btn btn-secondary create-btn" (click)="closeModel()">Cancel </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- <ng-template #deleteEvent> -->
+
+
+
+  <ng-template #deleteEvent>
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="removeEvent()">Delete</button>
+    </div>
+  </ng-template>
+
+
+
+
+
+  <!-- <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="center">
+          <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+        </div>
+        <h4 class="modal-title">Are you sure?</h4>
+        <button type="button" class="close" (click)="closeModel()" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="center">
+          <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+        </div>
+        <h4 class="modal-title">Delete?</h4>
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info cancel cancel-btn" (click)="closeModel()">Cancel</button>
+        <button type="button" class="btn btn-danger danger delete-btn" (click)="removeEvent()">Delete</button>
+      </div>
+    </div>
+  </div>
+  </ng-template> -->
+</div>

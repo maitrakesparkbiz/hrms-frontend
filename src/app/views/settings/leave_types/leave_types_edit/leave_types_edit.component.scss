@@ -1,0 +1,517 @@
+.message .row .btn.btn-success i {
+  padding-right: 5px;
+}
+
+button#allow:focus {
+  background: limegreen;
+}
+
+button#dnalllow:focus {
+  background: deeppink;
+}
+
+label i {
+  font-size: 15px !important;
+  color: #66bb6a;
+}
+
+label.btn-primary.btn.active {
+  background-color: #4caf50;
+  border: transparent;
+}
+
+label.btn-primary.btn {
+  background: #fff;
+  border: transparent;
+  font-size: 13px !important;
+  font-family: 'Noto Sans', sans-serif !important;
+  padding: 4px 0.75rem;
+}
+
+label.btn-default.btn {
+  padding: 4px 0.75rem;
+}
+
+label.btn-default.btn.btn-danger.active {
+  background-color: #e91e63;
+  padding: 4px 0.75rem;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus {
+  box-shadow: none !important
+}
+
+label.btn-primary.btn.active.focus {
+  box-shadow: none
+}
+
+label.btn-default.btn.btn-info.active.focus {
+  box-shadow: none
+}
+
+label.btn-default.btn.btn-danger.active.focus {
+  box-shadow: none;
+}
+
+.btn-toggle:focus {
+  outline: none
+}
+
+label.btn-primary.btn.active:focus,
+label.btn-primary.btn:focus {
+  color: #fff;
+}
+
+.card .card-header {
+  padding: 15px 20px 15px 20px;
+  border-radius: 0;
+  background-color: rgb(229, 115, 115);
+  border-radius: .25rem .25rem 0 0
+}
+
+.card .card-header.blue-bg {
+  background-color: #039be5
+}
+
+.card .card-header.purple-bg {
+  background-color: #7986cb
+}
+
+.card-header.red-bg {
+  background-color: #e57373;
+}
+
+.card-header h4.c-white {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 0;
+
+  font-weight: 700;
+}
+
+.card-header h4.c-white i {
+  padding-right: 5px;
+}
+
+input.form-control.input-sm.fc-alt {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+input.form-control.input-sm.fc-alt:focus {
+  box-shadow: none;
+  border-color: #2f88d2 !important
+}
+
+textarea.form-control {
+  height: 85px;
+  resize: none;
+}
+
+textarea.form-control.input-sm.fc-alt:focus {
+  box-shadow: none;
+  border-color: #2f88d2;
+}
+
+label.f-700.control-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5e5e5e;
+
+  padding-bottom: 3px;
+}
+
+.form-group.pull-center {
+  text-align: center;
+}
+
+.form-group button.btn.btn-primary {
+  margin: 0 5px;
+  border-color: transparent;
+  background-color: #2196f3;
+}
+
+button.btn:focus {
+  box-shadow: none;
+}
+
+.form-group button.btn.btn-primary:focus {
+  box-shadow: none;
+}
+
+.message .row .card .card-body .form-group .checkbox {
+  position: relative;
+}
+
+.message .row .card .card-body .form-group .checkbox input[type="checkbox"] {
+  position: absolute;
+  left: 32px;
+  z-index: 2;
+  top: 15px;
+  opacity: 0;
+}
+
+.message .row .card .card-body .form-group .checkbox input[type="checkbox"]+i:before {
+  content: '';
+  background: #fff;
+  height: 17px;
+  width: 17px;
+  border: 2px solid #7a7a7a;
+  position: absolute;
+  left: 0px;
+  top: 5px;
+  border-radius: 2px;
+}
+
+.message .row .card .card-body .form-group .checkbox input[type="checkbox"]:checked+i:after {
+  content: '\f00c';
+  font-family: fontawesome;
+  background: #000;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  left: 0px;
+  top: 5px;
+  height: 17px;
+  width: 17px;
+  font-size: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.message .row .card .card-body .form-group .checkbox .txt-wrap {
+  padding-left: 30px;
+}
+
+.message .row .card .card-body .form-group .checkbox .txt-wrap h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5e5e5e;
+  line-height: 25px;
+  margin-bottom: 0
+}
+
+.message .row .card .card-body .form-group .checkbox .txt-wrap h5 {
+  font-size: 12px;
+  color: #5e5e5e;
+  font-weight: 400;
+  line-height: 16px;
+  margin-bottom: 0;
+  float: left;
+}
+
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched,
+select.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-untouched {
+  height: 30px;
+  padding: 0px 10px;
+  font-size: 15px;
+  border-radius: 2px;
+}
+
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched:focus,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-untouched:focus {
+  box-shadow: none !important;
+  border-color: #2f88d2 !important
+}
+
+.form-group i {
+  padding-left: 5px;
+  font-size: 15px;
+  color: #66bb6a;
+}
+
+span.switch-slider.toggle-switch:before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -4px;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 90px;
+  transition: 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .28);
+  background: #fff;
+}
+
+span.switch-slider.toggle-switch:after {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 40px;
+  height: 16px;
+  background: rgba(0, 0, 0, .26);
+  display: block;
+  border-radius: 100px;
+  position: relative;
+  top: -4px;
+}
+
+span.switch-slider.toggle-switch {
+  border: none;
+}
+
+.switch-primary .switch-input:checked+.switch-slider {
+  background-color: transparent;
+  border-color: transparent
+}
+
+.switch-primary .switch-input:checked+.switch-slider::before {
+  border-color: transparent;
+  background: #3e6595;
+}
+
+.switch-label .switch-input:checked~.switch-slider::after {
+  background: rgba(62, 101, 149, .58);
+}
+
+.checkbox-wrap {
+  position: relative;
+  display: inline-block;
+  padding: 10px 9px;
+}
+
+.checkbox-wrap:first-child {
+  padding-left: 0;
+}
+
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+[type="radio"]:checked+label,
+[type="radio"]:not(:checked)+label {
+  position: relative;
+  padding-left: 28px;
+  cursor: pointer;
+  line-height: 20px;
+  display: inline-block;
+  color: #666;
+  float: left;
+  padding-right: 15px;
+}
+
+[type="radio"]:checked+label:before,
+[type="radio"]:not(:checked)+label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #000;
+  border-radius: 100%;
+  background: #fff;
+}
+
+[type="radio"]:checked+label:after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #000;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-radius: 100%;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+[type="radio"]:not(:checked)+label:after {
+  opacity: 0;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+[type="radio"]:checked+label:after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+label.btn-primary.btn:focus {
+  color: #5e5e5e;
+}
+
+label.btn-primary.btn {
+  color: #5e5e5e;
+  font-size: 13px;
+  font-weight: 700;
+
+}
+
+.pull-center {
+  text-align: center
+}
+
+input {
+  font-size: 12px;
+  color: #000 !important;
+
+}
+
+select {
+  font-size: 13px !important;
+  color: #333333 !important;
+
+}
+
+main.message {
+  padding: 0px !important;
+  background: #f5f5f5;
+}
+
+.backbtn {
+  margin: 15px 30px;
+}
+
+.card.custom-padding {
+  margin: 30px 30px 0;
+}
+
+.white-bg {
+  background: #fff
+}
+
+.btn-group .btn+.btn,
+.btn-group .btn+.btn-group,
+.btn-group .btn-group+.btn,
+.btn-group .btn-group+.btn-group,
+.btn-group-vertical .btn+.btn,
+.btn-group-vertical .btn+.btn-group,
+.btn-group-vertical .btn-group+.btn,
+.btn-group-vertical .btn-group+.btn-group {
+  margin: 0
+}
+
+label.btn-primary.btn {
+  font-weight: 400 !important;
+  line-height: 22px;
+}
+
+.mt {
+  margin-top: 30px
+}
+
+.card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+  border-radius: 2px;
+  border: none;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #eee !important;
+}
+
+.btn-toggle {
+  height: 30px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .3);
+}
+
+.updatebtn {
+  background-color: #2196f3;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  padding: 4.5px 11px;
+  font-size: 13px;
+
+}
+
+.cancelbtn {
+  font-size: 13px;
+
+  padding: 4.5px 11px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #fff
+}
+
+.btn-group.btn-group-toggle {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.updatebtn {
+  background-color: #2196f3;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+  padding: 5.5px 12px;
+  font-size: 13px;
+
+  border: none;
+  border-radius: 2px;
+}
+
+.updatebtn:hover {
+  opacity: .9;
+}
+
+.updatebtn:active:focus {
+  background-color: #2196f3 !important;
+  opacity: .9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12) !important;
+}
+
+.updatebtn:active {
+  opacity: .9;
+  background-color: #2196f3 !important;
+}
+
+.updatebtn:focus {
+  opacity: .9;
+}
+
+.cancelbtn {
+  font-size: 13px;
+
+  padding: 4.5px 11px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #fff;
+  border-radius: 2px;
+  color: #333333;
+}
+
+.cancelbtn:hover {
+  opacity: .9;
+}
+
+.cancelbtn:active:focus {
+  background: #fff;
+  opacity: .9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12) !important;
+}
+
+.cancelbtn:active {
+  opacity: .9;
+  background: #fff;
+}
+
+.cancelbtn:focus {
+  opacity: .9;
+}
+
+.backbtn {
+  font-size: 15px;
+  margin: 15px 0 15px 30px !important;
+  padding: 3.5px 11px;
+  border: none;
+  border-radius: 3px;
+  background: #66bb6a;
+
+}
+
+.backbtn:focus {
+  box-shadow: none
+}
+
+.backbtn:active:focus {
+  box-shadow: none !important
+}
+
+.backbtn:hover {
+  background: #4cac51
+}
+
+.card {
+  border-radius: 0 0 .25rem .25rem
+}

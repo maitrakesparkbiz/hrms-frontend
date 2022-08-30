@@ -1,0 +1,270 @@
+<div class="main-section animated fadeIn">
+  <div class="row">
+    <div class="col-md-12 header-buttons">
+      <!-- <button type="button" class="btn btn-success" [routerLink]="'create'">
+        <i class="fa fa-plus"></i>
+        Add
+      </button> &nbsp;&nbsp; -->
+      <button *ngIf="allcheck_id_count==1 && (!Final_approve) && Leave_status=='Accept'" (click)="openModel(cancel)" type="button" class="select-btn reject-button">
+        <i class="fa fa-close"></i>
+        Cancel
+      </button>
+      <!--<button *ngIf="allcheck_id_count==1 && Leave_status=='Pending'" type="button" (click)="openModel(delete)" class="btn btn-danger leave-danger">-->
+        <!--<i class="fa fa-trash "></i>-->
+        <!--Delete-->
+      <!--</button>&nbsp;&nbsp; &ndash;&gt;-->
+      <!-- <button *ngIf="allcheck_id_count==1 && Leave_status=='Pending'" (click)="openModel(accept)" type="button" class="select-btn accept-button">
+        <i class="fa fa-check "></i>
+        Approve
+      </button>
+      <button *ngIf="allcheck_id_count==1 && Leave_status=='Pending'" (click)="openModel(reject)" type="button" class="select-btn reject-button">
+        <i class="fa fa-close "></i>
+        Reject
+      </button> -->
+      <div class="search-section search">
+        <!-- <input class="search-box ng-pristine ng-valid ng-touched" placeholder="Search..." [(ngModel)]="search" type="text"> -->
+        <form [formGroup]="leaveForm" class="custom-wrap">
+          <select (change)="getSelectedData()" class="custom-duration" [formControlName]="'duration'">
+            <option value="all">Duration:All</option>
+            <option value="this_month">This Month</option>
+            <option value="last_30_days">Last 30 days</option>
+            <option value="last_3_months">Last 3 Months</option>
+            <option value="last_6_months">Last 6 Months</option>
+            <option value="last_year">Last Year</option>
+          </select>
+          <select (change)="getSelectedData()" class="search-box ng-pristine ng-valid ng-touched custom-status"
+            [formControlName]="'status'">
+            <option value="all">Status:All</option>
+            <option value="Accept">Accepted</option>
+            <option value="Reject">Rejected</option>
+            <option value="Pending">Pending</option>
+            <option value="Cancel">Cancel</option>
+          </select>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="table-wrap leave-app-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 7%">
+            </th>
+            <th>Employees</th>
+            <th>Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="AllLeaves?.length != 0">
+          <tr *ngFor="let item of AllLeaves" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" [(ngModel)]="item.isSelected"
+                (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td>
+              <span class="custom-emp-img">
+                <img style="width: 38px; height: 38px" *ngIf="item.user_id.profile_image ;else other_content" [src]=IMAGE_URL+item.user_id.profile_image
+                  class="img-avatar" />
+                <ng-template #other_content>
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </ng-template>
+              </span><span class="table-txt blue-txt custom-emp-details">{{item.firstname }}</span>
+            </td>
+            <td><span class="table-txt">{{ item.leave_date.date | dateFilter }}</span></td>
+            <td><span class="table-txt lower-case-txt custom-reason">{{ item.reason }}</span></td>
+            <td>
+              <h6>
+                <ng-container *ngIf="item.status=='Pending';else actions">
+                  <div class="action-btns selective-bttn leave-selection-btn">
+                    <button type="button" (click)="openModel(accept,item.id);$event.stopPropagation()" class="tick-btn">
+                      <i class="fa fa-check"></i>
+                    </button>
+                    <button type="button" (click)="openModel(reject,item.id);$event.stopPropagation()" class="cross-btn">
+                      <i class="fa fa-close"></i>
+                    </button>
+                  </div>
+                </ng-container>
+                <ng-template #actions>
+                  <div [class]="item.status=='Pending' ? 'status pending-tag' : (item.status=='Accept' ? 'status approve-tag':'status reject-tag')">
+                    {{item.status == 'Accept' ? 'Approved' : (item.status == 'Reject' ? 'Rejected'
+                    :item.status)}}
+                  </div>
+                </ng-template>
+              </h6>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="AllLeaves?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-image">
+        <div class="emp-img">
+          <img style="width: 38px; height: 38px" *ngIf="leavedetail.user_id.profile_image ;else other_content" [src]=IMAGE_URL+leavedetail.user_id.profile_image
+            class="img-avatar" />
+          <ng-template #other_content>
+            <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+          </ng-template>
+        </div>
+        <div class="emp-text">
+          {{leavedetail.firstname}}
+        </div>
+      </div>
+      <div class="details-tag">
+        <div class="row" *ngIf="leavedetail.status=='Pending'" class="status pending-tag">
+          {{leavedetail.status}}
+        </div>
+      </div>
+
+      <div class="details-tag">
+        <div class="row" *ngIf="leavedetail.status=='Accept'" class="status approve-tag">
+          Approved
+        </div>
+      </div>
+
+      <div class="details-tag">
+        <div class="row" *ngIf="leavedetail.status=='Reject'" class="status reject-tag">
+          Rejected
+        </div>
+      </div>
+
+      <div class="description-detail">
+        <div class="right-part-content">
+          <span class="left-part">Leave Type</span>
+          <span class="right-part leave">{{leavedetail.leave_type.leavetype}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Date</span>
+          <span class="right-part">{{leavedetail.leave_date.date | dateFilter}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Half Day</span>
+          <span class="right-part">{{leavedetail.half_day ? 'Yes' : 'No'}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Days</span>
+          <span class="right-part">{{leavedetail.leave_count}}</span>
+        </div>
+        <div class="right-part-content" *ngIf="leavedetail.status=='Reject';else reason">
+          <span class="left-part">Reject Reason</span>
+          <span class="right-part">{{leavedetail.reject_reason}}</span>
+        </div>
+        <ng-template #reason>
+          <div class="right-part-content">
+            <span class="left-part">Reason</span>
+            <span class="right-part">{{leavedetail.reason}}</span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <ng-template class="test_content" #other_content>
+      <div class="abc">
+        <h3> Select a row to view it's Detail</h3>
+      </div>
+    </ng-template>
+  </div>
+</div>
+<ng-template #delete>
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="center">
+          <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+        </div>
+        <h4 class="modal-title">Are you sure?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+        <button type="button" class="modal-delete-button" (click)="DeleteLeave()">Delete</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #accept>
+  <!-- <div class="modal-dialog modal-confirm"> -->
+  <!-- <div class="modal-content"> -->
+  <!-- <div class="modal-header"> -->
+  <div class="center img-center"><img src="../../../assets/img/avatars/info.png" class="img-avatar" alt="admin@bootstrapmaster.com" /></div>
+  <h4 class="modal-title title-center">Continue?</h4>
+  <!-- </div> -->
+  <div class="modal-body modal-body-txt">
+    <p>You will not be able to reject/delete application after it has been accepted. Continue?.</p>
+  </div>
+  <div class="modal-footer modal-footer-buttons">
+    <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+    <button type="button" class="modal-delete-button" (click)="AcceptLeave()">Accept</button>
+  </div>
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-template>
+
+<ng-template #reject>
+  <!-- <div class="modal-dialog modal-confirm"> -->
+  <!-- <div class="modal-content"> -->
+  <!-- <div class="modal-header"> -->
+  <div class="center img-center">
+    <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" />
+  </div>
+  <h4 class="modal-title title-center">Reject Leave</h4>
+  <!-- </div> -->
+  <form [formGroup]="rejectForm" (ngSubmit)="RejectLeave()" #rejectform="ngForm">
+    <div class="modal-body modal-body-txt">
+      <p>Are you sure you want to reject this leave?</p>
+      <input type="text" class="form-control modal-input-box" formControlName="reject_reason" placeholder="reject reason"
+        [ngClass]="rejectForm.get('reject_reason').invalid && rejectform.submitted ? 'is-invalid':''">
+      <div class="invalid-feedback" *ngIf="rejectForm.get('reject_reason').invalid && rejectform.submitted">
+        Reject Reason is Required
+      </div>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="submit" class="modal-delete-button">Reject</button>
+    </div>
+  </form>
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-template>
+
+<ng-template #cancel>
+  <!-- <div class="modal-dialog modal-confirm"> -->
+  <!-- <div class="modal-content"> -->
+  <!-- <div class="modal-header"> -->
+  <div class="center img-center">
+    <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" />
+    <!-- </div> -->
+  </div>
+  <div class="">
+    <h4 class="modal-title title-center">Cancel Leave</h4>
+  </div>
+
+  <form [formGroup]="cancelForm" (ngSubmit)="CancelLeave()" #cancelform="ngForm">
+    <div class="modal-body modal-body-txt">
+      <p>Are you sure you want to cancel this leave?</p>
+      <input type="text" class="form-control modal-input-box" formControlName="cancel_reason" placeholder="cancel reason"
+      [ngClass]="cancelForm.get('cancel_reason').invalid && cancelform.submitted ? 'is-invalid':''">
+      <div class="invalid-feedback" *ngIf="cancelForm.get('cancel_reason').invalid && cancelform.submitted">
+        Cancel Reason is Required
+      </div>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">No</button>
+      <button type="submit" class="modal-delete-button">Yes</button>
+    </div>
+  </form>
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-template>

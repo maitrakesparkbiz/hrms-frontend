@@ -1,0 +1,231 @@
+.p_class{
+background-color: #66bb6a;
+  alignment: center;
+  font-weight: bold ;
+  color: white;
+  text-align: center;
+  border-radius: 2px;
+ /* width: 20px;*/
+  margin: 0 auto;
+  font-size: 10px;
+  padding: 0px 3px;
+  display: inline-block;
+  vertical-align: top;
+}
+.l_class{
+background-color: #fd9a1f;
+align-items: center;
+  color: white;    text-align: center;
+  border-radius: 2px;
+  /*width:42px;*/
+  margin: 0 auto;
+  font-size: 10px;
+  padding: 0px 3px;
+      display: inline-block;
+    vertical-align: top;    
+}
+.h_class{
+background-color: #315684;
+  alignment: center;
+  color: white;    text-align: center;
+  border-radius: 2px;
+ /* width: 12px;*/
+  margin: 0 auto;
+  font-size: 10px;
+  padding: 0px 2px;
+      display: inline-block;
+    vertical-align: top;
+}
+.a_class{
+background-color: #f44336;
+   align-items: center;
+  color: white;    text-align: center;
+  border-radius: 2px;
+  /*width: 12px;*/
+  margin: 0 auto;
+  font-size: 10px;
+  padding: 0px 2px;
+      display: inline-block;
+    vertical-align: top;
+
+}
+.custom-present-span {
+  width: 7.48%;
+  background: #66bb6a;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.custom-present-paragraph {
+  float: left;
+  width: 85%;
+  text-align: left;
+  padding-left: 10px;
+  margin: 0;
+  font-size: 12px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+.custom-holiday-span {
+  width: 7.48%;
+  background: #315684;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.custom-holiday-paragraph {
+  float: left;
+  width: 85%;
+  text-align: left;
+  padding-left: 10px;
+  margin: 0;
+  font-size: 12px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+.custom-absent-span {
+  width: 7.48%;
+  background: #f44336;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.custom-absent-paragraph {
+  float: left;
+  width: 85%;
+  text-align: left;
+  padding-left: 10px;
+  margin: 0;
+  font-size: 12px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+.custom-leave-span {
+  width: 7.48%;
+  background: #fd9a1f;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.custom-leave-paragraph {
+  float: left;
+  width: 85%;
+  text-align: left;
+  padding-left: 10px;
+  margin: 0;
+  font-size: 12px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+
+form .color-code {
+  width: 70%; }
+
+.color-code .color-1 {
+    float: left;
+    width: 50%;
+}
+
+form  .col-md-4.summary-year {margin: 0 auto;}
+
+
+form .row.ng-star-inserted {
+    width: 100%;
+    margin: 0;
+}
+.col-md-5.summary-year {
+  margin: 10px auto 15px;
+}
+
+form .col-md-4.summary-year {
+  margin: 15px auto 15px;
+}
+
+input.form-control.ng-untouched.ng-pristine.ng-valid {
+    display: inline-block;
+    width: 77%;    vertical-align: middle;
+}
+
+form .summary-year .ng-star-inserted input.form-control.ng-pristine.ng-valid.ng-touched {
+    width: 77%;
+    display: inline-block;
+}
+
+.summary-year input.form-control.ng-pristine.ng-valid.ng-touched {
+    width: 70%;
+    float: left;
+}
+
+.summary-year label {
+    width: 100%;
+    float: left;
+}
+
+table.table {
+    margin: 0 auto;
+}
+
+form[_ngcontent-c4] button.btn.btn-success[_ngcontent-c4] {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 5px;
+    width: 20%;
+}
+
+form .top .col-md-4.summary-year {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    text-align: left;
+}
+
+form .top  .col-md-5.custom-color {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: -webkit-right;
+}
+
+form .top {
+    text-align: center;
+    width: auto;
+    margin: 0 auto;
+    float: none;
+}
+.custom-header .breadcrumb {
+  border: none;
+}
+
+
+.custom-header {
+  padding-left: 30px;
+  width: calc(100% - 223px);
+}
+.table th{padding: 10px 4px !important;
+  text-align: left !important;}
+.table td{padding: 10px 6px !important;
+  text-align: left !important;}
+
+table tbody tr th:first-child{width:2px;    text-align: center !important;}
+table tbody tr th:nth-child(2){text-align: left;    padding: 0 10px;}
+
+table.date-table-style {
+  border: none;
+  width: auto !important;
+}
+@media(max-width:1300px){
+  table.table{    overflow: auto;
+    height: 400px;}
+}
+

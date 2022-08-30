@@ -1,0 +1,25 @@
+img.lock-img {
+  display: block;
+  height: 150px;
+  width: 100%;
+  max-width: 150px;
+  margin: 0px auto 20px;
+}
+
+h1.text-center.lock-name {
+  float: left;
+  width: 100%;
+  text-transform: capitalize;
+}
+
+.login-btn {
+  background: #168eef;
+  border: none;
+  padding: 2.8px 12px 4.3px !important;
+  font-size: 15px;
+  border-radius: 3px;
+}
+
+button.btn.btn-primary.px-4.login-btn:focus {
+  box-shadow: none;
+}

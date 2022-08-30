@@ -1,0 +1,248 @@
+<div class="main-section animated fadeIn">
+  <div class="row inner-header">
+    <div class="col-md-12 header-buttons">
+      <button type="button" class="button new-button" [routerLink]="['create']" [appCheckPermission]="'LEAVES.FINAL-LEAVES.ADD'">
+        <i class="fa fa-plus"></i>
+        Add
+      </button>
+      <!-- <button *ngIf="allcheck_id_count==1" (click)="editLeave(editLeaveModal)" type="button" class="btn btn-primary leave-edit">
+        <i class="fa fa-check "></i>
+        Edit
+      </button>&nbsp;&nbsp; -->
+      <button *ngIf="allcheck_id_count==1" (click)="openModel(reject)" type="button" class="button del-button"
+        [appCheckPermission]="'LEAVES.FINAL-LEAVES.ADD'">
+        <i class="fa fa-close "></i>
+        Delete
+      </button>
+      <div class="search-section">
+        <!-- <input class="search-box ng-pristine ng-valid ng-touched" placeholder="Search..." [(ngModel)]="search" type="text"> -->
+        <form [formGroup]="leaveForm" class="custom-wrap">
+          <select (change)="getSelectedData()" class="custom-duration" [formControlName]="'duration'">
+            <option value="all">Duration:All</option>
+            <option value="this_month">This Month</option>
+            <option value="last_30_days">Last 30 days</option>
+            <option value="last_3_months">Last 3 Months</option>
+            <option value="last_6_months">Last 6 Months</option>
+            <option value="last_year">Last Year</option>
+          </select>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="table-wrap final-leave-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 40px">
+              <!-- <input id="" type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+              <label for=""></label> -->
+            </th>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="AllLeaves?.length != 0">
+          <tr *ngFor="let item of AllLeaves" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" [(ngModel)]="item.isSelected"
+                (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td>
+              <span class="custom-emp-img">
+                <img style="width: 38px; height: 38px" *ngIf="item.user_id.profile_image ;else other_content" [src]=IMAGE_URL+item.user_id.profile_image
+                  class="img-avatar" />
+                <ng-template #other_content>
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </ng-template>
+              </span><span class="table-txt blue-txt custom-emp-details">{{ item.firstname }}</span>
+            </td>
+            <td><span class="table-txt">{{ item.leave_date.date | dateFilter }}</span></td>
+            <td><span class="table-txt lower-case-txt custom-reason">{{ item.reason }}</span></td>
+            <td>
+              <h6>
+                <div [class]="item.status=='Pending' ? 'status pending-tag' : (item.status=='Accept' ? 'status approve-tag':'status reject-tag')">
+                  {{item.status == 'Accept' ? 'Approved' : (item.status == 'Reject' ? 'Rejected'
+                  :item.status)}}
+                </div>
+              </h6>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="AllLeaves?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-image">
+        <div class="emp-img">
+          <img style="width: 38px; height: 38px" *ngIf="leavedetail.user_id.profile_image ;else other_content" [src]=IMAGE_URL+leavedetail.user_id.profile_image
+            class="img-avatar" />
+          <ng-template #other_content>
+            <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+          </ng-template>
+        </div>
+        <div class="emp-text">
+          {{leavedetail.firstname}}
+        </div>
+      </div>
+
+      <div class="row" *ngIf="leavedetail.status=='Pending'" class="status pending-tag" style="width: 70px">
+        {{leavedetail.status}}
+      </div>
+      <div class="row" *ngIf="leavedetail.status=='Accept'" class="status approve-tag" style="width: 70px">
+        Approved
+      </div>
+      <div class="row" *ngIf="leavedetail.status=='Reject'" class="statusr reject-tag" style="width: 70px">
+        Rejected
+      </div>
+      <div class="description-detail">
+        <div class="right-part-content">
+          <span class="left-part">Leave Type</span>
+          <span class="right-part leave">{{leavedetail.leave_type.leavetype}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Date</span>
+          <span class="right-part">{{leavedetail.leave_date.date | dateFilter}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Half Day</span>
+          <span class="right-part">{{leavedetail.half_day? 'Yes' : 'No'}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Days</span>
+          <span class="right-part">{{leavedetail.leave_count}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Reason</span>
+          <span class="right-part">{{leavedetail.reason}}</span>
+        </div>
+      </div>
+    </div>
+    <ng-template class="test_content" #other_content>
+      <div class="abc">
+        <h3> Select a row to view it's Detail</h3>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+
+<ng-template #editLeaveModal>
+  <div class="modal-content">
+    <div class=" modal-header edit-leave">
+      <h4 class="modal-title">Edit Leave</h4>
+      <button type="button" class="close custom-close" (click)="closeModel()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="LeaveEditForm" (ngSubmit)="SaveLeave()" #leaveEditForm="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="f-700 control-label">Employee</label>
+            <input type="text" name="user_id" id="user_id" formControlName="user_id" class="form-control input-sm fc-alt"
+              readonly>
+          </div>
+          <div class="col-md-6 form-group">
+            <label class="f-700 control-label">Leave Date</label>
+            <input type="text" name="leave_date" formControlName="leave_date" class="form-control" readonly>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group" [hidden]="halfDayError">
+            <label class="f-700 control-label">Leave Type</label>
+            <input type="text" name="leave_type" formControlName="leave_type" class="form-control" [disabled]="halfDayError"
+              readonly>
+          </div>
+
+          <div class="col-md-6 form-group" [hidden]="!halfDayError">
+            <label class="f-700 control-label">Leave Type</label>
+            <select class="form-control" formControlName="leave_type" [disabled]="!halfDayError" [ngClass]="LeaveEditForm.get('leave_type').value==null && leaveEditForm.submitted ? 'is-invalid':''">
+              <option value=null>-- select leave type --</option>
+              <option *ngFor="let leave of leaveOpt" value={{leave.id}}>{{leave.label}}<span *ngIf="leave.available!== undefined">{{leave.available}}</span></option>
+            </select>
+            <div class="error-feedback" *ngIf="LeaveEditForm.get('leave_type').value==null && leaveEditForm.submitted">
+              Choose any one leave
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <label class="f-700 control-label">HalfDay</label>
+            <br />
+            <label class="switch switch-label switch-primary">
+              <input type="checkbox" name="half_day" formControlName="half_day" (change)="onHalfDay()" class="switch-input"
+                checked>
+              <span class="switch-slider toggle-switch" data-checked="Yes" data-unchecked="No"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <label class="f-700 control-label">Reason</label>
+            <textarea name="description" formControlName="reason" class="form-control input-sm fc-alt" readonly></textarea>
+          </div>
+        </div>
+        <div class="col-md-12" style="color:red" *ngIf="msg">
+          *{{msg}}
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary cancel-btn">Update</button>
+          <button type="button" class="btn btn-secondary create-btn" (click)="closeModel()">Cancel </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #accept>
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="center"><img src="../../../assets/img/avatars/info.png" class="img-avatar" alt="admin@bootstrapmaster.com" /></div>
+        <h4 class="modal-title">Continue?</h4>
+      </div>
+      <div class="modal-body">
+        <p>You will not be able to reject/delete application after it has been accepted. Continue?.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info btn-cancel" (click)="closeModel()">Cancel</button>
+        <button type="button" class="btn btn-danger btn-dlt" (click)="ApproveLeave()">Accept</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #reject>
+  <!-- <div class="modal-dialog modal-confirm"> -->
+  <!-- <div class="modal-content"> -->
+  <!-- <div class="modal-header"> -->
+  <div class="center img-center">
+    <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" />
+    <!-- </div> -->
+  </div>
+  <div class="">
+    <h4 class="modal-title title-center">Delete Leave</h4>
+  </div>
+
+  <form [formGroup]="rejectForm" (ngSubmit)="RejectLeave()" #rejectform="ngForm">
+    <div class="modal-body modal-body-txt">
+      <p>Are you sure you want to delete this leave?</p>
+      <input type="text" class="form-control modal-input-box" formControlName="reject_reason" placeholder="delete reason">
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="submit" class="modal-delete-button">Delete</button>
+    </div>
+  </form>
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-template>

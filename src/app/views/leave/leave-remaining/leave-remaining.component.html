@@ -1,0 +1,76 @@
+<div class="animated fadeIn">
+  <div class="row leave-remaining-section">
+    <div class="col-md-3">
+      <input type="text" placeholder="Search..." [(ngModel)]="search" class="search-box">
+    </div>
+    <!-- <div class="col-md-4 form-group">
+    <select class="form-control m-input custom-year" name="year" [(ngModel)]="leave.year" (ngModelChange)="loaduserYear()">
+      <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
+    </select>
+  </div> -->
+  </div>
+
+  <div class="email-app">
+    <div class="custom-scroll">
+      <nav class="col-md-3">
+        <ul class="nav leave-remaining-ul" #leaveList>
+          <ng-container *ngFor="let emp of employee|filter:search ; let i = index">
+            <li class="nav-item" (click)="onClick(i,emp.id)">
+              <a class="nav-link" style="cursor: pointer">
+                <span class="custom-image">
+                  <img style="width: 38px; height: 38px" *ngIf="emp.profile_image ;else other_content" [src]=IMAGE_URL+emp.profile_image
+                    class="img-avatar" />
+                  <ng-template #other_content>
+                    <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                  </ng-template>
+                </span>&nbsp;&nbsp;
+
+                <div class="image-text">
+                  <span>{{emp.firstname}} {{emp.lastname}}</span>
+                  <br>
+                  <h6>{{emp.location}}</h6>
+                </div>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-md-9 custom-table">
+      <div class="row table-row-wrap">
+        <table class="table table-striped" style="width: 100%" [mfData]="(leavetypes) " #mf="mfDataTable"
+          [mfRowsOnPage]="20">
+          <thead>
+            <tr>
+              <th>
+                <mfDefaultSorter by="leavetype">Leave Type</mfDefaultSorter>
+              </th>
+              <th style="width: 60%">
+                <mfDefaultSorter by="count">Leaves Remaining</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="leavetypes" class="animated fadeIn">
+            <tr *ngFor="let item of mf.data">
+              <td>{{item.leavetype}}</td>
+              <td>{{item.count}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- <ng-template #other>
+      <div class="ng-star-inserted col-md-12">
+        No Data Found
+      </div>
+    </ng-template> -->
+    </div>
+  </div>
+</div>

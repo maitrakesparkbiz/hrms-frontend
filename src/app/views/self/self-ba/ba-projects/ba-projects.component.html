@@ -1,0 +1,177 @@
+<main class="message">
+  <div class="row animated fadeIn">
+    <div class="col-md-12 header-buttons">
+      <button type="button" class="edit-button" [routerLink]="['../create-project']"
+        [appCheckPermission]="'SELF-BA.PROJECTS.ADD'">
+        <i class="fa fa-pencil"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1 && !projectDetails.is_closed" type="button" class="edit-button"
+        [routerLink]="['../update-project',projectDetails.id]" [appCheckPermission]="'SELF-BA.PROJECTS.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <button *ngIf="allcheck_id_count==1 && projectDetails.is_closed" type="button" class="edit-button"
+        [routerLink]="['../view-project',projectDetails.id]">
+        <i class="fa fa-eye"></i>
+        View
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrap self-job-opening">
+    <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+      class="row-border hover" style="width: 100%">
+      <thead>
+        <tr class="custom-th">
+          <th style="width: 40px">
+          </th>
+          <th style="width: 120px">Project Name</th>
+          <th style="width: 150px">Created On</th>
+          <th style="width: 80px">Estimated Hours</th>
+          <!--<th style="width: 87px">Total Hours</th>-->
+          <th style="width: 100px;color: #757575;">Status</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="allProjects.length > 0;else no_data">
+        <tr *ngFor="let project of allProjects" (click)="checkone(project.id);$event.stopPropagation()">
+          <td>
+            <input type="checkbox" name="checkselection" value={{project.id}} class="formcontrol" class="formcontrol"
+              [(ngModel)]="project.isSelected" (click)="checkone(project.id);$event.stopPropagation()" />
+            <label></label>
+          </td>
+          <td>
+            <span class="table-txt">{{ project.project_name }}</span>
+          </td>
+          <td><span class="table-txt">{{ project.created_at.date | dateFilter }} {{project.created_at.date |
+                    date:'h:mm a'}}</span></td>
+          <td><span class="table-txt">{{ project.est_time? project.est_time : '-' }}</span></td>
+          <!--<td><span class="table-txt">{{ project.total_hours? project.total_hours : '-' }}</span></td>-->
+          <td *ngIf="project.key_text;else projectFlag">
+            <span class="status" [ngClass]="project.key_text">
+              {{project.value_text}}
+            </span>
+          </td>
+          <ng-template #projectFlag>
+            <td>
+              <span class="status" [ngClass]="project.pf_key_text">
+                {{project.pf_value_text}}
+              </span>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+      <ng-template #no_data>
+        <tbody>
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </ng-template>
+    </table>
+  </div>
+
+  <div *ngIf="allcheck_id_count==1;else default" class="description-wrap">
+    <div  class="custom-scroll">
+      <!--<div class="description-detail-div">-->
+      <div class="custom-detail green-txt">Project Details</div>
+      <span *ngIf="projectDetails.key_text;else projectFlagDetails" class="status" [ngClass]="projectDetails.key_text">
+        {{projectDetails.value_text}}
+      </span>
+      <ng-template #projectFlagDetails>
+        <span class="status" [ngClass]="projectDetails.pf_key_text">
+          {{projectDetails.pf_value_text}}
+        </span>
+      </ng-template>
+
+      <div class="description-detail">
+        <button *ngIf="!projectDetails.is_started && !projectDetails.is_closed" type="button" class="btn btn-primary"
+          (click)="openModel(start,'project_started')">
+          <i class="fa fa-check"></i>Get Started
+        </button>
+        <button *ngIf="projectDetails.is_started && !projectDetails.is_closed" type="button" class="btn btn-primary"
+          (click)="openModel(start,'project_closed')">
+          <i class="fa fa-check"></i>Close Project
+        </button>
+        <button *ngIf="projectDetails.is_closed" type="button" class="btn btn-primary"
+          (click)="openModel(start,'project_reopened')">
+          <i class="fa fa-check"></i>Reopen Project
+        </button>
+        <div class="right-part-content">
+          <span class="left-part">Project Name</span>
+          <span class="right-part">{{projectDetails.project_name}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Project Status</span>
+          <span class="right-part">
+            {{projectDetails.on_hold
+                ? 'On Hold'
+                : (projectDetails.is_closed
+                        ? 'Project Closed'
+                        : (projectDetails.is_started
+                                ? 'Project Started' :
+                                'Not Started Yet'))}}
+          </span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Client Name</span>
+          <span class="right-part">{{projectDetails.client_name}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Project Document</span>
+          <ng-container *ngIf="projectDetails.project_doc.length > 0; else nullData">
+            <a *ngFor="let doc of projectDetails.project_doc" target="blank" href="{{FILE_URL}}{{doc}}">
+              {{doc}}
+            </a>
+          </ng-container>
+          <ng-template #nullData>
+            -
+          </ng-template>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Created On</span>
+          <span class="right-part">{{projectDetails.created_at.date | dateFilter}} {{projectDetails.created_at.date |
+                date:'h:mm a'}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Estimated Hours</span>
+          <span class="right-part">{{projectDetails.est_time ? projectDetails.est_time : '-'}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Total Hours</span>
+          <span class="right-part">{{this.totalHours ? this.totalHours: '-'}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Extra Hours Comment</span>
+          <span
+            class="right-part">{{projectDetails.extra_hours_comment ? projectDetails.extra_hours_comment : '-'}}</span>
+        </div>
+      </div>
+      <div class="right-part-content">
+        <div class="custom-detail  green-txt">Project Description</div>
+        <span>{{projectDetails.project_description}}</span>
+      </div>
+    <!--</div>-->
+    </div>
+    </div>
+
+
+  <ng-template class="test_content" #default>
+    <div class="abc">
+      <h3> Select a row to view it's Detail</h3>
+    </div>
+  </ng-template>
+
+  <ng-template #start>
+    <div class="center img-center"><img src="../../../assets/img/avatars/info.png" class="img-avatar"
+        alt="admin@bootstrapmaster.com" /></div>
+    <h4 class="modal-title title-center">Continue?</h4>
+    <div class="modal-body modal-body-txt">
+      <p>{{promptMsg}}</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="projectAction()">Accept</button>
+    </div>
+  </ng-template>
+</main>

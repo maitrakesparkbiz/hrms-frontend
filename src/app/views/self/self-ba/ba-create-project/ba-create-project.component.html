@@ -1,0 +1,364 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="row header-buttons">
+      <button type="button" class="btn btn-success" (click)="onBack()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Back
+      </button>
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="saveProject()" #projectform="ngForm" class=" main-form">
+      <div class="row">
+        <div class="col-md-12 form-group  comman-card-wrap">
+          <div class="card">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Description</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row ">
+                <div class="col-md-4 form-group ">
+                  <label class="f-700 control-label">Client Name</label>
+                  <br />
+                  <input type="text" name="client_name" formControlName="client_name" class="form-control"
+                    [ngClass]="projectForm.get('client_name').invalid && projectform.submitted?'is-invalid':''">
+                  <div class="invalid-feedback" *ngIf="projectForm.get('client_name').invalid && projectform.submitted">
+                    Client Name is required
+                  </div>
+                </div>
+                <div class="col-md-4 form-group ">
+                  <label class="f-700 control-label">Project Name</label>
+                  <br />
+                  <input type="text" name="project_name" formControlName="project_name" #searchFilter
+                    class="form-control"
+                    [ngClass]="projectForm.get('project_name').invalid && projectform.submitted?'is-invalid':''">
+                  <div class="invalid-feedback"
+                    *ngIf="projectForm.get('project_name').invalid && projectform.submitted">
+                    Project Name is required
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label class="f-700 control-label">Project Hours</label>
+                  <input type="text" name="est_time" formControlName="est_time" class="form-control"
+                    [ngClass]="projectForm.get('est_time').invalid && projectform.submitted?'is-invalid':''"
+                    (keyup)="onHoursChange()">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="f-700 control-label">Description</label>
+                  <br>
+                  <textarea class="form-control" formControlName="project_description"></textarea>
+                </div>
+                <div class="col-md-6 form-group" *ngIf="!projectData.is_tl">
+                  <label class="f-700 control-label">Assign BA</label>
+                  <br>
+                  <ng-multiselect-dropdown class="news-custom-select-warp" [disabled]="ba_dis" formControlName="assigned_ba" [data]="baList"
+                    [(ngModel)]="selectedItems" [settings]="dropdownSettings">
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <label class="f-700 control-label">Project Document</label>
+                  <div class="row project_doc_wrap" style="margin: 2px;">
+                    <div *ngFor="let doc of docArr;let i = index">
+                      <div class="doc-card">
+                        <div class="row col-md-12 document-image">
+                          <p>{{doc}}</p>
+                        </div>
+                        <div class="row col-md-8">
+                          <button type="button" (click)="removeDoc(doc)" class="btn btn-remove remove_btn">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <label for="project_doc" class="custom-file-upload document-select-btn">
+                      Select
+                    </label>
+                    <input type="file" name="project_doc" id="project_doc" (change)="uploadDoc($event)"
+                      formControlName="project_doc" class="form-control input-sm fc-alt" multiple>
+                  </div>
+                </div>
+                <ng-container *ngIf="project_id && projectForm.get('est_time').value > 0">
+                  <div class="col-md-4">
+                    <label class="f-700 control-label">Extra Hours</label>
+                    <input type="text" [readOnly]="disable" (keyup)="checkExtraHoursValidation($event.target.value)"
+                      name="extra_hours" formControlName="extra_hours" class="form-control"
+                      [ngClass]="projectForm.get('extra_hours').invalid && projectform.submitted?'is-invalid':''">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="f-700 control-label">Extra Hours Comment</label>
+                    <input type="text" [readOnly]="disable" name="extra_hours_comment"
+                      formControlName="extra_hours_comment" class="form-control"
+                      [ngClass]="projectForm.get('extra_hours_comment').invalid && projectform.submitted?'is-invalid':''">
+                    <div class="invalid-feedback"
+                      *ngIf="projectForm.controls['extra_hours_comment'].invalid && projectForm.controls['extra_hours_comment'].value==''&& projectform.submitted">
+                      field is required
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class=" row">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Time Limits</h4>
+            </div>
+            <div class="card-body form-padding">
+              <div class="row">
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Deadline</label>
+                  <input [readOnly]="disable" [owlDateTimeTrigger]="deadline" [owlDateTime]="deadline"
+                    formControlName="deadline" name="deadline" class="form-control m-input">
+                  <owl-date-time [pickerType]="'calendar'" #deadline [disabled]="disable"></owl-date-time>
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Threshold Limit 1</label>
+                  <input [readOnly]="disable" type="text" name="threshold_limit1" formControlName="threshold_limit1"
+                    (keyup)="onHoursChange()" class="form-control"
+                    [ngClass]="projectForm.get('threshold_limit1').invalid && projectform.submitted ?'is-invalid':''">
+                  <!-- <div class="invalid-feedback"
+                    *ngIf="projectForm.get('threshold_limit1').invalid && projectform.submitted">
+                    valid number is required<span class="fa fa-info-circle" data-toggle="tooltip" title="Threshold1 less than project hours or Threshold1 not equal to Threshold2 or Threshold1 is less than to Threshold2 or Thresold Hour Not more than 12 hours"></span>
+                  </div> -->
+
+                  <div class="invalid-feedback"
+                    *ngIf="projectForm.get('threshold_limit1').invalid && projectform.submitted">
+                    valid number is required<span class="fa fa-info-circle" data-toggle="tooltip" title="">
+                      <p>threshold1 is less than project hours or threshold1 not equal to threshold2 or threshold1 is
+                        less than to threshold2</p>
+                    </span>
+                  </div>
+
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="f-700 control-label">Threshold Limit 2</label>
+                  <input [readOnly]="disable" type="text" name="threshold_limit2" (keyup)="onHoursChange()"
+                    formControlName="threshold_limit2" class="form-control"
+                    [ngClass]="projectForm.get('threshold_limit2').invalid && projectform.submitted ?'is-invalid':''">
+                  <div class="invalid-feedback"
+                    *ngIf="projectForm.get('threshold_limit2').invalid && projectform.submitted">
+                    valid number is required<span class="fa fa-info-circle" data-toggle="tooltip" title="">
+                      <p>threshold2 is less than project hours or threshold2 not equal to threshold1 or threshold2 is
+                        greater than to threshold1</p>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="project_id">
+                <div class="col-md-4 form-group">
+                  <label class="switch switch-label switch-primary">
+                    On Hold
+                    <input type="checkbox" name="on_hold" formControlName="on_hold" class="switch-input"
+                      (change)="on_Hold($event.target.checked)">
+                    <span class="switch-slider toggle-switch" data-unchecked="No" data-checked="Yes"></span>
+                  </label>
+                </div>
+                <div class="col-md-4" *ngIf="hold_comment">
+                  Comment
+                  <input type="text" name="hold_comment" formControlName="hold_comment" class="form-control"
+                    [ngClass]="projectForm.get('hold_comment').invalid && projectform.submitted ?'is-invalid':''">
+                  <div class="invalid-feedback"
+                    *ngIf="projectForm.get('hold_comment').invalid && projectform.submitted">
+                    field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="project_id">
+        <div class="col-md-12 form-group">
+          <div class="card">
+            <div class="card-header custom-blue">
+              <h4 class="c-white">
+                <i class="fa fa-info-circle"></i>Record Timing</h4>
+            </div>
+            <div class="record_timing_top">
+              <div class="margin-20 header-record">
+                <button class="btn-secondary edit-button " [disabled]="disable || (!projectData.is_started)"
+                  type="button" (click)="addAddress()" style="cursor: default;color: #fff;">
+                  Add +
+                </button>
+              </div>
+
+            </div>
+            <div formArrayName="record_timing">
+              <div *ngFor="let address of projectForm.get('record_timing')['controls']; let j=index"
+                [formGroupName]="j">
+                <div>
+                  <button class="btn-danger" *ngIf="j >= 0" (click)="removeAddress(j)"
+                    style="cursor: pointer; float: right">
+                    X
+                  </button>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="form-group col-md-3">
+                      <input type="text" class="form-control" readonly value="{{timing_date}}"
+                        formControlName="record_date">
+                    </div>
+                    <div class="form-group col-md-3 form_sec_in">
+                      <ng-select #empSelect name="emp_id" [items]="all_users" [selectOnTab]="true" bindValue="value"
+                        placeholder="employee" formControlName="emp_id" class="form-control custom_employee"
+                        [ngClass]="address.get('emp_id').invalid && projectform.submitted ?'is-invalid':''">
+                      </ng-select>
+                      <div class="invalid-feedback" *ngIf="address.get('emp_id').invalid && projectform.submitted">
+                        valid number is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <!--(keyup)="checkRecordHours(projectForm.get('est_time').value, $event.target.value, j)"-->
+                      <input type="number" class="form-control" placeholder="hours" formControlName="record_hours"
+                        [ngClass]="address.get('record_hours').invalid && projectform.submitted ?'is-invalid':''">
+                      <div class="invalid-feedback"
+                        *ngIf="address.get('record_hours').invalid && projectform.submitted">
+                        valid number is required<span class="fa fa-info-circle" data-toggle="tooltip" title="">
+                          <p>hours is not more than 12 or field is required</p>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <input type="text" class="form-control" placeholder="redmark comment(optional)"
+                        formControlName="redmark_comment">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="empTimingRecord.length > 0" class="table_wrap">
+              <div id="collapseExample">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="record_timing_search">
+                      <input type="text" formControlName="searchTxt" name="searchTxt"
+                        placeholder="search employee name">
+                    </div>
+                    <table class="table" style="width: 100%" [mfData]="empTimingRecord | search:searchTxt"
+                      #mf="mfDataTable" [mfRowsOnPage]="5">
+                      <thead>
+                        <tr>
+                          <th style="width: 10%">
+                            <mfDefaultSorter by="name">Created By</mfDefaultSorter>
+                          </th>
+                          <th style="width: 10%">
+                            <mfDefaultSorter by="name">Employee</mfDefaultSorter>
+                          </th>
+                          <th style="width: 10%">
+                            <mfDefaultSorter by="name">Hours</mfDefaultSorter>
+                          </th>
+                          <th style="width: 20%">
+                            <mfDefaultSorter by="status">Date</mfDefaultSorter>
+                          </th>
+                          <th style="width: 20%">
+                            <mfDefaultSorter by="status">Comment</mfDefaultSorter>
+                          </th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of mf.data" style="cursor: pointer;"
+                          [ngClass]="item.redmark_comment!='' ? 'redmark_tag' : ''">
+                          <td>
+                            {{item.created_by.firstname}} {{item.created_by.lastname}}
+                          </td>
+                          <td>
+                            {{item.emp_id.firstname}} {{item.emp_id.lastname}}
+                          </td>
+                          <td>{{item.record_hours}}</td>
+                          <td>{{item.record_date.date | dateFilter}}</td>
+                          <td>
+                            {{item.redmark_comment ? item.redmark_comment : '-'}}
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td colspan="5">
+                            <mfBootstrapPaginator [rowsOnPageSet]="[2,4,6]"></mfBootstrapPaginator>
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                    <div class="total-hours">
+                      <label>Total Hours:{{empTimingRecordTime.total ? empTimingRecordTime.total : ''}}</label>
+                      <br>
+                      <label>Total
+                        Days:{{empTimingRecordTime.diff_date === 0 ? 1 : empTimingRecordTime.diff_date}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="button-wrap">
+          <button class="btn btn-primary custom-create" type="submit">
+            <span>{{!!project_id?'Update':'Create'}}</span>
+          </button>&nbsp;
+          <button type="button" class="btn btn-default custom-cancel" (click)="onBack()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="row comments_in">
+      <div class="col-md-12 form-group  comman-card-wrap">
+        <div class="card">
+          <div class="card-header custom-blue">
+            <h4 class="c-white">
+              <i class="fa fa-info-circle"></i>Comments BA</h4>
+          </div>
+          <ng-container *ngIf="projectData.convs &&  projectData.convs.length > 0">
+            <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="comments-msg">
+              <div class="card-body form-padding row" formArrayName="comments">
+                <div class="col-md-6 custom-comment-box"
+                  *ngFor="let ctrl of commentForm.get('comments')['controls']; let i=index" [formGroupName]="i">
+                  <h4>{{projectData.convs[i]['second_user']}}</h4>
+                  <div class="msg-wrap">
+                    <ng-container *ngFor="let cmt of projectData.convs[i].comments">
+                      <div class="msg" [ngClass]="cmt.emp_id == userId ? 'sender' : 'receiver'">
+                        {{cmt.msg_text}}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="cmt-form text-box-msg">
+                    <input type="text" class="cmt-box" formControlName="msg_text" placeholder="type comment ... "
+                      (keyup.enter)="doComment(ctrl,i)">
+                    <button type="button" (click)="doComment(ctrl,i)" class="btn btn-primary"
+                      [disabled]="!ctrl.get('msg_text').valid"><i class="fa fa-paper-plane"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #projName>
+    <div class="modal-body modal-body-txt">
+      <h4>
+        <p class="caption-txt">project with this name already exist.</p>
+      </h4>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Ok</button>
+    </div>
+  </ng-template>
+</main>

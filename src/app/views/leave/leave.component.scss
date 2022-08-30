@@ -1,0 +1,136 @@
+.custom-duration {
+  height: 29px;
+  width: 118.45px;
+  margin: 0px 5px 0;
+  border-radius: 0;
+  background: #4f585d;
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+
+  outline: none;
+  padding-left: 5px;
+  border-radius: 3px
+}
+
+.custom-duration:focus {
+  outline: none
+}
+
+.custom-status {
+  height: 29px;
+  width: 118.45px;
+  border-radius: 0;
+  background: #4f585d;
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+
+  outline: none;
+  padding-left: 5px;
+  border-radius: 3px
+}
+
+/*09-01-2019*/
+
+.details-tag {
+  float: left;
+  width: 100%
+}
+
+form.custom-wrap {
+  float: right;
+  width: auto;
+  margin-top: 0;
+}
+
+img.img-avatar {
+  object-position: left top;
+  object-fit: cover;
+}
+
+
+// 28-01-2019
+
+.emp-text {
+  float: left;
+  padding: 0;
+  padding-top: 7px;
+  padding-left: 10px;
+}
+
+.custom-image {
+  float: left;
+  width: 100%;
+  text-align: left;
+  padding: 15px 0;
+}
+
+.search-section.search {
+  margin-right: 15px;
+}
+
+.emp-img {
+  width: 10%
+}
+
+span.table-txt.blue-txt.custom-emp-details {
+  padding-top: 7px;
+  cursor: pointer;
+}
+
+
+// 05-2-2019
+
+table.dataTable tbody tr {
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+  span.custom-emp-img {
+    width: 23%
+  }
+
+}
+
+
+
+@media(max-width:1500px) {
+  span.custom-emp-img {
+    width: 25% !important;
+  }
+
+  .emp-img {
+    width: 14%;
+  }
+}
+
+
+
+
+
+@media(max-width:1400px) {
+  span.custom-emp-img {
+    width: 30%;
+  }
+
+  .abc,
+  .description-wrap {
+    width: 25.1%;
+  }
+}

@@ -1,0 +1,78 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 header-buttons setting-header">
+      <button type="button" class="new-button" (click)="addPolicy()" [appCheckPermission]="'COMPANY-POLICY.ADD'">
+        <i class="fa fa-plus "></i>
+        Add
+      </button>
+      <button *ngIf="allcheck_id_count==1" type="button " class="edit-button" (click)="editPolicy()"
+        [appCheckPermission]="'COMPANY-POLICY.EDIT'">
+        <i class="fa fa-pencil "></i>
+        Edit
+      </button>
+      <button *ngIf="allcheck_id_count && !selectedPolicy.is_published" type="button " class="del-button"
+        (click)="openModel(delete)" [appCheckPermission]="'COMPANY-POLICY.DELETE'">
+        <i class="fa fa-trash "></i>
+        Delete
+      </button>
+    </div>
+
+    <div class="table-wrap setting-table holiday-table">
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 40px">
+            </th>
+            <th style="width: 180px">Title</th>
+            <th style="width: 100px">Document</th>
+            <th style="width: 100px">Created At</th>
+            <th style="width: 100px">Status</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="policyData?.length != 0">
+          <tr *ngFor="let item of policyData" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" /><label></label>
+            </td>
+            <td><span class="table-txt">{{item.title}}</span></td>
+            <td><span class="table-txt"><a target="blank"
+                  href="{{FILE_URL}}{{item.policy_doc}}">{{item.policy_doc ? item.policy_doc : '-' }}</a></span>
+            </td>
+            <td><span class="table-txt">{{item.created_at.date | dateFilter}}</span></td>
+            <td><span class="table-txt">
+                <div *ngIf="item.is_published;else unPublished" class="status approve-tag">
+                  <i class="fa fa-check"></i>&nbsp;Published
+                </div>
+                <ng-template #unPublished>
+                  <div class="status reject-tag">
+                    <i class="fa fa-ban"></i>&nbsp;Draft
+                  </div>
+                </ng-template>
+              </span></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="policyData?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #delete>
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteCompanyPolicy()">Delete</button>
+    </div>
+  </ng-template>
+</main>

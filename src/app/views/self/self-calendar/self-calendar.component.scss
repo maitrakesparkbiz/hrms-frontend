@@ -1,0 +1,328 @@
+  .text-center {
+  float: left;
+  width: 100%;
+  padding: 15px 0 15px 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.cus-month {
+  float: left;
+}
+
+.btn.btn-outline-secondary {
+  float: left;
+  background: #4f585d;
+  border: none;
+  width: 26px;
+  height: 32px;
+  border-radius: 3px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.custom-month {
+  float: left;
+  width: 80%;
+  text-align: center;
+}
+
+.custom-month h3 {
+  margin: 0;
+  padding-top: 7px;
+}
+
+.custom-color {
+  float: left;
+}
+
+.customer-calender {
+  padding-right: 0;
+}
+
+.custom-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 13px;
+  color: #5e5e5e;
+}
+
+.color-code {
+  float: left;
+  width: 100%;
+  padding-top: 10px;
+}
+
+.color-1 {
+  float: left;
+  width: 33.33%;
+}
+
+.color-1.event {
+  width: 23%;
+}
+
+.custom-event-span {
+  width: 14.48%;
+  background: #00bcd4;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.custom-event-paragraph {
+  float: left;
+  width: 85%;
+  text-align: left;
+  padding-left: 10px;
+  margin: 0;
+  font-size: 12px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+
+.custom-year-span {
+  width: 10%;
+  background: #66bb6a;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.custom-year-paragraph {
+  float: left;
+  width: 90%;
+  text-align: left;
+  padding-left: 10px;
+  margin: 0;
+  font-size: 12px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+
+.custom-holiday-span {
+  width: 10%;
+  background: #f44336;
+  height: 12px;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.custom-holiday-paragraph {
+  float: left;
+  width: 90%;
+  text-align: left;
+  padding-left: 10px;
+  margin: 0;
+  font-size: 12px;
+  color: #4c4c4c;
+
+  padding-top: 3px;
+}
+
+.cal-month-view {
+  float: left;
+  width: 100%;
+  padding-top: 10px;
+}
+
+.cal-month-view .cal-days {
+  border: 1px solid #c8ced3;
+  border-bottom: 0;
+}
+
+.cal-month-view .cal-days .cal-cell-row {
+  border-bottom: 1px solid #c8ced3;
+}
+
+.cal-month-view .cal-cell {
+  float: left;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.cal-month-view .cal-day-cell:not(:last-child) {
+  border-right: 1px solid #c8ced3;
+}
+
+.cal-month-view .cal-day-cell {
+  min-height: 100px;
+}
+
+.cal-month-view .cal-cell-top {
+  min-height: 62px;
+}
+
+
+.cal-month-view .cal-day-number {
+  font-size: 1.2em;
+  font-weight: 400;
+  opacity: .5;
+  margin-top: 15px;
+  margin-right: 15px;
+  float: right;
+  margin-bottom: 10px;
+}
+
+span.cal-day-number {
+  color: #ccc;
+  font-size: 25px;
+
+  float: left;
+  padding-left: 10px;
+  margin-top: 0;
+}
+
+.cal-month-view .cal-day-cell.cal-out-month .cal-day-number {
+  opacity: .1;
+  cursor: default;
+}
+
+.cal-month-view .cal-day-cell.cal-weekend .cal-day-number {
+  color: #8b0000;
+}
+
+
+.custom-holiday {
+  display: block;
+  padding: 1px 28.42px;
+  background: #f44336;
+  color: #fff;
+  float: left;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px;
+  text-align: left;
+  margin: 0 0 5px 10px;
+  font-weight: 500;
+}
+
+
+.year-events {
+  color: #fff;
+  background: #00bcd4;
+  display: block;
+  float: left;
+  border-radius: 3px;
+  margin: 0 0 5px 10px;
+  padding: 1px 11.89px;
+  font-size: 12px;
+
+  font-weight: 500;
+}
+
+.year-festival {
+  display: block;
+  padding: 1px 15.42px;
+  background: #66bb6a;
+  color: #fff;
+  float: left;
+
+  font-size: 12px;
+  border-radius: 3px;
+  text-align: left;
+
+  font-weight: 500;
+   word-break: break-word;
+    margin: 0 0 5px 0px;
+
+}
+
+.custom-description {
+  border-left: 1px solid #eee;
+  padding-left: 0;
+  min-height: 747px;
+}
+
+.description {
+  padding: 30px;
+}
+
+.description h4 {
+  font-size: 23px;
+  color: #2196f3;
+  font-weight: 500;
+
+  text-transform: capitalize;
+}
+
+.description h5 {
+  font-size: 17px;
+
+  color: #3f51b5;
+  font-weight: 500;
+  padding-top: 8px;
+  text-transform: capitalize;
+}
+
+.description span {
+  font-size: 13px;
+  color: #5e5e5e;
+
+}
+
+.employee-profile {
+  float: left;
+  width: 100%;
+  padding: 7px 0;
+}
+
+.emp-img {
+  float: left;
+  width: 16%;
+}
+
+.emp-details {
+  float: left;
+  width: 80%;
+}
+
+.img-avatar {
+  max-width: none;
+}
+
+.emp-details a {
+  display: inline-block;
+  padding-top: 7px;
+}
+
+.emp-button {
+  padding-bottom: 3px
+}
+
+
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+
+  .emp-img {
+    width: 20%;
+  }
+
+  .emp-details {
+    width: 80%
+  }
+
+}
+
+@media(max-width:1500px) {
+  .emp-img {
+    width: 23%
+  }
+
+  .emp-details {
+    width: 77%
+  }
+}

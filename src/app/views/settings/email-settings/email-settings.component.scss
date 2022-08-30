@@ -1,0 +1,293 @@
+.message .row .btn.btn-success i {
+  padding-right: 5px;
+}
+
+.card-header {
+  padding: 15px 20px 15px 20px;
+  border-radius: 0;
+  background-color: #66bb6a
+}
+
+.card-header.red-bg {
+  background-color: #e57373;
+}
+
+.card-header h4.c-white {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 0;
+
+  font-weight: 700;
+}
+
+.card-header h4.c-white i {
+  padding-right: 5px;
+}
+
+textarea.form-control {
+  height: 85px;
+  resize: none;
+}
+
+textarea.form-control.input-sm.fc-alt:focus {
+  box-shadow: none;
+  border-color: #2f88d2;
+}
+
+label.f-700.control-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5e5e5e;
+
+}
+
+.form-group.pull-center {
+  text-align: center;
+}
+
+.form-group button.btn.btn-primary {
+  margin: 0 5px;
+  border-color: transparent;
+  background-color: #2196f3;
+}
+
+button.btn:focus {
+  box-shadow: none;
+}
+
+.form-group button.btn.btn-primary:focus {
+  box-shadow: none;
+}
+
+.message .row .card .card-body .form-group .checkbox {
+  position: relative;
+}
+
+.message .row .card .card-body .form-group .checkbox input[type="checkbox"] {
+  position: absolute;
+  left: 32px;
+  z-index: 2;
+  top: 15px;
+  opacity: 0;
+}
+
+.message .row .card .card-body .form-group .checkbox input[type="checkbox"]+i:before {
+  content: '';
+  background: #fff;
+  height: 17px;
+  width: 17px;
+  border: 2px solid #7a7a7a;
+  position: absolute;
+  left: 0px;
+  top: 5px;
+  border-radius: 2px;
+}
+
+.message .row .card .card-body .form-group .checkbox input[type="checkbox"]:checked+i:after {
+  content: '\f00c';
+  font-family: fontawesome;
+  background: #000;
+  color: #fff;
+  position: absolute;
+  display: flex;
+  left: 0px;
+  top: 5px;
+  height: 17px;
+  width: 17px;
+  font-size: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.message .row .card .card-body .form-group .checkbox .txt-wrap {
+  padding-left: 30px;
+}
+
+.message .row .card .card-body .form-group .checkbox .txt-wrap h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5e5e5e;
+  line-height: 25px;
+  margin-bottom: 0
+}
+
+.message .row .card .card-body .form-group .checkbox .txt-wrap h5 {
+  font-size: 12px;
+  color: #5e5e5e;
+  font-weight: 400;
+  line-height: 16px;
+  margin-bottom: 0;
+  float: left;
+}
+
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-untouched,
+input.form-control.input-sm.fc-alt,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-untouched,
+select.form-control.input-sm.fc-alt.ng-valid.ng-touched.ng-dirty,
+select.form-control.input-sm.fc-alt.ng-valid.ng-untouched.ng-dirty {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-touched:focus,
+input.form-control.input-sm.fc-alt.ng-valid.ng-dirty.ng-untouched:focus,
+select.form-control.input-sm.fc-alt.ng-valid.ng-touched.ng-dirty:focus,
+input.form-control.input-sm.fc-alt:focus select.form-control.input-sm.fc-alt.ng-valid.ng-untouched.ng-dirty:focus,
+select.form-control.input-sm.fc-alt.ng-pristine.ng-valid.ng-untouched:focus {
+  box-shadow: none;
+  border-color: #2f88d2 !important
+}
+
+.custom-form {
+  padding: 30px;
+  background: #f5f5f5;
+  border-top: 1px solid #eee;
+  height: 100% !important;
+  min-height: 100vh;
+}
+
+
+// 22-11-2018
+.backbtn {
+  font-size: 15px;
+  margin: 15px 0 15px 30px !important;
+  padding: 3.5px 8.67px;
+  border: none;
+  border-radius: 2px;
+  background: #66bb6a;
+
+}
+
+.backbtn:focus {
+  box-shadow: none
+}
+
+.backbtn:active:focus {
+  box-shadow: none !important
+}
+
+.backbtn:hover {
+  background: #4cac51
+}
+
+.updatebtn {
+  background-color: #2196f3;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+  padding: 5px 11px;
+  font-size: 13px;
+
+  border: none;
+  border-radius: 2px
+}
+
+.updatebtn:hover {
+  opacity: .9;
+  background-color: #2196f3;
+}
+
+.updatebtn:active {
+  opacity: .9;
+  background-color: #2196f3 !important;
+}
+
+.updatebtn:focus {
+  opacity: .9;
+  background-color: #2196f3;
+  box-shadow: none !important
+}
+
+.updatebtn:active:focus {
+  background-color: #2196f3;
+}
+
+.cancelbtn {
+  font-size: 13px;
+
+  padding: 4.5px 11px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #fff
+}
+
+.email-app main {
+  padding: 0;
+}
+
+.custom-setting {
+  min-height: 820px
+}
+
+.updatebtn {
+  background-color: #2196f3;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  padding: 4.5px 11px;
+  font-size: 13px;
+
+}
+
+.updatebtn:hover {
+  opacity: .9;
+  background-color: #2196f3;
+}
+
+.updatebtn:active {
+  opacity: .9;
+  background-color: #2196f3;
+}
+
+.updatebtn:focus {
+  opacity: .9;
+  background-color: #2196f3;
+}
+
+.updatebtn:active:focus {
+  opacity: .9;
+  background-color: #2196f3;
+}
+
+.cancelbtn {
+  font-size: 13px;
+
+  padding: 4.5px 11px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .16), 0 2px 10px rgba(0, 0, 0, .12);
+  background: #fff
+}
+
+.cancelbtn:hover {
+  opacity: .9;
+  background: #fff
+}
+
+.cancelbtn:active {
+  opacity: .9;
+  background: #fff
+}
+
+.cancelbtn:focus {
+  opacity: .9;
+  background: #fff
+}
+
+.cancelbtn:active:focus {
+  opacity: .9;
+  background: #fff
+}
+
+input {
+  height: 30px !important;
+  border-radius: 2px !important
+}
+
+input:focus {
+  border: 1px solid #2f88d2 !important;
+  box-shadow: none !important
+}
+
+.card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  border: none;
+}

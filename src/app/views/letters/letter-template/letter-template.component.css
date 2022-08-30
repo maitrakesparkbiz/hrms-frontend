@@ -1,0 +1,18 @@
+.team-table {
+  float: left;
+  width: 100%;
+  margin-top: 60px; }
+
+main.messaage.main-div {
+  padding: 0 15px; }
+
+main.messaage.main-div button {
+  margin: 15px 0; }
+
+main.messaage.main-div form {
+  padding: 20px 0 0 0; }
+
+main.messaage.main-div form .card-body .row {
+  padding-bottom: 10px; }
+
+/*# sourceMappingURL=letter-template.component.css.map */

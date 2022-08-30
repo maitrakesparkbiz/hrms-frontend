@@ -1,0 +1,286 @@
+<div class="main-section animated fadeIn">
+  <div class="row">
+    <div class="col-md-12 header-buttons">
+      <!-- <button *ngIf="allcheck_id_count==1 && finalApprove" (click)="openModel(accept)" type="button" class="select-btn accept-button">
+        <i class="fa fa-check "></i>
+        Grant Leave
+      </button>
+      <button *ngIf="allcheck_id_count==1" (click)="openModel(reject)" type="button" class="select-btn reject-button">
+        <i class="fa fa-close "></i>
+        Reject
+      </button> -->
+      <!-- <button *ngIf="allcheck_id_count==1" (click)="openModel(reject)" type="button" class="btn btn-danger reject">
+        <i class="fa fa-close "></i>
+        Move to Panding
+      </button> -->
+      <div class="search-section">
+        <!-- <input class="search-box ng-pristine ng-valid ng-touched" placeholder="Search..." [(ngModel)]="search" type="text"> -->
+        <form [formGroup]="leaveForm" class="custom-wrap">
+          <select (change)="getSelectedData()" class="custom-duration" [formControlName]="'duration'">
+            <option value="all">Duration:All</option>
+            <option value="today">Today</option>
+            <option value="this_month">This Month</option>
+            <option value="last_30_days">Last 30 days</option>
+            <option value="last_3_months">Last 3 Months</option>
+            <option value="last_6_months">Last 6 Months</option>
+            <option value="last_year">Last Year</option>
+          </select>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="table-wrap manage-leave-table">
+      <!-- <table class="table table-striped" style="width: 100%" [mfData]="(selectedResult|filter:search) " #mf="mfDataTable"
+        [mfRowsOnPage]="20">
+        <thead>
+          <tr>
+            <th style="width: 5%">
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="firstname">Employee</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="leave_date">Date</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              <mfDefaultSorter by="reason">Reason</mfDefaultSorter>
+            </th>
+            <th style="width: 15%">
+              <mfDefaultSorter by="status">Status</mfDefaultSorter>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" [(ngModel)]="item.isSelected"
+                (click)="checkone(item.id)" />
+              <label></label>
+            </td>
+            <td>
+              <span>
+                <img style="width: 38px; height: 38px" *ngIf="item.user_id['profile_image'] ;else other_content" [src]=IMAGE_URL+item.profile_image
+                  class="img-avatar" />
+                <ng-template #other_content>
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </ng-template>
+              </span>
+              <span class="emp-text">
+                {{item.firstname}}
+              </span>
+            </td>
+            <td>
+              <h6>{{item.leavedate}}</h6>
+            </td>
+            <td>
+              <h6>{{item.reason}}</h6>
+            </td>
+            <td>
+              <h6>
+                <div *ngIf="item.status=='Accept'" class="status approve-tag" style="width: 70px">Approved
+                </div>
+              </h6>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table> -->
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover" style="width: 100%">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 40px">
+              <!-- <input id="" type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" />
+              <label for=""></label> -->
+            </th>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="AllLeaves?.length != 0">
+          <tr *ngFor="let item of AllLeaves" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" [(ngModel)]="item.isSelected"
+                (click)="checkone(item.id);$event.stopPropagation()" />
+              <label></label>
+            </td>
+            <td>
+              <span class="custom-emp-img">
+                <img style="width: 38px; height: 38px" *ngIf="item.user_id.profile_image ;else other_content" [src]=IMAGE_URL+item.user_id.profile_image
+                  class="img-avatar" />
+                <ng-template #other_content>
+                  <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+                </ng-template>
+              </span><span class="table-txt blue-txt custom-emp-details">{{item.firstname}}</span>
+            </td>
+            <td><span class="table-txt">{{ item.leave_date.date | dateFilter }}</span></td>
+            <td><span class="table-txt lower-case-txt custom-reason">{{ item.reason }}</span></td>
+            <!-- <td>
+              <h6>
+                <ng-container *ngIf="item.final_approve && item.today;else actions"> -->
+            <!-- <div [class]="item.status=='Pending' ? 'status pending-tag' : (item.status=='Accept' ? 'status approve-tag':'status reject-tag')">
+                    {{item.status == 'Accept' ? 'Approved' : (item.status == 'Reject' ? 'Rejected'
+                    :item.status)}}
+                  </div> -->
+            <!-- <div class="status approve-tag">Approved</div>
+                </ng-container>
+                <ng-template #actions>
+                  <div class="action-btns selective-bttn leave-selection-btn" *ngIf="item.today">
+                    <button type="button" (click)="openModel(accept,item.id);$event.stopPropagation()" class="tick-btn">
+                      <i class="fa fa-check"></i>
+                    </button>
+                    <button type="button" (click)="openModel(reject,item.id);$event.stopPropagation()" class="cross-btn">
+                      <i class="fa fa-close"></i>
+                    </button>
+                  </div>
+                </ng-template>
+              </h6>
+            </td> -->
+
+
+
+
+            <td>
+              <h6>
+                <ng-container *ngIf="item.final_approve && item.today;else actions">
+                  <!-- <div [class]="item.status=='Pending' ? 'status pending-tag' : (item.status=='Accept' ? 'status approve-tag':'status reject-tag')">
+                    {{item.status == 'Accept'  ? 'Approved' : (item.status == 'Reject' ? 'Rejected'
+                    :item.status)}}
+                  </div> -->
+                  <div class="status approve-tag">Approved</div>
+                </ng-container>
+                <ng-template #actions>
+                  <div class="action-btns selective-bttn leave-selection-btn" *ngIf="item.today;else past_leaves">
+                    <button type="button" (click)="openModel(accept,item.id);$event.stopPropagation()" class="tick-btn">
+                      <i class="fa fa-check"></i>
+                    </button>
+                    <button type="button" (click)="openModel(reject,item.id);$event.stopPropagation()" class="cross-btn">
+                      <i class="fa fa-close"></i>
+                    </button>
+                  </div>
+                  <ng-template #past_leaves>
+                    <div *ngIf="item.final_approve" [class]="item.status=='Pending' ? 'status pending-tag' : (item.status=='Accept' ? 'status approve-tag':'status reject-tag')">
+                      {{item.status == 'Accept' ? 'Approved' : (item.status == 'Reject' ? 'Rejected'
+                      :item.status)}}
+                    </div>
+                  </ng-template>
+                </ng-template>
+              </h6>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="AllLeaves?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+
+    <div *ngIf="allcheck_id_count==1;else other_content" class="description-wrap">
+      <div class="custom-image">
+        <div class="emp-img">
+          <img style="width: 38px; height: 38px" *ngIf="leavedetail.user_id.profile_image ;else other_content" [src]=IMAGE_URL+leavedetail.user_id.profile_image
+            class="img-avatar" />
+          <ng-template #other_content>
+            <img style="width: 38px; height: 38px" [src]="employee_image" class="img-avatar" />
+          </ng-template>
+        </div>
+        <div class="emp-text">
+          {{leavedetail.firstname}}
+        </div>
+      </div>
+
+      <!-- <div class="row" *ngIf="leavedetail.status=='Pending'" class="status pending-tag">
+        {{leavedetail.status}}
+      </div> -->
+      <div class="row" *ngIf="leavedetail.final_approve && leavedetail.today" class="status approve-tag">
+        Approved
+      </div>
+      <!--
+      <div class="row" *ngIf="leavedetail.status=='Reject'" class="status reject-tag">
+        Rejected
+      </div> -->
+
+      <div class="description-detail">
+        <div class="right-part-content">
+          <span class="left-part">Leave Type</span>
+          <span class="right-part leave">{{leavedetail.leave_type.leavetype}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Date</span>
+          <span class="right-part">{{leavedetail.leave_date.date | dateFilter}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Half Day</span>
+          <span class="right-part">{{leavedetail.half_day ? 'Yes' : 'No'}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Days</span>
+          <span class="right-part">{{leavedetail.leave_count}}</span>
+        </div>
+        <div class="right-part-content">
+          <span class="left-part">Reason</span>
+          <span class="right-part">{{leavedetail.reason}}</span>
+        </div>
+      </div>
+    </div>
+    <ng-template class="test_content" #other_content>
+      <div class="abc">
+        <h3> Select a row to view it's Detail</h3>
+      </div>
+    </ng-template>
+  </div>
+</div>
+<ng-template #accept>
+  <!-- <div class="modal-dialog modal-confirm"> -->
+  <!-- <div class="modal-content"> -->
+  <!-- <div class="modal-header"> -->
+  <div class="center img-center"><img src="../../../assets/img/avatars/info.png" class="img-avatar" alt="admin@bootstrapmaster.com" /></div>
+  <h4 class="modal-title title-center">Continue?</h4>
+  <!-- </div> -->
+  <div class="modal-body modal-body-txt">
+    <p>You will not be able to reject/delete application after it has been accepted. Continue?.</p>
+  </div>
+  <div class="modal-footer modal-footer-buttons">
+    <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+    <button type="button" class="modal-delete-button" (click)="ApproveLeave()">Accept</button>
+  </div>
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-template>
+
+<ng-template #reject>
+  <!-- <div class="modal-dialog modal-confirm"> -->
+  <!-- <div class="modal-content"> -->
+  <!-- <div class="modal-header"> -->
+  <div class="center img-center">
+    <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" />
+  </div>
+  <h4 class="modal-title title-center">Reject Leave</h4>
+  <!-- </div> -->
+  <form [formGroup]="rejectForm" (ngSubmit)="RejectLeave()" #rejectform="ngForm">
+    <div class="modal-body modal-body-txt">
+      <p>Are you sure you want to reject this leave?</p>
+      <input class="form-control modal-input-box" formControlName="reject_reason" placeholder="reject reason" [ngClass]="rejectForm.get('reject_reason').invalid && rejectform.submitted ? 'is-invalid':''">
+      <div class="invalid-feedback" *ngIf="rejectForm.get('reject_reason').invalid && rejectform.submitted">
+        Reject Reason is Required
+      </div>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="submit" class="modal-delete-button">Reject</button>
+    </div>
+  </form>
+  <!-- </div> -->
+  <!-- </div> -->
+</ng-template>

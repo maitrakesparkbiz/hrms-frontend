@@ -1,0 +1,208 @@
+.img-avatar,
+.avatar>img,
+.img-circle {
+  object-fit: cover;
+  object-position: left top
+}
+
+.email-app nav {
+  padding: 0;
+  border-right: 1px solid #eee;
+  max-width: none;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+
+.email-app {
+  border: 1px solid #eee;
+}
+
+li.nav-item.ng-star-inserted:hover {
+  background: #f5f5f5 !important;
+}
+
+li.nav-item.ng-star-inserted {
+  width: 252px !important;
+  padding: 0 25px;
+}
+
+.email-app nav .nav-link {
+  border-bottom: none;
+}
+
+input.search-box {
+  background: #4f585d;
+  color: #fff !important;
+  border: none;
+  outline: none;
+  max-width: 190px;
+  height: 29px;
+  padding-left: 10px;
+  font-size: 15px !important;
+  line-height: 29px;
+  margin-top: 15px !important;
+  margin-left: 30px !important
+}
+
+input::placeholder {
+  color: #fff
+}
+
+select.form-control.m-input.custom-year {
+  width: 106px;
+  background: #4f585d;
+  color: #fff;
+  margin-top: 15px;
+  padding: 0 9px;
+  height: 29px;
+  border-radius: 0;
+  border: none;
+  margin-bottom: 0 !important
+}
+
+select.form-control.m-input.custom-year:focus {
+  box-shadow: none;
+  border: none;
+}
+
+.form-group {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.custom-image {
+  float: left;
+  width: 35%;
+}
+
+.image-text {
+  float: left;
+  width: 60%;
+}
+
+li.nav-item.ng-star-inserted {
+  padding: 7px 25px;
+}
+
+.image-text span {
+
+  font-size: 13px;
+  color: #333333 !important;
+  text-transform: capitalize;
+}
+
+.image-text h6 {
+  font-size: 12px;
+  font-weight: 400;
+
+  color: #898989;
+  padding-top: 3px;
+}
+
+.custom-table {
+  margin-left: 15px;
+  padding: 0;
+}
+
+.table thead th {
+  border-bottom: 1px solid #eee;
+  padding-left: 25px;
+}
+
+.table th,
+.table td {
+  border-top: none;
+  padding-left: 25px;
+}
+
+
+tr.ng-star-inserted {
+  border-bottom: 1px solid #eee;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background: transparent
+}
+
+.leave-remaining-section {
+  padding-bottom: 16px;
+}
+
+tr.ng-star-inserted:hover {
+  background: #f5f5f5 !important;
+}
+
+a.nav-link {
+  padding-left: 6px;
+}
+
+td {
+
+  font-size: 13px;
+  color: #5e5e5e !important;
+}
+
+.ng-star-inserted.custom-nodata {
+  float: left;
+  width: 100%;
+  text-align: center;
+  margin-top: -39px;
+  background: #f5f5f5;
+  padding: 19px 0;
+}
+
+li.active {
+  background: #efefef;
+}
+
+.custom-scroll {
+  float: left;
+  width: 253px;
+  overflow-y: auto;
+  height: 100vh;
+  overflow-x: hidden;
+  max-height: 800px;
+
+}
+
+.custom-table {
+  flex: 0 0 87%;
+  max-width: calc(100% - 283px);
+}
+
+ul.nav.leave-remaining-ul li a {
+  padding-left: 4px !important;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, .75);
+}
+
+
+.custom-image {
+  width: 32%;
+}
+
+.email-app {
+  min-height: 86vh;
+}
+
+@media(max-width:1500px) {
+  .custom-image {
+    width: 30%;
+  }
+}
+
+
+
+
+@media (max-width: 1400px) {
+  .custom-image {
+    width: 30%;
+  }
+}

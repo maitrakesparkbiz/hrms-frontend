@@ -1,0 +1,273 @@
+img.img-avatar {
+  object-fit: cover !important;
+  -o-object-fit: cover !important;
+  -o-object-position: left top;
+  object-position: left top;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-fit: contain;
+  object-fit: contain;
+  
+}
+
+.emp-name {
+  display: inline-block;
+  padding-left: 15px;
+  text-transform: capitalize;
+}
+
+.table thead th {
+  border-bottom: 1px solid #c8ced3;
+}
+
+.description-wrap {
+  padding: 20px;
+}
+
+.admin-image {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #9e9e9e;
+  border-radius: 3px;
+  display: inline-block;
+
+}
+table#claim_table tbody tr td:nth-child(3) {
+    display: flex;
+    align-items: center;
+}
+
+.custom-image {
+  text-align: left;
+  float: left;
+  width: 10%;
+
+}
+
+.custom-admin {
+  width: 80%;
+  display: inline-block;
+  text-align: left;
+}
+
+.custom-admin a.profile-name {
+
+  font-size: 13px;
+  color: #2196f3;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.custom-admin h6 {
+  color: #9e9e9e;
+  font-weight: 400;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.emp-particular-details {
+  float: left;
+  width: 100%;
+  padding: 15px 0px 0;
+}
+
+span.custom-leave-type {
+  font-weight: 500;
+  color: #757575;
+  padding: 0 10px;
+  font-size: 14px;
+}
+
+span.custom-leave-type:first-child {
+  padding-left: 0
+}
+
+span.leave-number {
+  display: inline-block;
+  width: auto;
+  font-size: 12px;
+  color: #fff;
+  background: #4dbd74;
+  border-radius: 2px;
+  padding: 0 10px;
+  margin: 0 4.7px 0 0;
+}
+
+accordion.hello:first-child {
+  border-radius: 0
+}
+
+accordion.hello .panel-heading.card-header {
+  padding: 0;
+  margin-bottom: 0px !important;
+  border-bottom: none;
+}
+
+accordion-group.panel:before {
+  content: '\f067';
+  font-family: FontAwesome;
+  position: relative;
+  left: -50%;
+  top: 28px;
+  z-index: 1;
+}
+
+accordion-group.panel.panel-open:before {
+  content: '\f068';
+}
+
+span.right-part.email {
+  color: #2196f3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+}
+
+.custom-status {
+  height: 29px;
+  width: 118.45px;
+  border-radius: 0;
+  background: #4f585d;
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+
+  outline: none;
+  padding-left: 5px;
+  border-radius: 3px;
+}
+
+.emp-name h6 {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #9e9e9e;
+  margin: 0
+}
+
+// 22-01-2019
+
+.description-custom-class {
+  float: left;
+  width: 100%;
+  max-width: 420px;
+  margin-left: 20px;
+}
+
+// 28-01-2019
+
+.red-text {
+  display: inline-block;
+  text-align: left;
+  width: 100%;
+  color: #f44336;
+  padding: 5px 0;
+  margin-left: -29px;
+}
+
+.custom-margin {
+  margin: 0 5px
+}
+
+.custom-account.red-txt {
+  text-align: left;
+}
+
+.custom-emp-details {
+  float: left;
+  width: 100%;
+}
+
+.custom-leaves-remaining {
+  float: left;
+  width: 100%;
+  text-align: left;
+  padding-top: 15px;
+}
+
+.custom-image img {
+  margin: 0
+}
+
+.blue-txt {
+  cursor: pointer;
+}
+
+span.left-part {
+  padding-right: 10px;
+}
+
+.search-section {
+  margin-right: 15px;
+}
+
+
+
+
+
+
+
+@media screen and(max-width:1700px) and (min-width:1501px) {
+  .custom-image {
+    width: 14%;
+  }
+
+  .description-custom-class {
+    max-width: 320px;
+  }
+
+}
+
+@media(max-width:1500px) {
+  .description-custom-class {
+    margin-left: 12px;
+    max-width: 290px;
+  }
+
+  .custom-image {
+    width: 21%;
+  }
+
+  .custom-admin {
+    width: 79%
+  }
+
+  .custom-scroll {
+    max-height: 590px
+  }
+
+}
+
+@media(max-width:1400px) {
+  .description-custom-class {
+    margin-left: 12px;
+    max-width: 260px;
+  }
+
+  span.custom-leave-type {
+    padding: 0 0px
+  }
+
+  .custom-image {
+    width: 25%;
+  }
+
+  .custom-admin {
+    width: 75%
+  }
+
+  span.leave-number {
+    padding: 0 9px;
+  }
+
+  .abc,
+  .description-wrap {
+    width: 25.1%;
+  }
+
+  .custom-scroll {
+    max-height: 490px;
+  }
+}

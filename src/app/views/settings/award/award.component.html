@@ -1,0 +1,110 @@
+<main class="message">
+  <div class="animated fadeIn">
+    <div class="col-md-12 header-buttons setting-header">
+      <button type="button" class="new-button" [routerLink]="'create'" [appCheckPermission]="'AWARDS.ADD'">
+        <i class="fa fa-plus"></i>
+        New
+      </button>
+      <button *ngIf="allcheck_id_count==1" type="button" class="edit-button" (click)="EditAward()" [appCheckPermission]="'AWARDS.EDIT'">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+      <button *ngIf="allcheck_id_count && !selected_assigned_emp" type="button" class="del-button" (click)="deleteModel(delete)"
+        [appCheckPermission]="'AWARDS.DELETE'">
+        <i class="fa fa-trash "></i>
+        Delete
+      </button>
+    </div>
+
+    <div class="table-wrap setting-table award-table">
+      <!-- <table class="table table-striped" style="width: 100%" [mfData]="dept " #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th style="width: 3%"><input type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" /><label></label></th>
+            <th style="width: 3%">
+              <mfDefaultSorter by="name">Name</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="status">Status</mfDefaultSorter>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id)" /><label></label>
+
+            </td>
+            <td>{{item.name}}</td>
+            <td>
+              <div *ngIf="item.status['key_text']=='Enabled'" class="badge-success"><i class="fa fa-check"></i>&nbsp;{{item.status['key_text']}}
+              </div>
+              <div *ngIf="item.status['key_text']=='Disabled'" class="badge-danger"><i class="fa fa-ban"></i>&nbsp;{{item.status['key_text']}}</div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table> -->
+
+      <table class="table table-striped" id="claim_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="row-border hover">
+        <thead>
+          <tr class="custom-th">
+            <th style="width: 5%">
+              <!-- <input type="checkbox" [(ngModel)]="allcheck_id" (click)="checkboxHeader($event)" /><label></label> -->
+            </th>
+            <th style="width: 180px">Name</th>
+            <th style="width: 180px">Award Assigned</th>
+            <th style="width: 100px">Status</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="dept?.length != 0">
+          <tr *ngFor="let item of dept" (click)="checkone(item.id);$event.stopPropagation()">
+            <td>
+              <input type="checkbox" name="checkselection" value={{item.id}} class="formcontrol" class="formcontrol"
+                [(ngModel)]="item.isSelected" (click)="checkone(item.id);$event.stopPropagation()" /><label></label>
+            </td>
+            <td><span class="table-txt">{{item.name}}</span></td>
+            <td><span class="table-txt">{{item.assigned_awards}}</span></td>
+            <td><span class="table-txt">
+                <div *ngIf="item.value_text=='Enabled'" class="status approve-tag"><i class="fa fa-check"></i>&nbsp;{{item.value_text}}
+                </div>
+                <div *ngIf="item.value_text=='Disabled'" class="status reject-tag"><i class="fa fa-ban"></i>&nbsp;{{item.value_text}}</div>
+              </span></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="dept?.length == 0">
+          <tr>
+            <td colspan="6" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
+
+    </div>
+  </div>
+  <ng-template #delete>
+    <!-- <div class="modal-dialog modal-confirm"> -->
+    <!-- <div class="modal-content"> -->
+    <div class="modal-body modal-body-txt">
+      <div class="center img-center">
+        <img src="../../../assets/img/avatars/cancel.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </div>
+      <h4 class="modal-title title-center">Delete?</h4>
+      <p class="caption-txt">Do you really want to delete these records? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer modal-footer-buttons">
+      <button type="button" class="modal-cancel-button" (click)="closeModel()">Cancel</button>
+      <button type="button" class="modal-delete-button" (click)="deleteaward()">Delete</button>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </ng-template>
+</main>

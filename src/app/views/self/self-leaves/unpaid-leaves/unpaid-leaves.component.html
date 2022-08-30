@@ -1,0 +1,38 @@
+<div class="animated fadeIn">
+  <div class="row unpaid-section">
+    <div class="unpaid-search">
+      <input type="text" placeholder="Search..." [(ngModel)]="search" class="search-box">
+    </div>
+    <div class="unpaid-year form-group">
+      <select class="form-control m-input custom-year" name="year" (change)="loaduserYear($event.target.value)">
+        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="email-app">
+    <div class="col-md-12 custom-table">
+      <div class="row table-row-wrap">
+        <table class="table table-striped" style="width: 100%" [mfData]="(unpaidLeaves|filter:search) " #mf="mfDataTable"
+          [mfRowsOnPage]="12">
+          <thead>
+            <tr>
+              <th>
+                <mfDefaultSorter by="month">Month</mfDefaultSorter>
+              </th>
+              <th style="width: 60%">
+                <mfDefaultSorter by="count">Unpaid Leaves</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="unpaidLeaves" class="animated fadeIn">
+            <tr *ngFor="let item of mf.data">
+              <td>{{item.month}}</td>
+              <td>{{item.leave_count}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

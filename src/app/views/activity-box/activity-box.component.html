@@ -1,0 +1,27 @@
+<span dropdown (onHidden)="onHide()">
+  <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+    dropdownToggle (click)="false">
+    <i class="icon-bell"></i><span class="badge badge-pill badge-danger">{{unreadCount}}</span>
+  </a>
+  <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg smooth-scroll" *dropdownMenu
+    aria-labelledby="simple-dropdown">
+    <div class="dropdown-header text-center"><strong>{{unreadCount ? unreadCount : 'No' }} New Notifications</strong>
+    </div>
+    <div class='dropdown-test'>
+      <div class="dropdown_in custom-scroll">
+        <ng-container *ngIf="allNotifications?.length > 0;else noData">
+          <span class="dropdown-item" *ngFor="let row of allNotifications" [ngClass]="row.is_read ?'is-read':''">
+            <span (click)="onDelete(row.id);$event.stopPropagation()" [appCheckPermission]="'ACTIVITY-BOX.DELETE'"
+              class="delete-icon">
+              <i class="fa fa-trash"></i></span>
+            <h5>{{row.title}}</h5>
+            <p>{{row.details}}</p>
+          </span>
+        </ng-container>
+        <ng-template #noData>
+          No Notifications Found
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</span>

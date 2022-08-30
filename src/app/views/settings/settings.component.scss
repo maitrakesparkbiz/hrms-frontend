@@ -1,0 +1,14 @@
+.custom_setting {
+  float: left;
+  width: calc(100% - 264px);
+}
+
+nav {
+  height: 100% !important;
+}
+
+@media(min-width:1740px) {
+  .custom_setting {
+    width: calc(100% - 260px)
+  }
+}

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,eAAgB;EACd,IAAI,EAAE,KAAK",
+"sources": ["company-policy.component.scss"],
+"names": [],
+"file": "company-policy.component.css"
+}

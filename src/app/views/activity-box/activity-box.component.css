@@ -1,0 +1,37 @@
+.dropdown-test {
+  overflow: auto; }
+
+.no-data {
+  position: absolute;
+  top: 50%;
+  left: 50%; }
+
+.is-read {
+  background: #efefef; }
+
+.dropdown-menu {
+  border-radius: 0; }
+
+.dropdown-header {
+  padding: 8px 20px;
+  background: #039be5;
+  border-bottom: 1px solid #c8ced3;
+  color: #fff; }
+
+.delete-icon {
+  position: absolute;
+  right: 0;
+  color: red; }
+
+.delete-icon i {
+  color: #f86c6b; }
+
+.dropdown-item {
+  white-space: pre-wrap; }
+
+.dropdown_in {
+  height: 380px;
+  width: 100%;
+  overflow: auto; }
+
+/*# sourceMappingURL=activity-box.component.css.map */
